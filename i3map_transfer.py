@@ -21,3 +21,10 @@ squared = nums.map(lambda x: x * x).collect()
 
 for num in squared:
     print('%i ' % num )
+
+lines = sc.parallelize(["I am abel", "hi", "Hello world"])
+words = lines.flatMap(lambda line: line.split(" "))
+print('words.first()=', words.first())
+
+for i in words.take(10):
+    print(colored('i==>', 'red'), i)
