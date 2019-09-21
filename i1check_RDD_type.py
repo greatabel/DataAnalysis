@@ -35,3 +35,9 @@ warningRDD = inputRDD.filter(lambda x: 'warning' in x)
 badLinesRDD = errorsRDD.union(warningRDD)
 for i in badLinesRDD.collect():
     print(colored('i==>', 'blue'), i)
+
+print(colored('行动操作', 'green'))
+c = 'input had ' + str(badLinesRDD.count()) + ' concerning lines'
+print(c, ' Here are 10 exmamples:')
+for line in badLinesRDD.take(10):
+    print(line)
