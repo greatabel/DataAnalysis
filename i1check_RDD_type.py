@@ -29,3 +29,9 @@ print('errorsRDD类型:', errorsRDD, isinstance(errorsRDD, RDD))
 
 for i in errorsRDD.collect():
     print(colored('i==>', 'red'), i)
+
+print('-'*30)
+warningRDD = inputRDD.filter(lambda x: 'warning' in x)
+badLinesRDD = errorsRDD.union(warningRDD)
+for i in badLinesRDD.collect():
+    print(colored('i==>', 'blue'), i)

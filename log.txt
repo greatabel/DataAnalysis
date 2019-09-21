@@ -9,6 +9,13 @@ The myth of the lone wolf is not applicable to the majority.
 
 --error
 
+-- warning -- !
+
+haha
+
+--- Warning ! -- warning #
+
+
 Everything is done to avoid men forming friendships and connections.
 
 Men who care about their friends care about society. They will fight against injustice.
