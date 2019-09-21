@@ -9,11 +9,16 @@ from pyspark import SparkConf
 sc = SparkContext('local[*]')
 # spark = SQLContext(sc)
 
-
-lines = sc.textFile("README.md")
+#创建一个lines的RDD
+lines = sc.textFile("i1introduction.md")
 
 c = lines.count()
 f = lines.first()
 
 print('#'*20)
 print(c, f)
+
+# 筛选的例子
+sparklines = lines.filter(lambda line: "Spark" in line)
+p = sparklines.first()
+print('p=', p)
