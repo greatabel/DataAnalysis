@@ -33,3 +33,13 @@ print('---- reduce() ----')
 isum = nums.reduce(lambda x, y: x+y)
 prod = nums.reduce(lambda x, y: x*y)
 print('isum=', isum, 'prod=', prod)
+
+print('--- aggregate() ----')
+print('计算Rdd的平均值')
+sumCount = nums.aggregate((0, 0),
+               (lambda acc, value: (acc[0] + value, acc[1] + 1)),
+               (lambda acc1, acc2: (acc1[0] + acc2[0], acc1[1] + acc2[1]))
+               )
+# return sumCount[0] / float(sumCount[1])
+
+print('sumsCount=', sumCount, '#', sumCount[0] / float(sumCount[1]))
