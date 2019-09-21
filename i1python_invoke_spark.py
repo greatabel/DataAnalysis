@@ -6,7 +6,7 @@ from pyspark import SQLContext
 from pyspark import SparkConf
 
 
-sc = SparkContext('local[*]')
+sc = SparkContext('local[*]', appName='PySparkShell')
 # spark = SQLContext(sc)
 
 #创建一个lines的RDD
