@@ -28,3 +28,8 @@ print('words.first()=', words.first())
 
 for i in words.take(10):
     print(colored('i==>', 'red'), i)
+
+print('---- reduce() ----')
+isum = nums.reduce(lambda x, y: x+y)
+prod = nums.reduce(lambda x, y: x*y)
+print('isum=', isum, 'prod=', prod)
