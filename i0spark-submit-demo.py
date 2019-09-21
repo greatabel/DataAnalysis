@@ -11,7 +11,7 @@ from pyspark import SparkConf
 # os.environ['JAVA_HOME']  = "$(/usr/libexec/java_home -v 13)"
 
 #################### spark调用python文件： ####################
-# spark-submit i0spark-submit-demo.py
+# spark-submit i0py_invoke_spark.py 
 
 
 
