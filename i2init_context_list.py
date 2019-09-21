@@ -1,6 +1,6 @@
 '''
 
-
+https://stackoverflow.com/questions/36708338/pyspark-pipelinedrdd-object-is-not-iterable
 
 '''
 
@@ -10,6 +10,7 @@ findspark.init()
 from pyspark import SparkConf, SparkContext
 from pyspark import SQLContext
 from pyspark import SparkConf
+from termcolor import colored
 
 '''
 sparkcontext 需要2个参数：
@@ -22,12 +23,15 @@ sparkcontext 需要2个参数：
 '''
 conf = SparkConf().setMaster('local').setAppName('PySparkShell')
 sc = SparkContext(conf=conf)
+
+#设置log级别
+sc.setLogLevel("WARN")
 # spark = SQLContext(sc)
 
 #创建一个lines的RDD
 lines = sc.textFile("i1introduction.md")
 
-# 筛选的例子
+# 遍历结果
 sparklines = lines.filter(lambda line: "Spark" in line)
-p = sparklines.first()
-print('p=', p)
+for i in sparklines.collect():
+    print(colored('i==>', 'red'), i)
