@@ -1,0 +1,61 @@
+I Everything is done to avoid men forming friendships and connections.
+
+Men who care about their friends care about society. 
+They will fight against injustice.
+
+Modern man is lonely, on purpose.
+
+The myth of the lone wolf is not applicable to the majority.
+
+--error
+
+-- warning -- !
+
+haha
+
+--- Warning ! -- warning #
+
+
+Everything is done to avoid men forming friendships and connections.
+
+Men who care about their friends care about society. They will fight against injustice.
+
+Modern man is lonely, on purpose.
+
+The myth of the lone wolf is not applicable to the majority.
+
+-- error is here --
+
+test
+
+Erorr message --
+
+test
+
+
+The myth of the lone wolf is not applicable to the majority.
+
+--error1
+
+-- warning1 -- !
+
+haha
+
+--- Warning1 ! -- warning #
+
+
+Everything is done to avoid men forming friendships and connections.
+
+Men who care about their friends care about society. They will fight against injustice.
+
+Modern man is lonely, on purpose.
+
+The myth of the lone wolf is not applicable to the majority.
+
+-- error1 is here --
+
+test
+
+Erorr message --
+
+test
