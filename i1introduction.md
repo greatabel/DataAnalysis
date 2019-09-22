@@ -37,3 +37,14 @@ Resilient Distributed Dataset 简称RDD，RDD其实就是分布式的元素集�
 @RDD 的转化操作都是惰性求值的。这意味着在被调用行动操作之前 Spark 不会开始计算。
 这对新用户来说可能与直觉有些相违背之处，但是对于那些使用过诸如 Haskell 等函数式语言或者
 类似 LINQ 这样的数据处理框架的人来说，会有些似曾相识。
+
+@ Spark常见的数据源：
+    文件格式和文件系统：Spark 可以访问很多种不同的文件格式，包括文本文件、JSON、SequenceFile，
+以及 protocol buffer
+    Spark SQL 它针对包括 JSON 和 Apache Hive 在内的结构化数据源，为我们提供了一套更加简洁高效的 API
+    Spark 自带的库和一些第三方库，它们可以用来连接 Cassandra、HBase、Elasticsearch 以及 JDBC 源
+
+
+
+
+
