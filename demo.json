@@ -1,5 +1,1 @@
-{
-    "fruit": "Apple",
-    "size": "Large",
-    "color": "Red"
-}
+{"name":"xiaoming","age":"15", "address":{"city":"Columbus","state":"Ohio"}}
