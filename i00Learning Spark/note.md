@@ -60,7 +60,7 @@ Spark 自带的集群管理器被称为独立集群管理器。
 Spark 也能运行在 Hadoop YARN 和 Apache Mesos 这两大开源集群管理器上
 
 
-
+@
 
 
 
