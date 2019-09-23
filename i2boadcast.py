@@ -72,10 +72,21 @@ def loadCallSignTable():
     f = open("callsign_tbl_sorted", "r")
     return f.readlines()
 
+
 # 读取为国家代码来进行查询
-signPrefixes = loadCallSignTable()
+# signPrefixes = loadCallSignTable()
+
+# prefixes to country code to support this lookup.
+
+
+# def processSignCount(sign_count, signPrefixes):
+#     country = lookupCountry(sign_count[0], signPrefixes)
+#     count = sign_count[1]
+#     return (country, count)
+signPrefixes = sc.broadcast(loadCallSignTable())
+
 def processSignCount(sign_count, signPrefixes):
-    country = lookupCountry(sign_count[0], signPrefixes)
+    country = lookupCountry(sign_count[0], signPrefixes.value)
     count = sign_count[1]
     return (country, count)
 
