@@ -16,7 +16,6 @@ sc = SparkContext(conf=conf)
 sc.setLogLevel("WARN")
 # spark = SQLContext(sc)
 
-lines = sc.parallelize(["I am abel", "hi abel", "Hello world", "xiaoming, how are your?"])
 
 inputFile = 'input_demo.txt'
 outputDir = 'i0out.txt'
