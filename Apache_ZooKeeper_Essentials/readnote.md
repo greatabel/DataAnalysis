@@ -11,5 +11,5 @@ docker run -it --rm --link my-zookeeper:zookeeper zookeeper zkCli.sh -server zoo
 
 docker container stop  my-zookeeper
 
-
+docker swam run zookeeper
 https://hub.docker.com/_/zookeeper
