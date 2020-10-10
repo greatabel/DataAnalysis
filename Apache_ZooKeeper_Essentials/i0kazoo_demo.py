@@ -29,7 +29,9 @@ def children_callback(children):
 
 children = zk.get_children('/zookeeper', children_callback)
 
-zk.create('/zookeeper/goodboy')
+# zk.create('/zookeeper/goodboy')
+zk.create('/zookeeper/mykey')
+# zk.delete('/zookeeper/mykey')
 # zk.delete('/zookeeper/goodboy')
 
 while True: 

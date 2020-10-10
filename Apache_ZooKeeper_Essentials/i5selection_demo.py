@@ -10,7 +10,6 @@ my_id = uuid.uuid4()
  
 
 def leader_func():
-
     print("I am the leader {}".format(str(my_id)))
 
     while True:
