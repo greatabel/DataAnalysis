@@ -5,8 +5,8 @@ from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 import csv
 
-def csv_write(filename, mylist, directory='./'):
-    with open(os.path.join(directory, filename), 'w', newline='') as csvfile:
+def csv_write(filename, mylist, mode='w', directory='./'):
+    with open(os.path.join(directory, filename), mode, newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerows(mylist)
 

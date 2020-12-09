@@ -1,9 +1,23 @@
-import i0csv_operation
+from  i0csv_operation import csv_write, csv_reader
 
 
 def main():
-    ""
+    sourcelist = csv_reader('source_demo.csv')
+    print(len(sourcelist))
+    lastrow = sourcelist[-1]
+    i = int(lastrow[0])
+    times = 1
+    csv_write('genreated_demo.csv', sourcelist)
+    del sourcelist[0]
+    for i_turn in range(0, times):
+        print(i_turn, ' turn')
 
+        for idx, val in enumerate(sourcelist):
+            # print(idx, val)
+            if idx != 0:
+                i += 1
+                sourcelist[idx][0] = i
+        csv_write('genreated_demo.csv', sourcelist, 'a')
 
 if __name__ == "__main__":
     main()
