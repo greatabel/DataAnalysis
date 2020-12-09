@@ -1,16 +1,20 @@
 from  i0csv_operation import csv_write, csv_reader
 
 
+times = 3
+
 def main():
+    global times
     sourcelist = csv_reader('source_demo.csv')
-    print(len(sourcelist))
+    # print(len(sourcelist))
     lastrow = sourcelist[-1]
     i = int(lastrow[0])
-    times = 1
+    
     csv_write('genreated_demo.csv', sourcelist)
+    print('original turn added')
     del sourcelist[0]
-    for i_turn in range(0, times):
-        print(i_turn, ' turn')
+    for i_turn in range(0, times-1):
+        print(i_turn, ' turn added')
 
         for idx, val in enumerate(sourcelist):
             # print(idx, val)
