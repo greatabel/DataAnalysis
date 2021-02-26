@@ -53,7 +53,8 @@ def receiver(host, processid):
 
 
 def data_anlysis(ch, method, properties, body, processid, detector):
-    print("data_anlysis", body)
+    msg = json.loads(body)
+    print("data_anlysis", msg)
 
 
 if __name__ == "__main__":
