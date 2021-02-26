@@ -44,7 +44,7 @@ def receiver(host, processid):
         on_message_callback=lambda ch, method, properties, body: data_anlysis(
             ch, method, properties, body, processid=processid, detector=detector
         ),
-        queue="hello",
+        queue="trafficflow_spark",
         auto_ack=False,
     )
 
