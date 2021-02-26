@@ -13,13 +13,13 @@ def image_put(q, user, pwd, ip, channel=1):
     video_url = ""
     if ip == "192.168.0.1":
         video_url = "mock_cameras/mock_intersection0.mp4"
-    elif ip == "192.168.0.1":
+    elif ip == "192.168.0.2":
         video_url = "mock_cameras/mock_intersection1.mp4"
     cap = cv2.VideoCapture(video_url)
 
     while True:
         q.put(cap.read()[1])
-        q.get() if q.qsize() > 1 else time.sleep(0.01)
+        q.get() if q.qsize() > 1 else time.sleep(0.1)
 
 
 def image_get(q, window_name):
