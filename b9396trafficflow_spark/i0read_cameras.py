@@ -27,12 +27,12 @@ def image_put(q, user, pwd, ip, channel=1):
 
     while True:
         q.put(cap.read()[1])
-        q.get() if q.qsize() > 1 else time.sleep(0.01)
+        q.get() if q.qsize() > 1 else time.sleep(0.05)
 
 
 def image_get(q, window_name):
     # 通过timeF控制多少帧数真正读取1帧到队列中
-    timeF = 1
+    timeF = 3
     count = 1
     cv2.namedWindow(window_name, flags=cv2.WINDOW_FREERATIO)
     while True:
