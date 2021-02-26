@@ -7,12 +7,16 @@ import i2rabbitmq_config
 
 
 def image_put(q, user, pwd, ip, channel=1):
+    # 真实环境摄像头 使用下列代码
     #     cap = cv2.VideoCapture("rtsp://%s:%s@%s//Streaming/Channels/%d" % (user, pwd, ip, channel))
     #     if cap.isOpened():
     #         print('HIKVISION')
     #     else:
     #         cap = cv2.VideoCapture("rtsp://%s:%s@%s/cam/realmonitor?channel=%d&subtype=0" % (user, pwd, ip, channel))
     #         print('DaHua')
+
+
+    # 使用视频模拟摄像头代码
     video_url = ""
     if ip == "192.168.0.1":
         video_url = "mock_cameras/mock_intersection0.mp4"
@@ -29,7 +33,7 @@ def image_put(q, user, pwd, ip, channel=1):
 
 def image_get(q, window_name):
     # 通过timeF控制多少帧数真正读取1帧到队列中
-    timeF = 15
+    timeF = 5
     count = 1
     cv2.namedWindow(window_name, flags=cv2.WINDOW_FREERATIO)
     while True:

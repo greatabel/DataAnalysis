@@ -53,6 +53,7 @@ def sender(host, img, queueid=None, queue_name="trafficflow_spark"):
         "car_type_middle": mock_car["car_type_middle"],
         "car_type_large": mock_car["car_type_large"],
         "car_total_num": mock_car["car_total_num"],
+        "car_speeds": mock_dic["car_speeds"] 
     }
     print("placeid=", queueid, msg)
     # print(type(msg), '@'*10, 'msg=', msg)
