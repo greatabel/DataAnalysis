@@ -33,11 +33,13 @@ def image_get(q, window_name):
     cv2.namedWindow(window_name, flags=cv2.WINDOW_FREERATIO)
     while True:
         frame = q.get()
-        cv2.imshow(window_name, frame)
-        cv2.waitKey(1)
-        count += 1
-        if count % timeF == 0:
-            sender(i2rabbitmq_config.Where_This_Server_ReadFrom, frame, window_name, 'LifeJacket')
+        # 只有frame有长宽，才是有意义的输入的情况
+        if frame.shape[1] > 0 and  frame.shape[0] > 0:
+            cv2.imshow(window_name, frame)
+            cv2.waitKey(1)
+            count += 1
+            if count % timeF == 0:
+                sender(i2rabbitmq_config.Where_This_Server_ReadFrom, frame, window_name, 'LifeJacket')
 
 
 

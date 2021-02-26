@@ -7,7 +7,7 @@ import cv2
 import base64
 
 import i2rabbitmq_config
-
+import i3mock_detection_algrithm
 # class NumpyArrayEncoder(JSONEncoder):
 #     def default(self, obj):
 #         if isinstance(obj, numpy.ndarray):
@@ -32,6 +32,7 @@ def sender(host, img, queueid=None, queue_name="trafficflow_spark"):
     )
 
     #  保留威将来，如果需要把模拟的图片数据处理，变成真实的
+
     # _, img_encode = cv2.imencode('.jpg', img)
     # np_data = np.array(img_encode)
     # str_data = np_data.tostring()
@@ -40,16 +41,17 @@ def sender(host, img, queueid=None, queue_name="trafficflow_spark"):
     # picData_string = b64_bytes.decode()
 
     now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+    mock_car = i3mock_detection_algrithm.mock_process
     msg = {
         "placeid": queueid,
         "time": now,
         # 'img': picData_string
-        "car_type_small": 10,
-        "car_type_middle": 5,
-        "car_type_large": 1,
-        "car_total_num": 10,
+        "car_type_small": mock_car['car_type_small'],
+        "car_type_middle": mock_car['car_type_middle'],
+        "car_type_large": mock_car['car_type_large'],
+        "car_total_num": mock_car['car_total_num'],
     }
-    print("placeid=", queueid)
+    print("placeid=", queueid, msg)
     # print(type(msg), '@'*10, 'msg=', msg)
     json0 = json.dumps(msg)
     # import codecs
