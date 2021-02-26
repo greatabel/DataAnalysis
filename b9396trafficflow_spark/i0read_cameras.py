@@ -2,6 +2,8 @@ import time
 import multiprocessing as mp
 import cv2
 
+from i1rabbitmq import sender
+import i2rabbitmq_config
 
 def image_put(q, user, pwd, ip, channel=1):
     #     cap = cv2.VideoCapture("rtsp://%s:%s@%s//Streaming/Channels/%d" % (user, pwd, ip, channel))
@@ -25,11 +27,18 @@ def image_put(q, user, pwd, ip, channel=1):
 
 
 def image_get(q, window_name):
+    # 通过timeF控制多少帧数真正读取1帧到队列中
+    timeF = 15
+    count = 1
     cv2.namedWindow(window_name, flags=cv2.WINDOW_FREERATIO)
     while True:
         frame = q.get()
         cv2.imshow(window_name, frame)
         cv2.waitKey(1)
+        count += 1
+        if count % timeF == 0:
+            sender(i2rabbitmq_config.Where_This_Server_ReadFrom, frame, window_name, 'LifeJacket')
+
 
 
 def run_multi_camera():
@@ -58,11 +67,10 @@ def run_multi_camera():
 
 
 def run():
-    run_multi_camera()  
+    run_multi_camera()
     # with 1 + n threads
     pass
 
 
 if __name__ == "__main__":
     run()
-
