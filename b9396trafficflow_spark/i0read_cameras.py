@@ -47,7 +47,7 @@ def image_get(q, window_name):
                     i2rabbitmq_config.Where_This_Server_ReadFrom,
                     frame,
                     window_name,
-                    "LifeJacket",
+                    "trafficflow_spark",
                 )
 
 
