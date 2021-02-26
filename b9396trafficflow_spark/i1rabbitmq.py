@@ -41,7 +41,7 @@ def sender(host, img, queueid=None, queue_name="trafficflow_spark"):
     # picData_string = b64_bytes.decode()
 
     now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-    mock_car = i3mock_detection_algrithm.mock_process
+    mock_car = i3mock_detection_algrithm.mock_process(img)
     msg = {
         "placeid": queueid,
         "time": now,
