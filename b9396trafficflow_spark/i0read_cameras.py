@@ -5,6 +5,7 @@ import cv2
 from i1rabbitmq import sender
 import i2rabbitmq_config
 
+
 def image_put(q, user, pwd, ip, channel=1):
     #     cap = cv2.VideoCapture("rtsp://%s:%s@%s//Streaming/Channels/%d" % (user, pwd, ip, channel))
     #     if cap.isOpened():
@@ -34,13 +35,17 @@ def image_get(q, window_name):
     while True:
         frame = q.get()
         # 只有frame有长宽，才是有意义的输入的情况
-        if frame.shape[1] > 0 and  frame.shape[0] > 0:
+        if frame is not None and frame.shape[1] > 0 and frame.shape[0] > 0:
             cv2.imshow(window_name, frame)
             cv2.waitKey(1)
             count += 1
             if count % timeF == 0:
-                sender(i2rabbitmq_config.Where_This_Server_ReadFrom, frame, window_name, 'LifeJacket')
-
+                sender(
+                    i2rabbitmq_config.Where_This_Server_ReadFrom,
+                    frame,
+                    window_name,
+                    "LifeJacket",
+                )
 
 
 def run_multi_camera():

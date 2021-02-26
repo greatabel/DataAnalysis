@@ -8,6 +8,7 @@ import base64
 
 import i2rabbitmq_config
 import i3mock_detection_algrithm
+
 # class NumpyArrayEncoder(JSONEncoder):
 #     def default(self, obj):
 #         if isinstance(obj, numpy.ndarray):
@@ -31,6 +32,9 @@ def sender(host, img, queueid=None, queue_name="trafficflow_spark"):
         arguments=i2rabbitmq_config.ARGUMENTS,
     )
 
+
+    now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+
     #  保留威将来，如果需要把模拟的图片数据处理，变成真实的
 
     # _, img_encode = cv2.imencode('.jpg', img)
@@ -39,17 +43,16 @@ def sender(host, img, queueid=None, queue_name="trafficflow_spark"):
     # b64_bytes = base64.b64encode(str_data)
 
     # picData_string = b64_bytes.decode()
+    mock_car = i3mock_detection_algrithm.mock_process(queueid, img)
 
-    now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-    mock_car = i3mock_detection_algrithm.mock_process(img)
     msg = {
         "placeid": queueid,
         "time": now,
         # 'img': picData_string
-        "car_type_small": mock_car['car_type_small'],
-        "car_type_middle": mock_car['car_type_middle'],
-        "car_type_large": mock_car['car_type_large'],
-        "car_total_num": mock_car['car_total_num'],
+        "car_type_small": mock_car["car_type_small"],
+        "car_type_middle": mock_car["car_type_middle"],
+        "car_type_large": mock_car["car_type_large"],
+        "car_total_num": mock_car["car_total_num"],
     }
     print("placeid=", queueid, msg)
     # print(type(msg), '@'*10, 'msg=', msg)
