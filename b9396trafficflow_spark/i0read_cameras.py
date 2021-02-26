@@ -32,7 +32,7 @@ def image_put(q, user, pwd, ip, channel=1):
 
 def image_get(q, window_name):
     # 通过timeF控制多少帧数真正读取1帧到队列中
-    timeF = 5
+    timeF = 1
     count = 1
     cv2.namedWindow(window_name, flags=cv2.WINDOW_FREERATIO)
     while True:
