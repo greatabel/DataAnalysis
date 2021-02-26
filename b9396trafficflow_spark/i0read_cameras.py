@@ -15,6 +15,8 @@ def image_put(q, user, pwd, ip, channel=1):
         video_url = "mock_cameras/mock_intersection0.mp4"
     elif ip == "192.168.0.2":
         video_url = "mock_cameras/mock_intersection1.mp4"
+    elif ip == "192.168.0.3":
+        video_url = "mock_cameras/mock_intersection2.mp4"
     cap = cv2.VideoCapture(video_url)
 
     while True:
@@ -31,10 +33,11 @@ def image_get(q, window_name):
 
 
 def run_multi_camera():
-    user_name, user_pwd = "admin", "admin123456"
+    user_name, user_pwd = "admin", "passwordtest"
     camera_ip_l = [
         "192.168.0.1",
         "192.168.0.2",
+        "192.168.0.3",
     ]
 
     mp.set_start_method(method="spawn")  # init
