@@ -30,7 +30,7 @@ AI_SERVER_NUMBER_placeid_end = placeid_bound_dict[AI_SERVER_NUMBER][1]
 
 # set the rabbit-server, local ai-server need to get data from
 servernumber_rabbitIP = {
-    "AI_SERVER_2": "10.248.68.59",
+    "AI_SERVER_2": "127.0.0.1",
     "AI_SERVER_1": "10.248.68.1",
     "AI_SERVER_0": "10.248.68.2",
     "VM_0": "10.248.68.3",
