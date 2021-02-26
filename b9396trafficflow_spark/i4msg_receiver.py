@@ -27,7 +27,8 @@ def receiver(host, processid):
     # host = '127.0.0.1'
     credentials = pika.PlainCredentials("test", "test")
     parameters = pika.ConnectionParameters(host, 5672, "/", credentials)
-    detector = Hat_and_Person_Detector(processid)
+    # detector = Hat_and_Person_Detector(processid)
+    detector = 'mydetector'
     connection = pika.BlockingConnection(parameters)
     channel = connection.channel()
     channel.queue_declare(
