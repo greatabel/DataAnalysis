@@ -15,7 +15,6 @@ def image_put(q, user, pwd, ip, channel=1):
     #         cap = cv2.VideoCapture("rtsp://%s:%s@%s/cam/realmonitor?channel=%d&subtype=0" % (user, pwd, ip, channel))
     #         print('DaHua')
 
-
     # 使用视频模拟摄像头代码
     video_url = ""
     if ip == "192.168.0.1":
@@ -28,7 +27,7 @@ def image_put(q, user, pwd, ip, channel=1):
 
     while True:
         q.put(cap.read()[1])
-        q.get() if q.qsize() > 1 else time.sleep(0.1)
+        q.get() if q.qsize() > 1 else time.sleep(0.01)
 
 
 def image_get(q, window_name):

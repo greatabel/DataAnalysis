@@ -32,7 +32,6 @@ def sender(host, img, queueid=None, queue_name="trafficflow_spark"):
         arguments=i2rabbitmq_config.ARGUMENTS,
     )
 
-
     now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
 
     #  保留威将来，如果需要把模拟的图片数据处理，变成真实的
@@ -53,7 +52,7 @@ def sender(host, img, queueid=None, queue_name="trafficflow_spark"):
         "car_type_middle": mock_car["car_type_middle"],
         "car_type_large": mock_car["car_type_large"],
         "car_total_num": mock_car["car_total_num"],
-        "car_speeds": mock_car["car_speeds"] 
+        "car_speeds": mock_car["car_speeds"],
     }
     print("placeid=", queueid, msg)
     # print(type(msg), '@'*10, 'msg=', msg)
