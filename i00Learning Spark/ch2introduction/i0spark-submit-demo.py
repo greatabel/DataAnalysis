@@ -19,7 +19,7 @@ sc = SparkContext("local","PySparkShell")
 spark = SQLContext(sc)
 
 
-lines = sc.textFile("README.md")
+lines = sc.textFile("i1introduction.md")
 
 c = lines.count()
 f = lines.first()
