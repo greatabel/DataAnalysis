@@ -53,7 +53,7 @@ def data_anlysis(ch, method, properties, body, processid, detector):
     msg = json.loads(body)
     print("data_anlysis", msg)
     now = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime(time.time()))
-    with open("traffic_data/traffic-"+str(now)+".json", "w") as f:
+    with open("traffic_data/traffic-" + str(now) + ".json", "w") as f:
         json.dump(msg, f)
 
 
