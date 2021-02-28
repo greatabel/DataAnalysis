@@ -1,0 +1,8 @@
+termcolor
+imutils
+pika==1.1.0
+simplejson
+opencv-python
+pyspark
+
+

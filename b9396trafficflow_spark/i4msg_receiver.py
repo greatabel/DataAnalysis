@@ -56,6 +56,9 @@ def data_anlysis(ch, method, properties, body, processid, detector):
     msg = json.loads(body)
     print("data_anlysis", msg)
 
+    with open('traffic.json', 'w') as f:
+        json.dump(msg, f)
+
 
 if __name__ == "__main__":
     receiver(i2rabbitmq_config.Where_This_Server_ReadFrom, None)
