@@ -1,10 +1,7 @@
 import cv2
 
 import time
-
-
 import os
-
 
 from random import choice, random
 
@@ -28,7 +25,7 @@ def receiver(host, processid):
     credentials = pika.PlainCredentials("test", "test")
     parameters = pika.ConnectionParameters(host, 5672, "/", credentials)
     # detector = Hat_and_Person_Detector(processid)
-    detector = 'mydetector'
+    detector = "mydetector"
     connection = pika.BlockingConnection(parameters)
     channel = connection.channel()
     channel.queue_declare(
@@ -55,8 +52,8 @@ def receiver(host, processid):
 def data_anlysis(ch, method, properties, body, processid, detector):
     msg = json.loads(body)
     print("data_anlysis", msg)
-
-    with open('traffic.json', 'w') as f:
+    now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+    with open("traffic-"+str(now)+".json", "w") as f:
         json.dump(msg, f)
 
 

@@ -6,6 +6,7 @@ from pyspark.sql import HiveContext, Row
 from pyspark.sql.types import IntegerType
 import json
 import sys
+from termcolor import colored
 
 
 inputFile = 'testweet.json'

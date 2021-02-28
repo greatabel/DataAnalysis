@@ -1,40 +1,48 @@
 import findspark
+
 findspark.init()
-# A simple demo for working with SparkSQL and Tweets
+# A simple demo for working with SparkSQL and Traffics
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import HiveContext, Row
 from pyspark.sql.types import IntegerType
 import json
 import sys
+import time
+from termcolor import colored
 
 
 def data_anlysis(inputFile):
-	inputFile = 'testweet.json'
-	conf = SparkConf().setAppName("SparkSQLTraffic")
-	sc = SparkContext()
-	hiveCtx = HiveContext(sc)
-	print("Loading tweets from " + inputFile)
+    # inputFile = 'tesTraffic.json'
+    conf = SparkConf().setAppName("SparkSQLTraffic")
+    sc = SparkContext()
+    hiveCtx = HiveContext(sc)
+    print("Loading traffic from " + inputFile)
+    while True:
+        input = hiveCtx.read.json(inputFile)
+        input.registerTempTable("traffic")
+        topTraffics = hiveCtx.sql(
+            "SELECT placeid,car_type_small, car_type_middle, car_type_large, car_total_num, car_speeds FROM traffic ORDER BY time LIMIT 10"
+        )
+        print("#" * 20, "\n 1. According to lastest time order:", topTraffics.collect(),' record count:', len( topTraffics.collect()))
 
-	input = hiveCtx.read.json(inputFile)
-	input.registerTempTable("tweets")
-	topTweets = hiveCtx.sql("SELECT text, retweetCount FROM tweets ORDER BY retweetCount LIMIT 10")
-	print('依据retweetCount（转发计数）选出推文=', topTweets.collect() )
+        # https://stackoverflow.com/questions/39535447/attributeerror-dataframe-object-has-no-attribute-map
+        topTrafficText = topTraffics.rdd.map(lambda row: row.car_speeds)
 
-	# https://stackoverflow.com/questions/39535447/attributeerror-dataframe-object-has-no-attribute-map
-	topTweetText = topTweets.rdd.map(lambda row : row.text)
-	print(topTweetText.collect() )
-	# Make a happy person row
-	happyPeopleRDD = sc.parallelize([Row(name="holden", favouriteBeverage="coffee")])
+        for singlelist in topTrafficText.collect():
+            print("#" * 20, "\n 2. Just car_speeds", singlelist)
+            isum = 0
+            for speed in singlelist:
+                isum += speed
+            average_speed = isum / len(singlelist)
+            show = colored("3. total flow is:", "red", attrs=['reverse', 'blink'])
+            print(show, isum, "average spped is:", average_speed)
+        time.sleep(3)
 
-	#https://blog.csdn.net/m0_37870649/article/details/81603764
-	happyPeopleSchemaRDD = hiveCtx.createDataFrame(happyPeopleRDD)
-	happyPeopleSchemaRDD.registerTempTable("happy_people")
-	# Make a UDF to tell us how long some text is
-	hiveCtx.registerFunction("strLenPython", lambda x: len(x), IntegerType())
-	lengthSchemaRDD = hiveCtx.sql("SELECT strLenPython('text') FROM tweets LIMIT 10")
-	print(lengthSchemaRDD.collect() )
-	sc.stop()
+    sc.stop()
 
 
 if __name__ == "__main__":
-	data_anlysis("traffic.json")
+
+    data_anlysis("traffic_data/traffic*.json")
+
+
