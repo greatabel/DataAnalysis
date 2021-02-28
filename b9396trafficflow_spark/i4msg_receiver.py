@@ -52,10 +52,12 @@ def receiver(host, processid):
 def data_anlysis(ch, method, properties, body, processid, detector):
     msg = json.loads(body)
     print("data_anlysis", msg)
-    now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-    with open("traffic-"+str(now)+".json", "w") as f:
+    now = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime(time.time()))
+    with open("traffic_data/traffic-"+str(now)+".json", "w") as f:
         json.dump(msg, f)
 
 
 if __name__ == "__main__":
     receiver(i2rabbitmq_config.Where_This_Server_ReadFrom, None)
+    # now = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime(time.time()))
+    # print(now)
