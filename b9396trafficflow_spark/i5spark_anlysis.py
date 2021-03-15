@@ -10,6 +10,17 @@ import sys
 import time
 from termcolor import colored
 
+import argparse
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='handle the folder of place where save all the json of this place')
+    parser.add_argument('--placeid', type=str, default='0',
+
+                        help="Base network name which serves as feature extraction base.")
+    args = parser.parse_args()
+    return args
+
 
 def data_anlysis(inputFile):
     # inputFile = 'tesTraffic.json'
@@ -21,44 +32,29 @@ def data_anlysis(inputFile):
         input = hiveCtx.read.json(inputFile)
         input.registerTempTable("traffic")
         topTraffics = hiveCtx.sql(
-            "SELECT placeid, time, car_type_small, car_type_middle, car_type_large, car_total_num, car_speeds FROM traffic ORDER BY time desc LIMIT 10"
+            "SELECT placeid,size, color, direction, speed FROM traffic ORDER BY time LIMIT 10"
         )
-        show1 = colored(
-            "\n 1. According to lastest time order:", "blue", attrs=["reverse", "blink"]
-        )
-        print(
-            "#" * 20,
-            show1,
-            topTraffics.collect(),
-            " record count:",
-            len(topTraffics.collect()),
-        )
-
-        for singleT in topTraffics.collect():
-            print(
-                singleT["time"],
-                colored("'s traffic flow :", "blue"),
-                singleT["car_total_num"],
-            )
+        print("#" * 20, "\n 1. According to lastest time order:", topTraffics.collect(),' record count:', len( topTraffics.collect()))
 
         # https://stackoverflow.com/questions/39535447/attributeerror-dataframe-object-has-no-attribute-map
-        topTrafficText = topTraffics.rdd.map(lambda row: row.car_speeds)
-
-        for singlelist in topTrafficText.collect():
-            print("#" * 20, "\n 2. Just car_speeds", singlelist)
-            isum = 0
-            for speed in singlelist:
-                isum += speed
-            average_speed = isum / len(singlelist)
-            show3 = colored(
-                "3. Traffic flow sum is:", "red", attrs=["reverse", "blink"]
-            )
-            print(show3, isum, "Traffic flow density is:", average_speed)
+        topTrafficText = topTraffics.rdd.map(lambda row: row.speed)
+        isum = 0
+        for speed in topTrafficText.collect():
+            print("#" * 20, "\n 2. Just speed", speed)
+            
+            # for speed in singlelist:
+            #     print('\nspeed=', speed)
+            isum += float(speed)
+        average_speed = isum / len( topTraffics.collect())
+        show = colored("3. total flow is:", "red", attrs=['reverse', 'blink'])
+        print(show, isum, "average spped is:", average_speed)
         time.sleep(3)
 
     sc.stop()
 
 
 if __name__ == "__main__":
+    args = parse_args()
+    data_anlysis("traffic_data/placeid"+ args.placeid+ "/traffic*.json")
 
-    data_anlysis("traffic_data/traffic*.json")
+
