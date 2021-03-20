@@ -31,13 +31,21 @@ import SimPy.Simulation as Sim
 from SimPy.Simulation import *
 
 
+## Experiment data -------------------------
+evarge_sevice_time = 5
+maxNumber = 5
+maxTime = 60.0  # minutes
+ARRint = 1.0  # time between arrivals, minutes
+
+## Model/Experiment ------------------------------
+
 class Source(Process):
     """ Source generates customers regularly """
 
     def generate(self, number, TBA):
         for i in range(number):
             c = Customer(name="Customer%02d" % (i,))
-            activate(c, c.visit(timeInBank=12.0))
+            activate(c, c.visit(timeInBank=evarge_sevice_time))
             yield hold, self, TBA
 
 
@@ -50,13 +58,9 @@ class Customer(Process):
         print("%7.4f %s: I finished calling" % (now(), self.name))
 
 
-## Experiment data -------------------------
 
-maxNumber = 5
-maxTime = 60.0  # minutes
-ARRint = 10.0  # time between arrivals, minutes
 
-## Model/Experiment ------------------------------
+
 
 initialize()
 s = Source()
