@@ -1,4 +1,4 @@
-'''
+"""
 Problem 1. (20 Pts.) Exercise 16 from Chapter 4 of the textbook.
 
 
@@ -22,4 +22,43 @@ The current assignment of agents is four for financial and three for contact man
 Simulate the system to find out how many agents are needed to deliver the same level of service 
 in the cross-trained system as in the current system.
 
-'''
+"""
+
+import random, math
+import numpy as np
+import SimPy.Simulation as Sim
+
+from SimPy.Simulation import *
+
+
+class Source(Process):
+    """ Source generates customers regularly """
+
+    def generate(self, number, TBA):
+        for i in range(number):
+            c = Customer(name="Customer%02d" % (i,))
+            activate(c, c.visit(timeInBank=12.0))
+            yield hold, self, TBA
+
+
+class Customer(Process):
+    """ Customer arrives, looks around and leaves """
+
+    def visit(self, timeInBank):
+        print("%7.4f %s: I am calling" % (now(), self.name))
+        yield hold, self, timeInBank
+        print("%7.4f %s: I finished calling" % (now(), self.name))
+
+
+## Experiment data -------------------------
+
+maxNumber = 5
+maxTime = 60.0  # minutes
+ARRint = 10.0  # time between arrivals, minutes
+
+## Model/Experiment ------------------------------
+
+initialize()
+s = Source()
+activate(s, s.generate(number=maxNumber, TBA=ARRint), at=0.0)
+simulate(until=maxTime)
