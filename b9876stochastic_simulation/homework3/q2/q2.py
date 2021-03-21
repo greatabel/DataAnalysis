@@ -5,6 +5,12 @@ can be found on the book website in CallCounts.xls. Use these data to estimate a
 rates for a piecewise-constant, nonstation- ary Poisson arrival process. 
 Implement this arrival process in your call center simulations. Does this affect your recommendation?
 '''
+
+'''
+问题1和问题2的区别在于到达率,使用细化方法为每个客户生成非平稳到达时间，然后使用基于事件的方法来运行模拟
+我直接把表格数据取出一部分，作为1小时内到达的数量，进行重复多次模拟
+
+'''
 from SimPy.Simulation import * 
 from random import expovariate,seed
 

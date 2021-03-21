@@ -3,7 +3,10 @@ from scipy.linalg import expm, logm, inv, pinv
 from random import random
 from SimPy.Simulation import *
 
+'''
+我实现了不同阶段的模型类，用户来访的通用类
 
+'''
 class PhaseModel(object):
     
     def __init__(self, phase_type_generator, initial_state):

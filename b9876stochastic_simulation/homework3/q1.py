@@ -24,6 +24,10 @@ in the cross-trained system as in the current system.
 
 """
 
+'''
+我觉得抽象出来 这是一个 M / G / s系统刺激具有不同数量服务器的交叉训练系统
+然后进行多轮模拟，得出数据结论
+'''
 import random, math
 import numpy as np
 import SimPy.Simulation as Sim
