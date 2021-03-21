@@ -30,39 +30,51 @@ import SimPy.Simulation as Sim
 
 from SimPy.Simulation import *
 
-
-## Experiment data -------------------------
-evarge_sevice_time = 5
-maxNumber = 5
-maxTime = 60.0  # minutes
-ARRint = 1.0  # time between arrivals, minutes
-
-## Model/Experiment ------------------------------
+from random import expovariate, seed
+## Model components ------------------------
 
 class Source(Process):
-    """ Source generates customers regularly """
+    """ Source generates customers randomly """
 
-    def generate(self, number, TBA):
+    def generate(self,number,meanTBA,resource):     
         for i in range(number):
-            c = Customer(name="Customer%02d" % (i,))
-            activate(c, c.visit(timeInBank=evarge_sevice_time))
-            yield hold, self, TBA
-
+            c = Customer(name = "Customer%02d"%(i,))
+            activate(c,c.visit(timeInBank=5.0,
+                               res=resource))          
+            # t = expovariate(1.0/meanTBA)
+            t = 5
+            yield hold,self,t
 
 class Customer(Process):
-    """ Customer arrives, looks around and leaves """
+    """ Customer arrives, is served and  leaves """
+        
+    def visit(self,timeInBank,res):       
+        arrive = now()       # arrival time        
+        print ("%8.3f %s: Here I am     "%(now(),self.name) )
 
-    def visit(self, timeInBank):
-        print("%7.4f %s: I am calling" % (now(), self.name))
-        yield hold, self, timeInBank
-        print("%7.4f %s: I finished calling" % (now(), self.name))
+        yield request,self,res                       
+        wait = now()-arrive  # waiting time        
+        print ("%8.3f %s: Waited %6.3f"%(now(),self.name,wait) )
+        yield hold,self,timeInBank               
+        yield release,self,res                     
+        
+        print ("%8.3f %s: Finished      "%(now(),self.name) )
 
+## 测试实验数据-------------------------
 
+maxNumber = 100       # 设置100模拟1小时足够了，根本不会有100个人来                               
+maxTime = 60.0  # minutes                                
+ARRint = 5.0    # mean, minutes，间隔，平均一个人服务5分钟
+k = Resource(name="Counter",unitName="Clerk")     
 
-
-
-
+## Model/Experiment ------------------------------
+seed(99999)
 initialize()
-s = Source()
-activate(s, s.generate(number=maxNumber, TBA=ARRint), at=0.0)
+s = Source('Source')
+activate(s,s.generate(number=maxNumber,            
+                      meanTBA=ARRint, resource=k),at=0.0)        
 simulate(until=maxTime)
+
+print('we can see 12 customers served by old ways by 4 financial 3 management')
+# 原来是7个人，不考虑金融和管理占用时间不同，新的都值上升了0.05的时间，于是换算下：
+print((4+3)*(1+0.05), ' now we need 8 clerk')
