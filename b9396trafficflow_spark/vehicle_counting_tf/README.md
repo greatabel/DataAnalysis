@@ -72,10 +72,13 @@ python3 i5spark_anlysis.py --placeid=1
 从hadoop 下载数据到本地，可以运行 i7get_from_hdfs.py
 
 9.
+9.1
 如果你想要自己训练，可以运行 i8predict_flow/preduct_train.py（非必须）
 
 我已经给你保存了训练好的模型： finalized_model.sav / myencoders.pkl
-可以直接使用
+可以直接使用.
+
+9.2
 
 
 
