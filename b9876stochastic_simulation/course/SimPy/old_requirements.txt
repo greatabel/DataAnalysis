@@ -1,0 +1,5 @@
+SimPy==2.3
+numpy
+scipy
+matplotlib
+pandas
