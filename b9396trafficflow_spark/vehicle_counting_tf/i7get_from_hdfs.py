@@ -1,5 +1,5 @@
 import pydoop.hdfs as hdfs
-import csv
+
 
 
 b = hdfs.path.isdir('/data')
@@ -18,6 +18,5 @@ if b==True :
 	print('---end get----')
 	
 
-	with open("traffic_measurement.csv", 'wb') as myfile:
-	    wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-	    wr.writerow(lines)
+	with open("i8predict_flow/history_traffic_measurement.txt", 'wb') as myfile:
+	    myfile.write(str(lines))

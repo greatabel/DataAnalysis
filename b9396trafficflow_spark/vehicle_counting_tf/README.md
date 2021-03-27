@@ -57,7 +57,28 @@ python3 i4msg_receiver.py
 python3 i5spark_anlysis.py --placeid=0
 和
 python3 i4msg_receiver.py 
-python3 i5spark_anlysis.py --placeid=0
+python3 i5spark_anlysis.py --placeid=1
+
+8.
+因为我们没有时序数据，所以我根据traffic_measurement.csv混淆生成了一批带时序的历史数据
+保存在i8predict_flow/history_traffic_measurement
+（8.1～8.2非必须的步骤，我预测训练和使用的是默认已经从云端下载到本地的数据）
+
+假设本地hadoop已经配置，服务已经运行起来，可以执行：
+8.1
+上传历史数据岛hadoop, 可以运行 i6put_to_hdfs.py
+
+8.2
+从hadoop 下载数据到本地，可以运行 i7get_from_hdfs.py
+
+9.
+如果你想要自己训练，可以运行 i8predict_flow/preduct_train.py（非必须）
+
+我已经给你保存了训练好的模型： finalized_model.sav / myencoders.pkl
+可以直接使用
+
+
+
 
 
 

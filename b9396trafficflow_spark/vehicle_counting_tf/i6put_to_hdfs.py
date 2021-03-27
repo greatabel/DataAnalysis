@@ -46,7 +46,7 @@ if b==True :
 
 	for item in data_list:
 	    print(item['name'])
-	    if 'traffic_measurement.csv' in item['name']:
+	    if 'history_traffic_measurement.txt' in item['name']:
 	        print('rm -->', item['name'])
 	        hdfs.rm(item['name'], recursive=True, user=None)
 
@@ -56,7 +56,7 @@ if b==True :
 
 
 
-	hdfs.put('traffic_measurement.csv', '/data')
+	hdfs.put('i8predict_flow/history_traffic_measurement.txt', '/data')
 	print('---after put ---')
 	data_list = hdfs_client.list_directory('/data')
 	print(data_list)

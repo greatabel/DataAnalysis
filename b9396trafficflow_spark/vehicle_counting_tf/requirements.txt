@@ -10,4 +10,6 @@ pika==1.1.0
 simplejson
 pyspark
 pydoop==2.0.0
-
+Flask==1.1.2
+flask-wtf==0.14.2
+sklearn
