@@ -79,6 +79,8 @@ python3 i5spark_anlysis.py --placeid=1
 可以直接使用.
 
 9.2
+新开一个命令行，进入虚拟环境，进入i8predict_flow 下，运行
+python3 app.py
 
 
 
