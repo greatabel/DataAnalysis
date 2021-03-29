@@ -37,7 +37,7 @@ def data_anlysis(inputFile):
         input = hiveCtx.read.json(inputFile)
         input.registerTempTable("traffic")
         topTraffics = hiveCtx.sql(
-            "SELECT placeid,size, color, direction, speed FROM traffic ORDER BY time LIMIT 10"
+            "SELECT placeid,size, color, direction, speed FROM traffic ORDER BY time desc LIMIT 10"
         )
         print(
             "#" * 20,
@@ -48,14 +48,15 @@ def data_anlysis(inputFile):
         )
 
         # https://stackoverflow.com/questions/39535447/attributeerror-dataframe-object-has-no-attribute-map
-        topTrafficText = topTraffics.rdd.map(lambda row: row.speed)
+        topTrafficText = topTraffics.rdd.map(lambda row: (row.speed, row.direction))
         isum = 0
-        for speed in topTrafficText.collect():
-            print("#" * 20, "\n 2. Just speed", speed)
+        for (speed, direction) in topTrafficText.collect():
+            print("#" * 20, "\n 2. Just speed", speed, ' direction=', direction)
 
             # for speed in singlelist:
             #     print('\nspeed=', speed)
-            isum += float(speed)
+            if speed != 'n.a.':
+                isum += float(speed)
         average_speed = isum / len(topTraffics.collect())
         show = colored("3. total flow is:", "red", attrs=["reverse", "blink"])
         print(show, isum, "average spped is:", average_speed)
