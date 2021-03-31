@@ -14,6 +14,7 @@ import random
 import argparse
 from datetime import date
 import calendar
+import os
 
 
 def parse_args():
@@ -29,15 +30,25 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+def count_files_in_folder(path):
+
+    dirListing = os.listdir(path)
+
+    file_count = len(dirListing)
+    return file_count
 
 def data_anlysis(placeid):
-    inputFile = "traffic_data/placeid" + placeid + "/traffic*.json"
+    inputPath = "traffic_data/placeid" + placeid
+    inputFile =  inputPath + "/traffic*.json"
+    
+
     # inputFile = 'tesTraffic.json'
     conf = SparkConf().setAppName("SparkSQLTraffic")
     sc = SparkContext()
     hiveCtx = HiveContext(sc)
     print("Loading traffic from " + inputFile)
     while True:
+        prev_count = count_files_in_folder(inputPath)
         input = hiveCtx.read.json(inputFile)
         input.registerTempTable("traffic")
         topTraffics = hiveCtx.sql(
@@ -94,7 +105,12 @@ def data_anlysis(placeid):
         with open("i8predict_flow/history_traffic_measurement.txt", "a") as myfile:
             myfile.write(record0)
             myfile.write(record1)
-        time.sleep(5)
+        now_count = count_files_in_folder(inputPath)
+        while now_count == prev_count:
+            time.sleep(5)
+            prev_count = now_count
+            now_count = count_files_in_folder(inputPath)
+            print('in waiting...', prev_count, now_count)
 
     sc.stop()
 
