@@ -44,9 +44,10 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-
+now = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime(time.time()))
+traffic_measurement_path = 'i0history_detail_data/' + now + '_traffic_measurement.csv'
 # initialize .csv
-with open("traffic_measurement.csv", "w") as f:
+with open(traffic_measurement_path, "w") as f:
     writer = csv.writer(f)
     csv_line = "Vehicle Type/Size, Vehicle Color, Vehicle Movement Direction, Vehicle Speed (km/h)"
     writer.writerows([csv_line.split(",")])
@@ -273,7 +274,7 @@ def object_detection_function(command, input_video):
                     print("writing frame...")
 
                 if csv_line != "not_available":
-                    with open("traffic_measurement.csv", "a") as f:
+                    with open(traffic_measurement_path, "a") as f:
                         writer = csv.writer(f)
                         (size, color, direction, speed) = csv_line.split(",")
                         writer.writerows([csv_line.split(",")])
