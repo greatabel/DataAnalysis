@@ -49,17 +49,20 @@ def data_anlysis(inputFile):
 
         # https://stackoverflow.com/questions/39535447/attributeerror-dataframe-object-has-no-attribute-map
         topTrafficText = topTraffics.rdd.map(lambda row: (row.speed, row.direction))
-        isum = 0
+        down_sum, up_sum = 0, 0
         for (speed, direction) in topTrafficText.collect():
             print("#" * 20, "\n 2. Just speed", speed, ' direction=', direction)
 
             # for speed in singlelist:
             #     print('\nspeed=', speed)
             if speed != 'n.a.':
-                isum += float(speed)
-        average_speed = isum / len(topTraffics.collect())
+                if direction == 'down':
+                    down_sum += float(speed)
+                elif direction == 'up':
+                    up_sum += float(speed)
+        average_speed = (down_sum + up_sum) / len(topTraffics.collect())
         show = colored("3. total flow is:", "red", attrs=["reverse", "blink"])
-        print(show, isum, "average spped is:", average_speed)
+        print(show, 'total down flow=', down_sum, 'total up flow=', up_sum, "average spped is:", average_speed)
         time.sleep(3)
 
     sc.stop()
@@ -68,3 +71,4 @@ def data_anlysis(inputFile):
 if __name__ == "__main__":
     args = parse_args()
     data_anlysis("traffic_data/placeid" + args.placeid + "/traffic*.json")
+    # python3 i5spark_anlysis.py --placeid=0
