@@ -32,27 +32,34 @@ hdfs dfs -ls /data
 """
 
 import pydoop.hdfs as hdfs
+import os
+
+import glob
+
+directoryPath = 'i0history_detail_data/'
+for file_name in glob.glob(directoryPath+'*.csv'):
+    print(file_name)
+    arr = file_name.split('/')
+    fname = arr[1]
+    b = hdfs.path.isdir("/data")
 
 
-b = hdfs.path.isdir("/data")
+    if b == True:
+        hdfs_client = hdfs.hdfs()
+        data_list = hdfs_client.list_directory("/data")
+        print(data_list)
 
+        for item in data_list:
+            print(item["name"])
+            if fname in item["name"]:
+                print("rm -->", item["name"])
+                hdfs.rm(item["name"], recursive=True, user=None)
 
-if b == True:
-    hdfs_client = hdfs.hdfs()
-    data_list = hdfs_client.list_directory("/data")
-    print(data_list)
+        print("---after rm ---")
+        data_list = hdfs_client.list_directory("/data")
+        print(data_list)
 
-    for item in data_list:
-        print(item["name"])
-        if "history_traffic_measurement.txt" in item["name"]:
-            print("rm -->", item["name"])
-            hdfs.rm(item["name"], recursive=True, user=None)
-
-    print("---after rm ---")
-    data_list = hdfs_client.list_directory("/data")
-    print(data_list)
-
-    hdfs.put("i8predict_flow/history_traffic_measurement.txt", "/data")
-    print("---after put ---")
-    data_list = hdfs_client.list_directory("/data")
-    print(data_list)
+        hdfs.put(file_name, "/data")
+        print("---after put ---")
+        data_list = hdfs_client.list_directory("/data")
+        print(data_list)
