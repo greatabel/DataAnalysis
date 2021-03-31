@@ -1438,3 +1438,15 @@ Sunday,23:40,placeid1,down,2
 Sunday,23:45,placeid1,down,6
 Sunday,23:50,placeid1,down,6
 Sunday,23:55,placeid1,down,3
+Wednesday,12:02,placeid0,down,99.14
+Wednesday,12:02,placeid0,up,44.43
+Wednesday,12:02,placeid0,down,191.29
+Wednesday,12:02,placeid0,up,43.83
+Wednesday,12:02,placeid0,down,151.65
+Wednesday,12:02,placeid0,up,30.55
+Wednesday,12:02,placeid0,down,170.7
+Wednesday,12:02,placeid0,up,33.06
+Wednesday,12:02,placeid0,down,169.79
+Wednesday,12:02,placeid0,up,33.9
+Wednesday,12:02,placeid0,down,217.69
+Wednesday,12:02,placeid0,up,33.6

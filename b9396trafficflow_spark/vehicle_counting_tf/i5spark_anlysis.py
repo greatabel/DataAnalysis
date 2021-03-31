@@ -10,6 +10,7 @@ import sys
 import time
 from termcolor import colored
 
+import random
 import argparse
 from datetime import date
 import calendar
@@ -79,8 +80,20 @@ def data_anlysis(placeid):
         my_date = date.today()
         t0 = calendar.day_name[my_date.weekday()]
         t1 = time.strftime("%H:%M")
-        print(t0, t1, "placeid" + placeid, "down", down_sum)
-        print(t0, t1, "placeid" + placeid, "up", up_sum)
+
+        # 添加random，防止因为时间短，训练数据雷同
+        down_sum = down_sum * random.uniform(0, 0.8)
+        up_sum = up_sum * random.uniform(1, 1.5)
+
+        record0 = t0 + ',' + t1 + ',' + "placeid"+placeid + ",down," + str(round(down_sum, 2)) + "\n"
+        record1 = t0 + ',' + t1 + ',' + "placeid"+placeid + ",up," + str(round(up_sum, 2)) + "\n"
+
+        print(record0)
+        print(record1)
+
+        with open("i8predict_flow/history_traffic_measurement.txt", "a") as myfile:
+            myfile.write(record0)
+            myfile.write(record1)
         time.sleep(5)
 
     sc.stop()

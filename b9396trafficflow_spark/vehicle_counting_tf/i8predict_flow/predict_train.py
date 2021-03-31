@@ -13,10 +13,10 @@ class MyEncoder:
     """
 
     def fit_transform(self, y):
-        return y.astype(int)
+        return y.astype(float)
 
     def transform(self, y):
-        return y.astype(int)
+        return y.astype(float)
 
     def inverse_transform(self, y):
         return y.astype(str)
