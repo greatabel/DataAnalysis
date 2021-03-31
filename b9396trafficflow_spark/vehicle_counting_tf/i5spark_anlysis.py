@@ -11,6 +11,8 @@ import time
 from termcolor import colored
 
 import argparse
+from datetime import date
+import calendar
 
 
 def parse_args():
@@ -27,7 +29,8 @@ def parse_args():
     return args
 
 
-def data_anlysis(inputFile):
+def data_anlysis(placeid):
+    inputFile = "traffic_data/placeid" + placeid + "/traffic*.json"
     # inputFile = 'tesTraffic.json'
     conf = SparkConf().setAppName("SparkSQLTraffic")
     sc = SparkContext()
@@ -51,24 +54,39 @@ def data_anlysis(inputFile):
         topTrafficText = topTraffics.rdd.map(lambda row: (row.speed, row.direction))
         down_sum, up_sum = 0, 0
         for (speed, direction) in topTrafficText.collect():
-            print("#" * 20, "\n 2. Just speed", speed, ' direction=', direction)
+            print("#" * 20, "\n 2. Just speed", speed, " direction=", direction)
 
             # for speed in singlelist:
             #     print('\nspeed=', speed)
-            if speed != 'n.a.':
-                if direction == 'down':
+            if speed != "n.a.":
+                if direction == "down":
                     down_sum += float(speed)
-                elif direction == 'up':
+                elif direction == "up":
                     up_sum += float(speed)
         average_speed = (down_sum + up_sum) / len(topTraffics.collect())
         show = colored("3. total flow is:", "red", attrs=["reverse", "blink"])
-        print(show, 'total down flow=', down_sum, 'total up flow=', up_sum, "average spped is:", average_speed)
-        time.sleep(3)
+        print(
+            show,
+            "total down flow=",
+            down_sum,
+            "total up flow=",
+            up_sum,
+            "average spped is:",
+            average_speed,
+        )
+
+        print(colored("@" * 30, "green"), "\n--- async summary record to history ---")
+        my_date = date.today()
+        t0 = calendar.day_name[my_date.weekday()]
+        t1 = time.strftime("%H:%M")
+        print(t0, t1, "placeid" + placeid, "down", down_sum)
+        print(t0, t1, "placeid" + placeid, "up", up_sum)
+        time.sleep(5)
 
     sc.stop()
 
 
 if __name__ == "__main__":
     args = parse_args()
-    data_anlysis("traffic_data/placeid" + args.placeid + "/traffic*.json")
+    data_anlysis(args.placeid)
     # python3 i5spark_anlysis.py --placeid=0

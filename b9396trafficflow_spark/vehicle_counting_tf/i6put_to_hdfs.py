@@ -1,4 +1,4 @@
-'''
+"""
 # python代码是直接调用hdfs接口，如果代码因为未知原因不work时候，
 # 还可以使用hdfs的命令，直接处理，具体如下:
 
@@ -22,43 +22,37 @@ hdfs dfs -ls /data
 
 
 
-'''
+"""
 
 
-
-'''
+"""
  -------------
  
  https://crs4.github.io/pydoop/api_docs/hdfs_api.html#module-pydoop.hdfs
-'''
+"""
 
 import pydoop.hdfs as hdfs
 
 
-
-b = hdfs.path.isdir('/data')
-
-
-if b==True :
-	hdfs_client = hdfs.hdfs()
-	data_list = hdfs_client.list_directory('/data')
-	print(data_list)
-
-	for item in data_list:
-	    print(item['name'])
-	    if 'history_traffic_measurement.txt' in item['name']:
-	        print('rm -->', item['name'])
-	        hdfs.rm(item['name'], recursive=True, user=None)
-
-	print('---after rm ---')
-	data_list = hdfs_client.list_directory('/data')
-	print(data_list)
+b = hdfs.path.isdir("/data")
 
 
+if b == True:
+    hdfs_client = hdfs.hdfs()
+    data_list = hdfs_client.list_directory("/data")
+    print(data_list)
 
-	hdfs.put('i8predict_flow/history_traffic_measurement.txt', '/data')
-	print('---after put ---')
-	data_list = hdfs_client.list_directory('/data')
-	print(data_list)
+    for item in data_list:
+        print(item["name"])
+        if "history_traffic_measurement.txt" in item["name"]:
+            print("rm -->", item["name"])
+            hdfs.rm(item["name"], recursive=True, user=None)
 
+    print("---after rm ---")
+    data_list = hdfs_client.list_directory("/data")
+    print(data_list)
 
+    hdfs.put("i8predict_flow/history_traffic_measurement.txt", "/data")
+    print("---after put ---")
+    data_list = hdfs_client.list_directory("/data")
+    print(data_list)
