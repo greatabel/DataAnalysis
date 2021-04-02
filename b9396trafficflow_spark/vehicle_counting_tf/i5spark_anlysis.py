@@ -15,6 +15,7 @@ import argparse
 from datetime import date
 import calendar
 import os
+import datetime
 
 
 def parse_args():
@@ -52,7 +53,7 @@ def data_anlysis(placeid):
         input = hiveCtx.read.json(inputFile)
         input.registerTempTable("traffic")
         topTraffics = hiveCtx.sql(
-            "SELECT placeid,size, color, direction, speed FROM traffic ORDER BY time desc LIMIT 10"
+            "SELECT placeid,size, color, direction, speed, time FROM traffic ORDER BY time desc LIMIT 20"
         )
         print(
             "#" * 20,
@@ -62,19 +63,25 @@ def data_anlysis(placeid):
             len(topTraffics.collect()),
         )
 
+        print(colored("2. filter out now span data:", "blue", attrs=["reverse", "blink"]))
         # https://stackoverflow.com/questions/39535447/attributeerror-dataframe-object-has-no-attribute-map
-        topTrafficText = topTraffics.rdd.map(lambda row: (row.speed, row.direction))
+        topTrafficText = topTraffics.rdd.map(lambda row: (row.speed, row.direction, row.time))
         down_sum, up_sum = 0, 0
-        for (speed, direction) in topTrafficText.collect():
-            print("#" * 20, "\n 2. Just speed", speed, " direction=", direction)
+        for (speed, direction, row_time) in topTrafficText.collect():
+            # print('time=', row_time, type(row_time))
+            record_dt = datetime.datetime.strptime(row_time,'%Y-%m-%d %H:%M:%S')
+            dnow = datetime.datetime.now()
+            if abs(dnow- record_dt) < datetime.timedelta(minutes=1):
+                print('time =', dnow, record_dt)
+                print("#" * 20, "\n 2.1 Just speed", speed, " direction=", direction)
 
-            # for speed in singlelist:
-            #     print('\nspeed=', speed)
-            if speed != "n.a.":
-                if direction == "down":
-                    down_sum += float(speed)
-                elif direction == "up":
-                    up_sum += float(speed)
+                # for speed in singlelist:
+                #     print('\nspeed=', speed)
+                if speed != "n.a.":
+                    if direction == "down":
+                        down_sum += float(speed)
+                    elif direction == "up":
+                        up_sum += float(speed)
         average_speed = (down_sum + up_sum) / len(topTraffics.collect())
         show = colored("3. total flow is:", "red", attrs=["reverse", "blink"])
         print(
