@@ -1654,3 +1654,9 @@ Friday,14:33,placeid0,down,11.95
 Friday,14:33,placeid0,up,0.0
 Friday,14:34,placeid0,down,25.38
 Friday,14:34,placeid0,up,0.0
+Sunday,00:44,placeid0,down,0.0
+Sunday,00:44,placeid0,up,0
+Sunday,00:45,placeid0,down,0.0
+Sunday,00:45,placeid0,up,0
+Sunday,00:48,placeid0,down,18.88
+Sunday,00:48,placeid0,up,0.0

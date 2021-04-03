@@ -94,24 +94,27 @@ def data_anlysis(placeid):
             average_speed,
         )
 
-        print(colored("@" * 30, "green"), "\n--- async summary record to history ---")
-        my_date = date.today()
-        t0 = calendar.day_name[my_date.weekday()]
-        t1 = time.strftime("%H:%M")
+        # 发生了变化，说明至少至少有数据符合时间间隔
+        if down_sum!=0 or up_sum!= 0 :
+            print(colored("@" * 30, "green"), "\n--- async summary record to history ---")
+            my_date = date.today()
+            t0 = calendar.day_name[my_date.weekday()]
+            t1 = time.strftime("%H:%M")
 
-        # 添加random，防止因为时间短，训练数据雷同
-        down_sum = down_sum * random.uniform(0, 0.8)
-        up_sum = up_sum * random.uniform(1, 1.5)
+            # 添加random，防止因为时间短，训练数据雷同
+            down_sum = down_sum * random.uniform(0, 0.8)
+            up_sum = up_sum * random.uniform(1, 1.5)
 
-        record0 = t0 + ',' + t1 + ',' + "placeid"+placeid + ",down," + str(round(down_sum, 2)) + "\n"
-        record1 = t0 + ',' + t1 + ',' + "placeid"+placeid + ",up," + str(round(up_sum, 2)) + "\n"
+            record0 = t0 + ',' + t1 + ',' + "placeid"+placeid + ",down," + str(round(down_sum, 2)) + "\n"
+            record1 = t0 + ',' + t1 + ',' + "placeid"+placeid + ",up," + str(round(up_sum, 2)) + "\n"
 
-        print(record0)
-        print(record1)
+            print(record0)
+            print(record1)
 
-        with open("i8predict_flow/history_traffic_measurement.txt", "a") as myfile:
-            myfile.write(record0)
-            myfile.write(record1)
+            with open("i8predict_flow/history_traffic_measurement.txt", "a") as myfile:
+                myfile.write(record0)
+                myfile.write(record1)
+
         now_count = count_files_in_folder(inputPath)
         while now_count == prev_count:
             time.sleep(5)
