@@ -71,5 +71,5 @@ def sender(
 
 
 if __name__ == "__main__":
-    numpyArrayOne = numpy.array([[11, 22, 33], [44, 55, 66], [77, 88, 99]])
+    numpyArrayOne = np.array([[11, 22, 33], [44, 55, 66], [77, 88, 99]])
     sender("localhost", numpyArrayOne)
