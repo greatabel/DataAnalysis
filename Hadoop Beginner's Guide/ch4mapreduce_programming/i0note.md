@@ -1,7 +1,8 @@
 hadoop-ufo-60000.tsv
 这个UFO数据集是《Hadoop Beginner's Guide》书上使用的例子
 
-如果hdfs故障
+如果hdfs故障: 
+https://blog.csdn.net/u011495642/article/details/84063496
 /home/abel/hadoop-3.1.4/sbin下执行: start-all.sh
 然后访问：
 http://localhost:9870 
@@ -16,6 +17,6 @@ hdfs dfs -copyFromLocal hadoop-ufo-60000.tsv /data
 
 mapred streaming -input /data/hadoop-ufo-60000.tsv -output /output10  -mapper "python3 wordcount_mapper.py" -reducer "python3 wordcount_reducer.py"
 
-
+hdfs dfs -rm -r /output10
 
 hadoop fs -cat output10/part-00000
