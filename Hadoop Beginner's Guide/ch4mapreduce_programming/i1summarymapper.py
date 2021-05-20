@@ -9,24 +9,24 @@ sys.stdin = codecs.getreader('utf8')(sys.stdin.detach(), errors='ignore')
  
 def map(input):
     for line in input:
-        print "total\t1"
+        print("total\t1")
         line = line.strip()
         words = line.split("\t")
         if len(words) != 6:
-            print "badline\t1"
+            print("badline\t1")
         else:
             if words[0] != None:
-                print "sighted\t1"
+                print("sighted\t1")
             if words[1] != None:
-                print "recorded\t1"
+                print("recorded\t1")
             if words[2] != None:
-                print "location\t1"
+                print("location\t1")
             if words[3] != None:
-                print "shape\t1"
+                print("shape\t1")
             if words[4] != None:
-                print "duration\t1"
+                print("duration\t1")
             if words[5] != None:
-                print "description\t1"
+                print("description\t1")
  
  
 def main():
