@@ -19,4 +19,4 @@ mapred streaming -input /data/hadoop-ufo-60000.tsv -output /output10  -mapper "p
 
 hdfs dfs -rm -r /output10
 
-hadoop fs -cat output10/part-00000
+hadoop fs -cat /output10/part-00000
