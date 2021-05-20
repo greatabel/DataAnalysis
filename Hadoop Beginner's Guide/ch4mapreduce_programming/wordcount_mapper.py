@@ -9,7 +9,7 @@ import sys
 #         print('{0}\t{1}'.format(key, value) )
 
 with open(sys.stdin.fileno(), mode='rb', closefd=False) as stdin_binary:
-    raw_input = stdin_binary.read()
+	raw_input = stdin_binary.read()
 	for line in raw_input:
 	    line = line.strip()
 	    keys = line.split()
