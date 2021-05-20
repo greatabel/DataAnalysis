@@ -14,8 +14,11 @@ hdfs dfs -copyFromLocal hadoop-ufo-60000.tsv /data
 查看hdfs的data文件夹: hdfs dfs -ls /data
 
 
-
+原来统计字数的：
 mapred streaming -input /data/hadoop-ufo-60000.tsv -output /output10  -mapper "python3 wordcount_mapper.py" -reducer "python3 wordcount_reducer.py"
+
+带summary的统计：
+mapred streaming -input /data/hadoop-ufo-60000.tsv -output /output10  -mapper "python3 i1summarymapper.py" -reducer "python3 wordcount_reducer.py"
 
 hdfs dfs -rm -r /output10
 
