@@ -9,31 +9,19 @@ sys.stdin = codecs.getreader('utf8')(sys.stdin.detach(), errors='ignore')
  
 def map(input):
     for line in input:
-        print("total\t1")
         line = line.strip()
         words = line.split("\t")
-        if len(words) != 6:
-            print("badline\t1")
-        else:
-            if words[0] != None:
-                print("sighted\t1")
-            if words[1] != None:
-                print("recorded\t1")
-            if words[2] != None:
-                print("location\t1")
-            if words[3] != None:
-                print("shape\t1")
-            if words[4] != None:
-                print("duration\t1")
-            if words[5] != None:
-                print("description\t1")
- 
- 
+        if len(words) == 6:
+            shape = words[3].strip()
+            if len(shape) > 0:
+                print(shape + "\t1")
+            
 def main():
     map(sys.stdin)
  
 if __name__ == "__main__":
-	main()
+    main()
+
 
 # hadoop fs -cat /output11/part-00000
 # 2021-05-20 16:19:03,124 WARN util.NativeCodeLoader: 
