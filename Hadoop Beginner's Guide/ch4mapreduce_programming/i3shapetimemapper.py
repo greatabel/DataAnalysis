@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*- 
 """a python script for hadoop streaming map """
  
 import sys
