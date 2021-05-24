@@ -22,7 +22,7 @@ mapred streaming -input /data/hadoop-ufo-60000.tsv -output /output11  -mapper "p
 
 
 带summary的统计：
-mapred streaming -input /data/hadoop-ufo-60000.tsv -output /output11  -mapper "python3 i1summarymapper.py" -reducer "python3 wordcount_reducer.py"
+mapred streaming -input /data/hadoop-ufo-60000.tsv -output /output12  -mapper "python3 i2shapemapper.py" -reducer "python3 wordcount_reducer.py"
 
 hdfs dfs -rm -r /output10
 
