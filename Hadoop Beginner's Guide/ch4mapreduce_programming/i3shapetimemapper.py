@@ -4,9 +4,9 @@ import sys
 import re
 import codecs
 
-
 sys.stdin = codecs.getreader('utf8')(sys.stdin.detach(), errors='ignore')
 
+ 
 
  
 def map(input):
