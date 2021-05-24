@@ -1,5 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*- 
 """a python script for hadoop streaming map """
  
 import sys
@@ -9,6 +7,8 @@ import codecs
 
 sys.stdin = codecs.getreader('utf8')(sys.stdin.detach(), errors='ignore')
 
+
+ 
 def map(input):
     pattern1 = re.compile(r'\d* ?((min)|(sec))')
     pattern2 = re.compile(r'\d*') 
@@ -31,10 +31,11 @@ def map(input):
                     if unit == 'min':
                         time = time * 60
                     if len(shape) > 0:
-                        print shape + '\t' + str(time) 
+                        print(shape + '\t' + str(time) )
  
 def main():
     map(sys.stdin)
  
 if __name__ == "__main__":
     main()
+

@@ -6,9 +6,8 @@ import sys
 import re
 import codecs
 
-
 sys.stdin = codecs.getreader('utf8')(sys.stdin.detach(), errors='ignore')
-
+ 
 def reduce(input):
     current = None
     minv = 0
@@ -31,13 +30,13 @@ def reduce(input):
                 maxv = time
         else:
             if current != None:
-                print current + '\t' + str(minv) +' ' + str(maxv) + ' ' + str((total/count))
+                print(current + '\t' + str(minv) +' ' + str(maxv) + ' ' + str((total/count)) )
             current = word
             count = 1
             total = time
             minv = time
             maxv = time
-    print current + '\t' + str(minv) +' ' + str(maxv) + ' ' + str((total/count))
+    print(current + '\t' + str(minv) +' ' + str(maxv) + ' ' + str((total/count)) )
  
 def main():
     reduce(sys.stdin)
