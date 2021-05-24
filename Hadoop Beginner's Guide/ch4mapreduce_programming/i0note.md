@@ -21,8 +21,11 @@ mapred streaming -input /data/hadoop-ufo-60000.tsv -output /output10  -mapper "p
 mapred streaming -input /data/hadoop-ufo-60000.tsv -output /output11  -mapper "python3 i1summarymapper.py" -reducer "python3 wordcount_reducer.py"
 
 
-带summary的统计：
+形状的统计：
 mapred streaming -input /data/hadoop-ufo-60000.tsv -output /output12  -mapper "python3 i2shapemapper.py" -reducer "python3 wordcount_reducer.py"
+
+形状和时间的统计：
+mapred streaming -input /data/hadoop-ufo-60000.tsv -output /output13  -mapper "i3shapetimemapper.py" -reducer "python3 i3shapetimereducer.py"
 
 hdfs dfs -rm -r /output10
 
