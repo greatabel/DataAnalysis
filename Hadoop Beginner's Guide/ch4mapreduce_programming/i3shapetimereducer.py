@@ -8,7 +8,9 @@ import codecs
 
 sys.stdin = codecs.getreader('utf8')(sys.stdin.detach(), errors='ignore')
 
- 
+'''
+我们想要获取ufo持续时间的极小值，极大值，平均值
+'''
  
 def reduce(input):
     current = None
