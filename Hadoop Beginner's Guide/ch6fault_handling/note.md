@@ -14,8 +14,8 @@ MapReduce作业中由软件错误引起个别任务故障
 MapReduce作业中由数据问题引发的个别任务故障
 
 -------------
-hadoop dfsadmin 命令
-hadoop dfsadmin -report
+hdfs dfsadmin 命令
+hdfs dfsadmin -report
 
 -------------
 修改数据块大小从256M设置为4M为：
@@ -26,5 +26,28 @@ hadoop dfsadmin -report
         <name>dfs.blocksize</name>
         <value>4194304</value>
     </property>
+
+
+-------------
+使用 jps 查看datanode进程id：
+$ jps
+6161 NameNode
+7317 NodeManager
+6390 DataNode
+6934 ResourceManager
+1114 Jps
+6671 SecondaryNameNode
+
+-------------
+start-all.sh
+重启所有节点
+
+
+
+
+
+
+
+
 
 
