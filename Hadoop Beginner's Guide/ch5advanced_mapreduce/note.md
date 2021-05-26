@@ -28,7 +28,7 @@ hadoop fs -cat /output30/part-r-00000
 hadoop fs -get /output30/part-r-00000 result.txt
 ------------
 #
-
+-
 
 
 ------------使用图算法  ----------
@@ -41,6 +41,6 @@ jar -cvf graph.jar *.class
 执行mapreduce作业:
 hadoop jar graph.jar GraphPath /graphin  /output40
 hadoop fs -get /output40/part-r-00000 graph_result.txt
-
+运行第二次：
 hadoop jar graph.jar GraphPath /output40  /output41
 hadoop fs -get /output41/part-r-00000 graph_result1.txt
