@@ -27,3 +27,17 @@ hadoop fs -cat /output30/part-r-00000
 ------------
 hadoop fs -get /output30/part-r-00000 result.txt
 ------------
+#
+
+
+
+------------使用图算法  ----------
+hadoop  fs -mkdir /graphin
+hadoop fs -put graph.txt /graphin/graph.txt
+
+编译成为jar:
+javac GraphPath.java  -cp $(hadoop classpath)
+jar -cvf graph.jar *.class
+执行mapreduce作业:
+hadoop jar graph.jar GraphPath /graphin  /output40
+hadoop fs -get /output40/part-r-00000 graph_result.txt
