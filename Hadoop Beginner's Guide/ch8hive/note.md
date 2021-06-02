@@ -45,17 +45,44 @@ crreate table 和 load data 语句都不会创建实际的表数据，只是生�
 
 ------------------------------------------------------------------------------
 
-hdfs dfs -copyFromLocal states.txt /tmp/states
 
+
+1)
+创建 i2states.hql
+
+DROP TABLE states ;
+CREATE EXTERNAL TABLE states(abbreviation string, full_name string)
+ROW FORMAT delimited
+FIELDS TERMINATED BY '\t'
+LOCATION '/tmp/states' ;
+
+2)
+先保证：相关数据集已经存在hadoop中:
+
+确保hdfs上文件夹存在
+hdfs dfs -mkdir /tmp/states
+
+拷贝到文件夹底下
+hdfs dfs -copyFromLocal states.txt /tmp/states/
+
+查询确认
 hdfs dfs -ls /tmp/states
 
+3)
+执行
+hive -f i2states.hql
 
+4)
+对刚创建的表进行查询
+hive -e "select full_name from states where abbreviation like 'CA' "
 
-
-
-
-
-
+应该看到结果：
+Logging initialized using configuration in file:/opt/hive-3.1.2/conf/hive-log4j2.properties Async: true
+Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+Hive Session ID = 4a7e8c47-1252-4f11-91fb-4b5994cd4271
+OK
+California
+Time taken: 2.165 seconds, Fetched: 1 row(s)
 
 
 
