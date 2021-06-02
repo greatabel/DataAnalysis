@@ -17,8 +17,12 @@ https://blog.csdn.net/aguang_vip/article/details/81583661
 
 
 1）
+DROP TABLE ufodata ;
 CREATE TABLE ufodata(sighted string, reported string, sighting_location string,
-shape string, duration string, description string);
+shape string, duration string, description string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t' ;
+
 
 hadoop 已经存在了：
 /data/hadoop-ufo-60000.tsv
@@ -31,5 +35,24 @@ LOAD DATA INPATH '/data/hadoop-ufo-60000.tsv' OVERWRITE INTO TABLE ufodata ;
 hive -e "select count(*) from ufodata;"
 -
 hive -e "select sighted from ufodata limit 5;"
+
+
+# hive表是一个逻辑概念
+表的创建和数据导入并没有真正引起MapReduce作业的执行
+
+crreate table 和 load data 语句都不会创建实际的表数据，只是生成一些元数据
+当Hive使用HiveQL转换成MapReduce作业访问概念上存储在表中的数据时，将会用到这些元数据
+
+------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 
 
