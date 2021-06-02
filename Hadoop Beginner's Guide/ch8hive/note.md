@@ -88,8 +88,23 @@ California
 Time taken: 2.165 seconds, Fetched: 1 row(s)
 
 ------------------------------------------------------------------------------
+创建使用视图
 
+CREATE VIEW IF NOT EXISTS usa_sightings (sighted, reported, shape, state)
+AS SELECT t1.sighted, t1.reported, t1.shape, t2.full_name
+FROM ufodata t1 JOIN states t2
+ON (lower(t2.abbreviation) = lower(substr( t1.sighting_location, -3, 2))) ;
 
+hive -f  i4view.hql
+
+hive -e "select count(state) from usa_sightings where state='California'"
+然后返回：
+OK
+7599
+Time taken: 8.955 seconds, Fetched: 1 row(s)
+
+删除视图
+hive -e "drop view usa_sightings"
 
 
 
