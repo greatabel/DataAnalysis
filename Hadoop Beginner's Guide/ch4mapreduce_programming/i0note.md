@@ -52,7 +52,7 @@ hadoop jar ufo.jar UFOLocation /data/hadoop-ufo-60000.tsv /output20
 ------------
 hadoop fs -get /output20/part-00000 locations.txt
 ------------
-
+-
 
 
 

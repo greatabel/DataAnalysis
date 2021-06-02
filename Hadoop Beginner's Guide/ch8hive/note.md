@@ -45,6 +45,10 @@ crreate table 和 load data 语句都不会创建实际的表数据，只是生�
 
 ------------------------------------------------------------------------------
 
+hdfs dfs -copyFromLocal states.txt /tmp/states
+
+hdfs dfs -ls /tmp/states
+
 
 
 
