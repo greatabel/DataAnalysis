@@ -7,3 +7,7 @@ RDBMS用作数据库，会遇到数据规模和数据保留问题。
 
 最近出现新的解决方案，用关系数据库存储最新数据，同时使用Hadoop存储老数据
 数据要么以文件形式存储在HDFS上，要么存储在Hive并保留RDBMS接口。
+
+----------------------- ----------------------- -----------------------
+create table employees(first_name varchar(10) primary key, 
+dept varchar(15), )
