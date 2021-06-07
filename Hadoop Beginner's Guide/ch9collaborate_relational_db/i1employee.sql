@@ -7,3 +7,6 @@ create table employees(
 	salary int,
 	start_date date
 );
+
+
+describe employees;
