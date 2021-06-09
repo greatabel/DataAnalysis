@@ -154,15 +154,14 @@ Time taken: 1.93 seconds, Fetched: 5 row(s)
 
 
 ----------------------- ----------------------- -----------------------
-
-从Hadoop导出数据
+先传本地文件到hadoop
 
 
 # 关闭只读模式 
 hdfs dfsadmin -safemode leave
 
 # 删除旧的同名数据
-hdfs dfs -rm -r 2020-12-28_generated_demo.csv
+hdfs dfs -rm -r /edata/newemployees.tsv
 
 # 在hdfs上创建data目录
 hdfs dfs -mkdir /edata
@@ -172,6 +171,49 @@ hdfs dfs -copyFromLocal newemployees.tsv /edata
 
 #查看文件
 hdfs dfs -ls /edata
+
+
+
+#######从Hadoop导出数据
+
+sqoop export --connect jdbc:mysql://127.0.0.1:3306/hadooptest --username root --password abel1024  --table employees --export-dir /edata --input-fields-terminated-by '\t'  --bindir /opt/sqoop/  -m 1
+
+查看：
+echo "select count(*) from employees" | mysql -u root -p hadooptest
+输出：
+Enter password: 
+count(*)
+5
+
+
+
+----------------------- ----------------------- -----------------------
+Sqoop导入和导出的区别
+
+sqoop导入数据时，Sqoop对数据结构和数据类型了解更详细一些，
+但是导出数据时，Sqoop只知道源文件位置以及字段和记录分隔符。
+
+此外Sqoop导入数据可根据源数据表的名称和结构自动新建一个Hive数据表，
+但只能把导出数据插入关系数据库已有数据表
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
