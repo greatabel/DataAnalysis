@@ -12,3 +12,6 @@ the repository is about learning data anlysis/big data...
 02 Foundations_and_MethodsOfStochasticSimulation
 《Foundations and Methods of Stochastic Simulation》 https://book.douban.com/subject/20274612/
 
+i03Hadoop Beginner's Guide
+《Hadoop beginner’s guide》
+《Hadoop基础教程》 https://book.douban.com/subject/25794620/
