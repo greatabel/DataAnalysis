@@ -153,6 +153,26 @@ Erica	Support	34000	2011-07-07 00:00:00
 Time taken: 1.93 seconds, Fetched: 5 row(s)
 
 
+----------------------- ----------------------- -----------------------
+
+从Hadoop导出数据
+
+
+# 关闭只读模式 
+hdfs dfsadmin -safemode leave
+
+# 删除旧的同名数据
+hdfs dfs -rm -r 2020-12-28_generated_demo.csv
+
+# 在hdfs上创建data目录
+hdfs dfs -mkdir /edata
+
+# 上传100w记录的csv
+hdfs dfs -copyFromLocal newemployees.tsv /edata
+
+#查看文件
+hdfs dfs -ls /edata
+
 
 
 
