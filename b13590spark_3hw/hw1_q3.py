@@ -31,7 +31,9 @@ input.printSchema()
 
 print('3. List the distinct carriers of in the dataframe:')
 myair_transits = hiveCtx.sql("SELECT distinct UniqueCarrier FROM air_transit ")
-print(myair_transits.collect())
+for row in myair_transits.collect():
+	print(row[0])
+
 
 print('4. How many flights in total are there in January:')
 myair_transits = hiveCtx.sql("SELECT count(*) FROM air_transit where Month=1 ")
