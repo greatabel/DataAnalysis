@@ -15,6 +15,10 @@
 # limitations under the License.
 #
 
+# file from https://github.com/apache/spark/blob/master/examples/src/main/python/pi.py
+# 解释：
+# https://radanalytics.io/assets/my-first-radanalytics-app/sparkpi-python-flask.html
+
 import sys
 from random import random
 from operator import add
@@ -33,6 +37,7 @@ if __name__ == "__main__":
 
     partitions = int(sys.argv[1]) if len(sys.argv) > 1 else 2
     n = 100000 * partitions
+    print('n=', n)
 
     def f(_):
         x = random() * 2 - 1
@@ -43,3 +48,6 @@ if __name__ == "__main__":
     print("Pi is roughly %f" % (4.0 * count / n))
 
     spark.stop()
+
+
+
