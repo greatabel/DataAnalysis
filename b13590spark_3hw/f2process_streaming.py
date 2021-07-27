@@ -32,7 +32,7 @@ def result(y):
 	if 'a' in k_v and 'b' in k_v and 'c' in k_v:
 		v_a = 8*8*8 * k_v['a'] / (k_v['a'] + k_v['a_out'] )
 		v_b = 4*4*4  * k_v['b'] / (k_v['b'] + k_v['b_out'] )
-		v_c = 8*8*8 * k_v['c'] / (k_v['a'] + k_v['c_out'] )
+		v_c = 8*8*8 * k_v['c'] / (k_v['c'] + k_v['c_out'] )
 		v_d = v_a + v_b  - v_c
 		print('v_a = ', v_a)
 		print('v_b = ', v_b)

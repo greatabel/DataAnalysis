@@ -40,7 +40,7 @@ def current_milli_time():
 
 def data_anlysis():
     partitions = int(sys.argv[1]) if len(sys.argv) > 1 else 2
-    n = 100 * partitions
+    n = 1000 * partitions
     print('n=', n)
 
     while True:
