@@ -1,16 +1,31 @@
 # -*- coding: UTF-8 -*-
 from kafka import KafkaConsumer
 import time
+import ast
 
 topic = 'myTopic'
 consumer = KafkaConsumer(topic, bootstrap_servers=['192.168.0.104:9092'], group_id="test", auto_offset_reset="earliest")
-# 参数bootstrap_servers：指定kafka连接地址
-# 参数group_id：如果2个程序的topic和group_id相同，那么他们读取的数据不会重复，2个程序的topic相同，group_id不同，那么他们各自消费相同的数据，互不影响
-# 参数auto_offset_reset：默认为latest表示offset设置为当前程序启动时的数据位置，earliest表示offset设置为0，在你的group_id第一次运行时，还没有offset的时候，给你设定初始offset。一旦group_id有了offset，那么此参数就不起作用了
+
+'''
+https://medium.com/@bee811101/%E4%BD%BF%E7%94%A8-docker-%E5%BF%AB%E9%80%9F%E5%BB%BA%E7%BD%AE-pyspark-%E7%92%B0%E5%A2%83-657f9d8bff3a
+
+docker run -it --rm -p 8888:8888 -v /Users/greatabel:/home/jovyan/work jupyter/pyspark-notebook
+
+Apache Bench
+https://xushanxiang.com/2019/10/mac-web-ab.html
+'''
+def current_milli_time():
+    return round(time.time() * 1000)
+
 
 for msg in consumer:
-    recv = "%s:%d:%d: key=%s value=%s" % (msg.topic, msg.partition, msg.offset, msg.key, msg.value)
-    print(recv)
+	recv = "%s:%d:%d: key=%s value=%s" % (msg.topic, msg.partition, msg.offset, msg.key, msg.value)
+	print(recv)
+	dict_str = msg.value.decode("UTF-8")
+	mydata = ast.literal_eval(dict_str)
+	print('mydata=', mydata)
+	with open("logfile/"+ str(current_milli_time()) +"Output.txt", "w") as text_file:
+		text_file.write(mydata['user_action'])
 
 
 print('##finished')
