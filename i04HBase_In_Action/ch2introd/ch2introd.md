@@ -18,6 +18,8 @@ mvn package
 
 java -cp target/twitbase-1.0.0.jar HBaseIA.TwitBase.UsersTool add TheRealMT "Mark Twain" samuel@126.com abc123
 
+java -cp target/twitbase-1.0.0.jar HBaseIA.TwitBase.UsersTool list
+
 
 #  ------------------------ end of ch2 ------------------------
 
