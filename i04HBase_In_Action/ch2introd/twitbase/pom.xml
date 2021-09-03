@@ -59,17 +59,13 @@
       <artifactId>hadoop-core</artifactId>
       <version>1.0.3</version>
     </dependency>
-    <dependency>
-      <groupId>org.apache.hbase</groupId>
-      <artifactId>hbase</artifactId>
-      <version>3.0.0-alpha-2-SNAPSHOT</version>
-      <exclusions>
-        <exclusion>
-          <artifactId>maven-release-plugin</artifactId>
-          <groupId>org.apache.maven.plugins</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
+    
+<dependency>
+  <groupId>org.apache.hbase</groupId>
+  <artifactId>hbase</artifactId>
+  <version>3.0.0-alpha-2-SNAPSHOT</version>
+  <type>pom</type>
+</dependency>
     <!-- Hadoop requires commons-io but doesn't list it as an explicit
          or transient dependency. include it manually. -->
     <dependency>
