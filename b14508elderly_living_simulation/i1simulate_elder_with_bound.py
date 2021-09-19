@@ -90,8 +90,8 @@ def main():
 
 def single_turn(generated_map):
 
-    welcome = colored('#'*10+' This turn generated_map:', 'red', attrs=['reverse', 'blink'])
-    print(welcome)
+    welcome = colored('#'*10+' This turn generated_map:'+'#'*10, 'red', attrs=['reverse', 'blink'])
+    print(welcome, '\n')
     # 房间地图
     # generated_map = [
     #     [0, 0, 0, 1, 1, 0, 0, 0],
@@ -119,7 +119,10 @@ def single_turn(generated_map):
                 # print(star +", ", end="")
                 cprint('*'+", ","green",attrs=['reverse', 'blink'],end = "")
             else:
-                print(str(generated_map[i][j]) + ", ", end="")
+                if generated_map[i][j] == 1:
+                    cprint('1'+", ","grey",attrs=['reverse', 'blink'],end = "")
+                else:
+                    print(str(generated_map[i][j]) + ", ", end="")
         print()
 
 if __name__ == "__main__":
