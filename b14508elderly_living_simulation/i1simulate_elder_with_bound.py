@@ -1,4 +1,10 @@
-def a_star_search(start, end):
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+
+
+def elder_walking(start, end, generated_map=[]):
     # 待访问的格子
     open_list = []
     # 已访问的格子
@@ -14,7 +20,7 @@ def a_star_search(start, end):
         # 当前方格节点进入 closeList
         close_list.append(current_grid)
         # 找到所有邻近节点
-        neighbors = find_neighbors(current_grid, open_list, close_list)
+        neighbors = find_neighbors(current_grid, open_list, close_list, generated_map)
         for grid in neighbors:
             if grid not in open_list:
                 # 邻近节点不在openList中，标记父亲、G、H、F，并放入openList
@@ -36,20 +42,21 @@ def find_min_gird(open_list=[]):
     return temp_grid
 
 
-def find_neighbors(grid, open_list=[], close_list=[]):
+def find_neighbors(grid, open_list=[], close_list=[], generated_map=[]):
     grid_list = []
-    if is_valid_grid(grid.x, grid.y - 1, open_list, close_list):
+    if is_valid_grid(grid.x, grid.y - 1, open_list, close_list, generated_map):
         grid_list.append(Grid(grid.x, grid.y - 1))
-    if is_valid_grid(grid.x, grid.y + 1, open_list, close_list):
+    if is_valid_grid(grid.x, grid.y + 1, open_list, close_list, generated_map):
         grid_list.append(Grid(grid.x, grid.y + 1))
-    if is_valid_grid(grid.x - 1, grid.y, open_list, close_list):
+    if is_valid_grid(grid.x - 1, grid.y, open_list, close_list, generated_map):
         grid_list.append(Grid(grid.x - 1, grid.y))
-    if is_valid_grid(grid.x + 1, grid.y, open_list, close_list):
+    if is_valid_grid(grid.x + 1, grid.y, open_list, close_list, generated_map):
         grid_list.append(Grid(grid.x + 1, grid.y))
     return grid_list
 
 
-def is_valid_grid(x, y, open_list=[], close_list=[]):
+def is_valid_grid(x, y, open_list=[], close_list=[], generated_map=[]):
+    MAZE = generated_map
     # 是否超过边界
     if x < 0 or x >= len(MAZE) or y < 0 or y >= len(MAZE[0]):
         return False
@@ -90,31 +97,36 @@ class Grid:
         self.h = abs(self.x - end.x) + abs(self.y - end.y)
         self.f = self.g + self.h
 
+def main():
+    # 迷宫地图
+    MAZE = [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+    ]
 
-# 迷宫地图
-MAZE = [
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-]
+    # 设置起点和终点
+    start_grid = Grid(2, 1)
+    end_grid = Grid(2, 5)
+    # 搜索迷宫终点
+    result_grid = elder_walking(start_grid, end_grid, MAZE)
+    # 回溯迷宫路径
+    path = []
+    while result_grid is not None:
+        path.append(Grid(result_grid.x, result_grid.y))
+        result_grid = result_grid.parent
+    # 输出迷宫和路径，路径用星号表示
+    for i in range(0, len(MAZE)):
+        for j in range(0, len(MAZE[0])):
+            if contain_grid(path, i, j):
+                print("*, ", end="")
+            else:
+                print(str(MAZE[i][j]) + ", ", end="")
+        print()
 
-# 设置起点和终点
-start_grid = Grid(2, 1)
-end_grid = Grid(2, 5)
-# 搜索迷宫终点
-result_grid = a_star_search(start_grid, end_grid)
-# 回溯迷宫路径
-path = []
-while result_grid is not None:
-    path.append(Grid(result_grid.x, result_grid.y))
-    result_grid = result_grid.parent
-# 输出迷宫和路径，路径用星号表示
-for i in range(0, len(MAZE)):
-    for j in range(0, len(MAZE[0])):
-        if contain_grid(path, i, j):
-            print("*, ", end="")
-        else:
-            print(str(MAZE[i][j]) + ", ", end="")
-    print()
+if __name__ == "__main__":
+    main()
+
+
