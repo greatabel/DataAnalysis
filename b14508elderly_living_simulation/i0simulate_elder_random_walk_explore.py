@@ -51,7 +51,8 @@ def animate(data):
     xmin, xmax = ax.get_xlim()
     ymin, ymax = ax.get_ylim()
 
-    # below code of if statements are to re-size the simulation if the random walk goes out of the frame
+    # below code of if statements are to re-size the simulation 
+    # if the random walk goes out of the frame
     if t >= xmax:
         ax.set_xlim(2 * xmin, 2 * xmax)
         ax.figure.canvas.draw()

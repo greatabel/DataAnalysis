@@ -4,6 +4,7 @@ import matplotlib.animation as animation
 from termcolor import colored, cprint
 
 from mygrid import Grid
+from my_unittype import unit_types, bathrooms
 
 
 def elder_walking(start, end, generated_map=[]):
@@ -82,16 +83,23 @@ def contain_grid(grids, x, y):
 
 
 def main():
+    for i in range(len(unit_types)):
+        print('unit_types =', i)
+        generated_map = unit_types[i]
+        single_turn(generated_map)
+
+def single_turn(generated_map):
+
     welcome = colored('#'*10+' This turn generated_map:', 'red', attrs=['reverse', 'blink'])
     print(welcome)
     # 房间地图
-    generated_map = [
-        [0, 0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 1],
-        [0, 0, 0, 1, 0, 0, 0, 1],
-        [0, 0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-    ]
+    # generated_map = [
+    #     [0, 0, 0, 1, 1, 0, 0, 0],
+    #     [0, 0, 0, 1, 1, 0, 0, 1],
+    #     [0, 0, 0, 1, 1, 0, 0, 1],
+    #     [0, 0, 0, 1, 1, 0, 0, 0],
+    #     [0, 0, 0, 0, 0, 0, 0, 0],
+    # ]
 
     # 设置起点和终点
     start_grid = Grid(2, 1)
