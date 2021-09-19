@@ -1,7 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+from termcolor import colored, cprint
 
+from mygrid import Grid
 
 
 def elder_walking(start, end, generated_map=[]):
@@ -14,7 +16,7 @@ def elder_walking(start, end, generated_map=[]):
     # 主循环，每一轮检查一个当前方格节点
     while len(open_list) > 0:
         # 在open_list中查找 F值最小的节点作为当前方格节点
-        current_grid = find_min_gird(open_list)
+        current_grid = find_current_grid(open_list)
         # 当前方格节点从openList中移除
         open_list.remove(current_grid)
         # 当前方格节点进入 closeList
@@ -34,7 +36,7 @@ def elder_walking(start, end, generated_map=[]):
     return None
 
 
-def find_min_gird(open_list=[]):
+def find_current_grid(open_list=[]):
     temp_grid = open_list[0]
     for grid in open_list:
         if grid.f < temp_grid.f:
@@ -79,51 +81,37 @@ def contain_grid(grids, x, y):
     return False
 
 
-class Grid:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.f = 0
-        self.g = 0
-        self.h = 0
-        self.parent = None
-
-    def init_grid(self, parent, end):
-        self.parent = parent
-        if parent is not None:
-            self.g = parent.g + 1
-        else:
-            self.g = 1
-        self.h = abs(self.x - end.x) + abs(self.y - end.y)
-        self.f = self.g + self.h
-
 def main():
-    # 迷宫地图
-    MAZE = [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
+    welcome = colored('#'*10+' This turn generated_map:', 'red', attrs=['reverse', 'blink'])
+    print(welcome)
+    # 房间地图
+    generated_map = [
+        [0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 1],
+        [0, 0, 0, 1, 0, 0, 0, 1],
+        [0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
     ]
 
     # 设置起点和终点
     start_grid = Grid(2, 1)
     end_grid = Grid(2, 5)
-    # 搜索迷宫终点
-    result_grid = elder_walking(start_grid, end_grid, MAZE)
-    # 回溯迷宫路径
+    # 搜索房间终点
+    result_grid = elder_walking(start_grid, end_grid, generated_map)
+    # 回溯房间路径
     path = []
     while result_grid is not None:
         path.append(Grid(result_grid.x, result_grid.y))
         result_grid = result_grid.parent
-    # 输出迷宫和路径，路径用星号表示
-    for i in range(0, len(MAZE)):
-        for j in range(0, len(MAZE[0])):
+    # 输出房间和路径，路径用星号表示
+    for i in range(0, len(generated_map)):
+        for j in range(0, len(generated_map[0])):
             if contain_grid(path, i, j):
-                print("*, ", end="")
+                # star = colored('*', 'magenta', attrs=['reverse', 'blink'])
+                # print(star +", ", end="")
+                cprint('*'+", ","green",attrs=['reverse', 'blink'],end = "")
             else:
-                print(str(MAZE[i][j]) + ", ", end="")
+                print(str(generated_map[i][j]) + ", ", end="")
         print()
 
 if __name__ == "__main__":
