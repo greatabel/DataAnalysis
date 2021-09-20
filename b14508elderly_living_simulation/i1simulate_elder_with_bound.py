@@ -6,6 +6,8 @@ from termcolor import colored, cprint
 import random
 import time
 import statistics
+from matplotlib import pyplot
+import seaborn as sns
 
 from mygrid import Grid
 from my_unittype import unit_types, bathrooms, beds
@@ -150,9 +152,25 @@ def single_turn(unittype, generated_map, oldman):
     print('abel_score=', abel_score)
     return abel_score
 
+def visual_to_png(res):
+    # res = [[0.01, 0.9, 0.46], [0.64, 0.24, 1], [0.87, 0.99, 0.47]]
+    # fig, ax = plt.subplots(figsize=(15,15)
+    colormap = pyplot.cm.cubehelix_r
+    fig, ax = plt.subplots()
+    ax = sns.heatmap(res, cmap=colormap)
+    # plt.yticks(rotation=0,fontsize=16);
+    # plt.xticks(fontsize=12);
+    # plt.tight_layout()
+    plt.title('Heatmap of unittype vs elderly-type', fontsize = 20) # title with fontsize 20
+    plt.xlabel('elderly-type', fontsize = 15) # x-axis label with fontsize 15
+    plt.ylabel('unittype', fontsize = 15) # y-axis label with fontsize 1
+    plt.savefig('colorlist.png')
+
 
 def main():
-    simulate_num = 20
+
+
+    simulate_num = 40
 
     elderly_types = [None, None, None, None]
     # living room type
@@ -170,6 +188,7 @@ def main():
 
     print('elderly_types=', elderly_types)
     mydict = {}
+    visual_data = []
     for i in range(len(unit_types)):
         print('unit_types =', i, '\n')
         generated_map = unit_types[i]
@@ -189,12 +208,21 @@ def main():
     print(welcome, '\n')
     time.sleep(0.5)
     for i in range(len(unit_types)):
+        type_data = []
         for elderly_type in range(len(elderly_types)):
             print('unit type ', i, ' with elderly_type ', elderly_type, 
                     ' simulate scores:', mydict[i, elderly_type])
             x = round(statistics.mean(mydict[i, elderly_type]), 2)
+            # 数据的总体方差
+            p = round(statistics.pvariance(mydict[i, elderly_type]), 2)
             print(colored('mean simulate scores =','red'), x)
+            print(colored('pvariance simulate scores =','blue'), p)
+            type_data.append(x)
             time.sleep(random.uniform(0.1, 0.5))
+        visual_data.append(type_data)
+    visual_to_png(visual_data)
+
+
 
 if __name__ == "__main__":
     main()
