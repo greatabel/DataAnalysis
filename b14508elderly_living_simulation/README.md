@@ -14,4 +14,5 @@ terminal底下进入工程目录下，在requirements.txt同级目录下运行�
 pip install --upgrade -r requirements.txt
 
 5.
-python3 i0plant_speak.py
+模拟运行在:
+python3 i1simulate_elder_with_bound.py

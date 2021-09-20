@@ -3,8 +3,13 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from termcolor import colored, cprint
 
+import random
+import time
+import statistics
+
 from mygrid import Grid
-from my_unittype import unit_types, bathrooms
+from my_unittype import unit_types, bathrooms, beds
+from elderly import OldMan
 
 
 def elder_walking(start, end, generated_map=[]):
@@ -82,28 +87,43 @@ def contain_grid(grids, x, y):
     return False
 
 
-def main():
-    for i in range(len(unit_types)):
-        print('unit_types =', i)
-        generated_map = unit_types[i]
-        single_turn(generated_map)
+def all_walkable(generated_map):
+    walkables = []
+    for i in range(0, len(generated_map)):
+        for j in range(0, len(generated_map[0])):
+            if generated_map[i][j] == 0:
+                walkables.append([i, j])
+    return walkables
 
-def single_turn(generated_map):
 
-    welcome = colored('#'*10+' This turn generated_map:'+'#'*10, 'red', attrs=['reverse', 'blink'])
-    print(welcome, '\n')
-    # 房间地图
-    # generated_map = [
-    #     [0, 0, 0, 1, 1, 0, 0, 0],
-    #     [0, 0, 0, 1, 1, 0, 0, 1],
-    #     [0, 0, 0, 1, 1, 0, 0, 1],
-    #     [0, 0, 0, 1, 1, 0, 0, 0],
-    #     [0, 0, 0, 0, 0, 0, 0, 0],
-    # ]
-
+def single_turn(unittype, generated_map, oldman):
+    walkables = all_walkable(generated_map)
+    # welcome = colored('#'*10+' This turn generated_map:'+'#'*10, 'red', attrs=['reverse', 'blink'])
+    # print(welcome, '\n')
+    print('-'*10, 'run new simulation turn', '-'*10, '\n')
     # 设置起点和终点
     start_grid = Grid(2, 1)
     end_grid = Grid(2, 5)
+    if oldman.behavior_type == 0 :
+        s = walkables[random.randint(0, len(walkables)/2)]
+        e = walkables[random.randint(len(walkables)/2, len(walkables)-1)]
+        start_grid = Grid(s[0], s[1])
+        end_grid = Grid(e[0], e[1])   
+    if oldman.behavior_type == 1:
+        s = walkables[random.randint(0, len(walkables)/2)]
+        e = walkables[random.randint(len(walkables)/2, len(walkables)-1)]
+        start_grid = Grid(s[0], s[1])
+        end_grid = Grid(2, 8)   
+    if oldman.behavior_type == 2:
+        s = walkables[random.randint(0, len(walkables)/2)]
+        e = walkables[random.randint(len(walkables)/2, len(walkables)-1)]
+        start_grid = Grid(beds[unittype][0], beds[unittype][1])
+        end_grid = Grid(e[0], e[1]) 
+    if oldman.behavior_type == 3 :
+        s = walkables[random.randint(0, len(walkables)//3)]
+        e = walkables[random.randint(len(walkables)//3, len(walkables)-1)]
+        start_grid = Grid(s[0], s[1])
+        end_grid = Grid(e[0], e[1]) 
     # 搜索房间终点
     result_grid = elder_walking(start_grid, end_grid, generated_map)
     # 回溯房间路径
@@ -111,6 +131,8 @@ def single_turn(generated_map):
     while result_grid is not None:
         path.append(Grid(result_grid.x, result_grid.y))
         result_grid = result_grid.parent
+
+    abel_score = 0
     # 输出房间和路径，路径用星号表示
     for i in range(0, len(generated_map)):
         for j in range(0, len(generated_map[0])):
@@ -118,12 +140,61 @@ def single_turn(generated_map):
                 # star = colored('*', 'magenta', attrs=['reverse', 'blink'])
                 # print(star +", ", end="")
                 cprint('*'+", ","green",attrs=['reverse', 'blink'],end = "")
+                abel_score += 1
             else:
                 if generated_map[i][j] == 1:
                     cprint('1'+", ","grey",attrs=['reverse', 'blink'],end = "")
                 else:
                     print(str(generated_map[i][j]) + ", ", end="")
         print()
+    print('abel_score=', abel_score)
+    return abel_score
+
+
+def main():
+    simulate_num = 20
+
+    elderly_types = [None, None, None, None]
+    # living room type
+    '''
+    类型一：客厅型老人：以看电视为主，占比70%左右；
+    类型二：外出型老人：为外出活动为主，占比20%左右；
+    类型三：卧室型老人：以卧床休息为主，占比5%左右；
+    类型四：家务型老人：以进行家务行为为主，占比较小。
+
+    '''
+    elderly_types[0] = int(simulate_num * 0.7)
+    elderly_types[1] = int(simulate_num * 0.2)
+    elderly_types[2] = int(simulate_num * 0.05)
+    elderly_types[3] = int(simulate_num * 0.05)
+
+    print('elderly_types=', elderly_types)
+    mydict = {}
+    for i in range(len(unit_types)):
+        print('unit_types =', i, '\n')
+        generated_map = unit_types[i]
+        for elderly_type in range(len(elderly_types)):
+            oldman = OldMan(elderly_type)
+            oldman.myprint()
+            scores = []
+            for j in range(elderly_types[elderly_type]):
+                score = single_turn(i, generated_map, oldman)
+                scores.append(score)
+                time.sleep(random.uniform(0.1, 0.5))
+            mydict[i, elderly_type] = scores
+
+    print('\n'*3)
+
+    welcome = colored('#'*10+' This statistics:'+'#'*10, 'red', attrs=['reverse', 'blink'])
+    print(welcome, '\n')
+    time.sleep(0.5)
+    for i in range(len(unit_types)):
+        for elderly_type in range(len(elderly_types)):
+            print('unit type ', i, ' with elderly_type ', elderly_type, 
+                    ' simulate scores:', mydict[i, elderly_type])
+            x = round(statistics.mean(mydict[i, elderly_type]), 2)
+            print(colored('mean simulate scores =','red'), x)
+            time.sleep(random.uniform(0.1, 0.5))
 
 if __name__ == "__main__":
     main()
