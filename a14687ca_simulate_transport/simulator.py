@@ -179,7 +179,7 @@ if __name__ == "__main__":
     leng = {0: 0, 1: 0, 2: 0, 3: 0}
     list1 = []
     # for i in range(0, 100):
-    for i in range(0, 5):
+    for i in range(0, 10):
         welcome = colored(
             "#" * 10 + " This turn of car_simulate_driving: " + str(i) + "#" * 10,
             "red",
@@ -238,8 +238,9 @@ if __name__ == "__main__":
     # plt.show(block=False)
     # plt.pause(0.2)
 
-    x = np.arange(0, 1, 0.2)
-    print("x=", x)
-    # x = np.arange(0, 1, 0.01)
+    x = np.arange(0, 1, 0.1)
     y = list1
+    print("x=", x)
+
+
     visulize_to_png(x, y)
