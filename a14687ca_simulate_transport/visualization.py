@@ -29,6 +29,7 @@ def show_simplify_to_path():
     df3.iloc[20:, :].plot(y=0, color="blue", ax=ax)
 
     plt.title("Simplify City geographical_urban to 3-lane Path ")
+    plt.savefig("i2show_simplify_to_path.png")
     plt.show()
 
 
@@ -38,9 +39,9 @@ def visulize_to_png(x, y):
     plt.plot(x, y)
 
     # Add title and axis names
-    plt.title("total-driving-distance /electronic-car rate")
-    plt.xlabel("electronic-car rate")
+    plt.title("total-driving-distance /electronic-car+fast_through_area_ratio rate")
+    plt.xlabel("electronic-car+fast_through_area_ratio rate")
     plt.ylabel("total-driving-distance")
 
-    plt.savefig("result_comparison.png")
+    plt.savefig("i3result_comparison.png")
     plt.show()
