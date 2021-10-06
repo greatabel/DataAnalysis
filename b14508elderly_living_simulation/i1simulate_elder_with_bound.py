@@ -1,3 +1,4 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -100,6 +101,8 @@ def all_walkable(generated_map):
 
 def single_turn(unittype, generated_map, oldman):
     walkables = all_walkable(generated_map)
+    # print('$'*20, walkables)
+    # print(len(walkables))
     # welcome = colored('#'*10+' This turn generated_map:'+'#'*10, 'red', attrs=['reverse', 'blink'])
     # print(welcome, '\n')
     print('-'*10, 'run new simulation turn', '-'*10, '\n')
@@ -107,19 +110,25 @@ def single_turn(unittype, generated_map, oldman):
     start_grid = Grid(2, 1)
     end_grid = Grid(2, 5)
     if oldman.behavior_type == 0 :
-        s = walkables[random.randint(0, len(walkables)/2)]
-        e = walkables[random.randint(len(walkables)/2, len(walkables)-1)]
+        s = walkables[random.randint(0, len(walkables)//2)]
+        e = walkables[random.randint(len(walkables)//2, len(walkables)-1)]
         start_grid = Grid(s[0], s[1])
         end_grid = Grid(e[0], e[1])   
     if oldman.behavior_type == 1:
-        s = walkables[random.randint(0, len(walkables)/2)]
-        e = walkables[random.randint(len(walkables)/2, len(walkables)-1)]
+        s = walkables[random.randint(0, len(walkables)//2)]
+        e = walkables[random.randint(len(walkables)//2, len(walkables)-1)]
         start_grid = Grid(s[0], s[1])
-        end_grid = Grid(2, 8)   
+        if random.randint(0, 4) > 2:
+            end_grid = Grid(beds[unittype][0], beds[unittype][1])
+        else:
+            end_grid = Grid(e[0], e[1]) 
     if oldman.behavior_type == 2:
-        s = walkables[random.randint(0, len(walkables)/2)]
-        e = walkables[random.randint(len(walkables)/2, len(walkables)-1)]
-        start_grid = Grid(beds[unittype][0], beds[unittype][1])
+        s = walkables[random.randint(0, len(walkables)//2)]
+        e = walkables[random.randint(len(walkables)//2, len(walkables)-1)]
+        if random.randint(0, 4) > 2:
+            start_grid = Grid(bathrooms[unittype][0], bathrooms[unittype][1])
+        else:
+            start_grid = Grid(s[0], s[1])
         end_grid = Grid(e[0], e[1]) 
     if oldman.behavior_type == 3 :
         s = walkables[random.randint(0, len(walkables)//3)]
@@ -170,7 +179,7 @@ def visual_to_png(res):
 def main():
 
 
-    simulate_num = 40
+    simulate_num = 160
 
     elderly_types = [None, None, None, None]
     # living room type
@@ -181,10 +190,10 @@ def main():
     类型四：家务型老人：以进行家务行为为主，占比较小。
 
     '''
-    elderly_types[0] = int(simulate_num * 0.7)
-    elderly_types[1] = int(simulate_num * 0.2)
-    elderly_types[2] = int(simulate_num * 0.05)
-    elderly_types[3] = int(simulate_num * 0.05)
+    elderly_types[0] = int(simulate_num * 0.25)
+    elderly_types[1] = int(simulate_num * 0.25)
+    elderly_types[2] = int(simulate_num * 0.25)
+    elderly_types[3] = int(simulate_num * 0.25)
 
     print('elderly_types=', elderly_types)
     mydict = {}
@@ -199,7 +208,7 @@ def main():
             for j in range(elderly_types[elderly_type]):
                 score = single_turn(i, generated_map, oldman)
                 scores.append(score)
-                time.sleep(random.uniform(0.1, 0.5))
+                # time.sleep(random.uniform(0.1, 0.5))
             mydict[i, elderly_type] = scores
 
     print('\n'*3)
