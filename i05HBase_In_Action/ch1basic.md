@@ -16,6 +16,11 @@ scan 'mytable'
 
 #  ------------------------ end of ch1 ------------------------
 
+使用docker安装运行hbase0.92:
+
+sudo docker pull harisekhon/hbase-dev:0.92
+
+sudo docker run -it harisekhon/hbase-dev:0.92 bash
 
 
 
