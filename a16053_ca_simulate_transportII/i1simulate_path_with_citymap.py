@@ -12,8 +12,9 @@ import seaborn as sns
 
 from mygrid import Grid
 from my_unittype import unit_types, inners, parkings
-from car_setting import CarSetting
+from car_district_setting import CarSetting
 from visualization import visulize_to_png, show_img, show_simplify_to_path
+import i2simulator 
 
 
 def mycar_walking(start, end, generated_map=[]):
@@ -168,8 +169,8 @@ def visual_to_png(res):
     # plt.yticks(rotation=0,fontsize=16);
     # plt.xticks(fontsize=12);
     # plt.tight_layout()
-    plt.title('Heatmap of citytype vs mycar-type', fontsize = 20) # title with fontsize 20
-    plt.xlabel('mycar-type', fontsize = 15) # x-axis label with fontsize 15
+    plt.title('Heatmap of citytype vs car-district-type', fontsize = 20) # title with fontsize 20
+    plt.xlabel('car-district-type', fontsize = 15) # x-axis label with fontsize 15
     plt.ylabel('citytype', fontsize = 15) # y-axis label with fontsize 1
     plt.savefig('i1colorlist.png')
 
@@ -185,10 +186,10 @@ def main():
 
     mycarly_types = [None, None, None, None]
 
-    mycarly_types[0] = int(simulate_num * 0.25)
-    mycarly_types[1] = int(simulate_num * 0.25)
-    mycarly_types[2] = int(simulate_num * 0.25)
-    mycarly_types[3] = int(simulate_num * 0.25)
+    mycarly_types[0] = int(simulate_num * 0.35)
+    mycarly_types[1] = int(simulate_num * 0.30)
+    mycarly_types[2] = int(simulate_num * 0.20)
+    mycarly_types[3] = int(simulate_num * 0.15)
 
     print('mycarly_types=', mycarly_types)
     mydict = {}
@@ -203,7 +204,7 @@ def main():
             for j in range(mycarly_types[mycarly_type]):
                 score = single_turn(i, generated_map, car_setting)
                 scores.append(score)
-                # time.sleep(random.uniform(0.1, 0.5))
+                time.sleep(random.uniform(0.1, 0.8))
             mydict[i, mycarly_type] = scores
 
     print('\n'*3)
@@ -225,7 +226,7 @@ def main():
             # time.sleep(random.uniform(0.1, 0.5))
         visual_data.append(type_data)
     visual_to_png(visual_data)
-
+    i2simulator.main(visual_data)
 
 
 if __name__ == "__main__":

@@ -154,13 +154,13 @@ def change_way(way, local, cell2, width, cell, road_2d_matrix):
             return 1
 
 
-def main():
+def main(visual_data=None):
     # show_img("resources/i1geographical_urban.jpg")
 
     # time.sleep(1)
 
     # show_simplify_to_path()
-
+    print('visual_data=', visual_data)
     length = 3
     width = 30
 
@@ -179,7 +179,10 @@ def main():
     leng = {0: 0, 1: 0, 2: 0, 3: 0}
     list1 = []
     # for i in range(0, 100):
-    for i in range(0, 4):
+    step = 100
+    mysum = sum(visual_data[0])
+    # print('@'*20, visual_data[0][0]/mysum)
+    for i in range(0, step):
         welcome = colored(
             "#" * 10 + " This turn of car_simulate_driving: " + str(i) + "#" * 10,
             "red",
@@ -190,16 +193,20 @@ def main():
         while True:
             if d % 4 == 0:
                 init_car_model(
-                    road_2d_matrix, leng, cell2, 0, i / 5, 0.3, fast_through_area_ratio
+                    road_2d_matrix, leng, cell2, 0, i / step, 0.3, visual_data[0][0]/mysum
                 )
                 # init_car_model(road_2d_matrix, leng, cell2,  0, i/100, 0.3)
             if d % 3 == 0:
                 init_car_model(
-                    road_2d_matrix, leng, cell2, 1, i / 5, 0.3, fast_through_area_ratio
+                    road_2d_matrix, leng, cell2, 1, i / step, 0.3, visual_data[0][1]/mysum
                 )
             if d % 5 == 0:
                 init_car_model(
-                    road_2d_matrix, leng, cell2, 2, i / 5, 0.3, fast_through_area_ratio
+                    road_2d_matrix, leng, cell2, 2, i / step, 0.3, visual_data[0][2]/mysum
+                )
+            if d % 7 == 0:
+                init_car_model(
+                    road_2d_matrix, leng, cell2, 2, i / step, 0.3, visual_data[0][3]/mysum
                 )
             cell = copy.deepcopy(road_2d_matrix)
             # 显示每一轮的图像
@@ -238,7 +245,7 @@ def main():
     # plt.show(block=False)
     # plt.pause(0.2)
 
-    x = np.arange(0, 1, 0.25)
+    x = np.arange(0, 1, 1/step)
     y = list1
     print("x=", x)
 
