@@ -15,4 +15,4 @@ pip install --upgrade -r requirements.txt
 
 5.
 模拟运行在:
-python3 simulator.py
+python3 i1simulate_path_with_citymap.py

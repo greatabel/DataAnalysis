@@ -32,7 +32,7 @@ def custom_map_2d_to_1d(x, width):
     return speedup, change_lane_rate, cular_scale
 
 
-def car_simulate_driving(way, width):
+def car_simulate_driving(way, width, cell,cell2, road_2d_matrix):
     for j in range(0, width - 1):
 
         # 获得当前位置街区的加速因子，换道印子，元胞扩大比例
@@ -52,11 +52,11 @@ def car_simulate_driving(way, width):
             if cell2[way][j] == way:
                 cell2[way][j] = -1
             if cell2[way][j] != -1 and road_2d_matrix[way][j] == 1:
-                a = change_way(way, j)
+                a = change_way(way, j, cell2, width, cell, road_2d_matrix)
                 if a == 0:
                     continue
             elif cell2[way][j] != -1 and road_2d_matrix[way][j] == 2 and j + 5 + way > width:
-                a = change_way(way, j)
+                a = change_way(way, j, cell2, width, cell, road_2d_matrix)
                 if a == 0:
                     continue
             x = 0
@@ -94,14 +94,14 @@ def car_simulate_driving(way, width):
                         cell2[way][k] = -1
 
 
-def off_road(way):
+def off_road(way, road_2d_matrix, width, cell2):
     if road_2d_matrix[way][width - 1] != 0 and cell2[way][width - 1] == -1:
         leng[3] = leng[3] + 1
         leng[way] = leng[way] - 1
         road_2d_matrix[way][width - 1] = 0
 
 
-def change_way(way, local):
+def change_way(way, local, cell2, width, cell, road_2d_matrix):
     m = 0
     n = 0
     if way == 1:
@@ -154,12 +154,12 @@ def change_way(way, local):
             return 1
 
 
-if __name__ == "__main__":
-    show_img("resources/i1geographical_urban.jpg")
+def main():
+    # show_img("resources/i1geographical_urban.jpg")
 
-    time.sleep(1)
+    # time.sleep(1)
 
-    show_simplify_to_path()
+    # show_simplify_to_path()
 
     length = 3
     width = 30
@@ -179,7 +179,7 @@ if __name__ == "__main__":
     leng = {0: 0, 1: 0, 2: 0, 3: 0}
     list1 = []
     # for i in range(0, 100):
-    for i in range(0, 10):
+    for i in range(0, 4):
         welcome = colored(
             "#" * 10 + " This turn of car_simulate_driving: " + str(i) + "#" * 10,
             "red",
@@ -206,12 +206,12 @@ if __name__ == "__main__":
             # plt.imshow(cell, aspect='auto')
             plt.imshow(cell)
             plt.pause(0.0000000001)
-            car_simulate_driving(0, width)
-            car_simulate_driving(1, width)
-            car_simulate_driving(2, width)
-            off_road(0)
-            off_road(1)
-            off_road(2)
+            car_simulate_driving(0, width, cell, cell2, road_2d_matrix)
+            car_simulate_driving(1, width, cell, cell2, road_2d_matrix)
+            car_simulate_driving(2, width, cell, cell2, road_2d_matrix)
+            off_road(0, road_2d_matrix, width, cell2)
+            off_road(1, road_2d_matrix, width, cell2)
+            off_road(2, road_2d_matrix, width, cell2)
             d = d + 1
             # if leng[3] >= 2000:
             if leng[3] >= 10:
@@ -220,7 +220,7 @@ if __name__ == "__main__":
                 leng[3] = 0
                 break
             print("turn:", len(list1))
-            time.sleep(random.uniform(0.1, 0.3))
+            # time.sleep(random.uniform(0.1, 0.3))
             print("car number off_road:", leng[3])
             msg = colored(
                 "#" * 10
@@ -238,9 +238,12 @@ if __name__ == "__main__":
     # plt.show(block=False)
     # plt.pause(0.2)
 
-    x = np.arange(0, 1, 0.1)
+    x = np.arange(0, 1, 0.25)
     y = list1
     print("x=", x)
 
 
     visulize_to_png(x, y)
+
+if __name__ == "__main__":
+    main()
