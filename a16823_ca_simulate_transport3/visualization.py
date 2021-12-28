@@ -44,4 +44,4 @@ def visulize_to_png(x, y):
     plt.ylabel("total-driving-distance")
 
     plt.savefig("i3result_comparison.png")
-    plt.show()
+    # plt.show()

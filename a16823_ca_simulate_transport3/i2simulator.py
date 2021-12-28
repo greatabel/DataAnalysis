@@ -179,7 +179,7 @@ def main(visual_data=None):
     leng = {0: 0, 1: 0, 2: 0, 3: 0}
     list1 = []
     # for i in range(0, 100):
-    step = 10
+    step = 100
     mysum = sum(visual_data[0])
     # print('@'*20, visual_data[0][0]/mysum)
     for i in range(0, step):

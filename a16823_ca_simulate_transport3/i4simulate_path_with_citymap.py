@@ -130,6 +130,8 @@ def single_turn(unittype, generated_map, CarSetting):
         while e[2] != 2:
             e = walkables[random.randint(0, len(walkables)-1)]
         s = walkables[random.randint(0, len(walkables)-1)]
+    # 更多场景 可以修改上面的代码
+
     start_grid = Grid(s[0], s[1])
     end_grid = Grid(e[0], e[1]) 
 
@@ -213,7 +215,14 @@ def hotmap(allpaths):
         for i in range(0, len(generated_map)):
             for j in range(0, len(generated_map[0])):
                 if contain_grid(path, i, j):
-                    heats[i][j] += 1
+                    energy_consume = 1
+                    if generated_map[i][j] == 2:
+                        energy_consume *= 1.5
+                    elif generated_map[i][j] == 3:
+                        energy_consume *= 1.6
+
+
+                    heats[i][j] += energy_consume
 
     for i in range(0, len(generated_map)):
         for j in range(0, len(generated_map[0])):
@@ -264,7 +273,7 @@ def main():
             for j in range(mycarly_types[mycarly_type]):
                 score = single_turn(i, generated_map, car_setting)
                 scores.append(score)
-                time.sleep(random.uniform(0.1, 0.8))
+                # time.sleep(random.uniform(0.1, 0.8))
             mydict[i, mycarly_type] = scores
 
     print('\n'*3)
