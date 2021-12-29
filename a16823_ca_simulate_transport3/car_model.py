@@ -1,6 +1,7 @@
 import random
 from car_district_setting import *
 
+
 def init_car_model(
     road_2d_matrix, leng, cell2, way, tesla_rate, car_p, fast_through_area_ratio
 ):

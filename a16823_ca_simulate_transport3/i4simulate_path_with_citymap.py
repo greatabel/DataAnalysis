@@ -1,4 +1,3 @@
-
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -14,7 +13,7 @@ from mygrid import Grid
 from my_unittype import unit_types, inners, parkings, heats
 from car_district_setting import CarSetting
 from visualization import visulize_to_png, show_img, show_simplify_to_path
-import i2simulator 
+import i2simulator
 
 
 ALL_PATHS = []
@@ -99,43 +98,42 @@ def all_walkable(generated_map):
     walkables = []
     for i in range(0, len(generated_map)):
         for j in range(0, len(generated_map[0])):
-            if generated_map[i][j] != 1 :
+            if generated_map[i][j] != 1:
                 walkables.append([i, j, generated_map[i][j]])
     return walkables
-
 
 
 def single_turn(unittype, generated_map, CarSetting):
     walkables = all_walkable(generated_map)
     # print('walkables=', walkables, '#-# '*10)
 
-    #设置随机数种子seed
+    # 设置随机数种子seed
     np.random.seed(456789)
-    #生成5个均值为len(walkables)//20，标准差为5的正态分布样本,模拟电量
-    r = np.random.normal(loc=len(walkables)//20, scale=5, size=5)
+    # 生成5个均值为len(walkables)//20，标准差为5的正态分布样本,模拟电量
+    r = np.random.normal(loc=len(walkables) // 20, scale=5, size=5)
 
     simulate_battery_init = int(r[random.randint(0, 4)])
-    print('正态分布样 simulate_battery_init:', simulate_battery_init)
+    print("正态分布样 simulate_battery_init:", simulate_battery_init)
     s, e = None, None
-    #模拟早上和晚上
+    # 模拟早上和晚上
     if random.randint(0, 1) == 0:
         # 模拟早上
-        s = walkables[random.randint(0, len(walkables)-1)]
+        s = walkables[random.randint(0, len(walkables) - 1)]
         while s[2] != 2:
-            s = walkables[random.randint(0, len(walkables)-1)]
-        e = walkables[random.randint(0, len(walkables)-1)]
+            s = walkables[random.randint(0, len(walkables) - 1)]
+        e = walkables[random.randint(0, len(walkables) - 1)]
     else:
         # 模拟晚上,正好相反
-        e = walkables[random.randint(0, len(walkables)-1)]
+        e = walkables[random.randint(0, len(walkables) - 1)]
         while e[2] != 2:
-            e = walkables[random.randint(0, len(walkables)-1)]
-        s = walkables[random.randint(0, len(walkables)-1)]
+            e = walkables[random.randint(0, len(walkables) - 1)]
+        s = walkables[random.randint(0, len(walkables) - 1)]
     # 更多场景 可以修改上面的代码
 
     start_grid = Grid(s[0], s[1])
-    end_grid = Grid(e[0], e[1]) 
+    end_grid = Grid(e[0], e[1])
 
-    print('-'*10, 'run new simulation turn', '-'*10, '\n')
+    print("-" * 10, "run new simulation turn", "-" * 10, "\n")
     # 设置起点和终点
     # start_grid = Grid(2, 1)
     # end_grid = Grid(2, 5)
@@ -143,7 +141,7 @@ def single_turn(unittype, generated_map, CarSetting):
     #     s = walkables[random.randint(0, len(walkables)//2)]
     #     e = walkables[random.randint(len(walkables)//2, len(walkables)-1)]
     #     start_grid = Grid(s[0], s[1])
-    #     end_grid = Grid(e[0], e[1])   
+    #     end_grid = Grid(e[0], e[1])
     # if CarSetting.behavior_type == 1:
     #     s = walkables[random.randint(0, len(walkables)//2)]
     #     e = walkables[random.randint(len(walkables)//2, len(walkables)-1)]
@@ -151,7 +149,7 @@ def single_turn(unittype, generated_map, CarSetting):
     #     if random.randint(0, 4) > 2:
     #         end_grid = Grid(parkings[unittype][0], parkings[unittype][1])
     #     else:
-    #         end_grid = Grid(e[0], e[1]) 
+    #         end_grid = Grid(e[0], e[1])
     # if CarSetting.behavior_type == 2:
     #     s = walkables[random.randint(0, len(walkables)//2)]
     #     e = walkables[random.randint(len(walkables)//2, len(walkables)-1)]
@@ -159,13 +157,12 @@ def single_turn(unittype, generated_map, CarSetting):
     #         start_grid = Grid(inners[unittype][0], inners[unittype][1])
     #     else:
     #         start_grid = Grid(s[0], s[1])
-    #     end_grid = Grid(e[0], e[1]) 
+    #     end_grid = Grid(e[0], e[1])
     # if CarSetting.behavior_type == 3 :
     #     s = walkables[random.randint(0, len(walkables)//3)]
     #     e = walkables[random.randint(len(walkables)//3, len(walkables)-1)]
     #     start_grid = Grid(s[0], s[1])
-    #     end_grid = Grid(e[0], e[1]) 
-
+    #     end_grid = Grid(e[0], e[1])
 
     # 搜索街区终点
     result_grid = mycar_walking(start_grid, end_grid, generated_map)
@@ -182,16 +179,17 @@ def single_turn(unittype, generated_map, CarSetting):
             if contain_grid(path, i, j):
                 # star = colored('*', 'magenta', attrs=['reverse', 'blink'])
                 # print(star +", ", end="")
-                cprint('*'+", ","green",attrs=['reverse', 'blink'],end = "")
+                cprint("*" + ", ", "green", attrs=["reverse", "blink"], end="")
                 abel_score += 1
             else:
                 if generated_map[i][j] == 1:
-                    cprint('1'+", ","grey",attrs=['reverse', 'blink'],end = "")
+                    cprint("1" + ", ", "grey", attrs=["reverse", "blink"], end="")
                 else:
                     print(str(generated_map[i][j]) + ", ", end="")
         print()
-    print('abel_score=', abel_score)
+    print("abel_score=", abel_score)
     return abel_score
+
 
 def visual_to_png(res):
     # res = [[0.01, 0.9, 0.46], [0.64, 0.24, 1], [0.87, 0.99, 0.47]]
@@ -202,10 +200,13 @@ def visual_to_png(res):
     # plt.yticks(rotation=0,fontsize=16);
     # plt.xticks(fontsize=12);
     # plt.tight_layout()
-    plt.title('Heatmap of citytype vs car-district-type', fontsize = 20) # title with fontsize 20
-    plt.xlabel('car-district-type', fontsize = 15) # x-axis label with fontsize 15
-    plt.ylabel('citytype', fontsize = 15) # y-axis label with fontsize 1
-    plt.savefig('i1colorlist.png')
+    plt.title(
+        "Heatmap of citytype vs car-district-type", fontsize=20
+    )  # title with fontsize 20
+    plt.xlabel("car-district-type", fontsize=15)  # x-axis label with fontsize 15
+    plt.ylabel("citytype", fontsize=15)  # y-axis label with fontsize 1
+    plt.savefig("i1colorlist.png")
+
 
 def hotmap(allpaths):
     # res = [[0.01, 0.9, 0.46], [0.64, 0.24, 1], [0.87, 0.99, 0.47]]
@@ -221,15 +222,24 @@ def hotmap(allpaths):
                     elif generated_map[i][j] == 3:
                         energy_consume *= 1.6
 
-
                     heats[i][j] += energy_consume
 
     for i in range(0, len(generated_map)):
         for j in range(0, len(generated_map[0])):
             if heats[i][j] == 0:
                 # 应该是封闭区间或者是道路的周边，需要进行差值法
-                if i != 0 and i!= len(generated_map) -1 and j!=0 and j<= len(generated_map) -2:
-                    heats[i][j] = (heats[i-1][j] + heats[i+1][j] + heats[i][j-1] + heats[i][j+1])/2
+                if (
+                    i != 0
+                    and i != len(generated_map) - 1
+                    and j != 0
+                    and j <= len(generated_map) - 2
+                ):
+                    heats[i][j] = (
+                        heats[i - 1][j]
+                        + heats[i + 1][j]
+                        + heats[i][j - 1]
+                        + heats[i][j + 1]
+                    ) / 2
             print(str(heats[i][j]) + ", ", end="")
         print()
     colormap = pyplot.cm.cubehelix_r
@@ -238,18 +248,16 @@ def hotmap(allpaths):
     # plt.yticks(rotation=0,fontsize=16);
     # plt.xticks(fontsize=12);
     # plt.tight_layout()
-    plt.title('Heatmap of station most needed', fontsize = 20) # title with fontsize 20
-    plt.xlabel('x', fontsize = 15) # x-axis label with fontsize 15
-    plt.ylabel('y', fontsize = 15) # y-axis label with fontsize 1
-    plt.savefig('i4heatmap.png')
+    plt.title("Heatmap of station most needed", fontsize=20)  # title with fontsize 20
+    plt.xlabel("x", fontsize=15)  # x-axis label with fontsize 15
+    plt.ylabel("y", fontsize=15)  # y-axis label with fontsize 1
+    plt.savefig("i4heatmap.png")
 
 
 def main():
 
     show_img("resources/i1geographical_urban.jpg")
     time.sleep(3)
-
-
 
     simulate_num = 160
 
@@ -260,11 +268,11 @@ def main():
     mycarly_types[2] = int(simulate_num * 0.20)
     mycarly_types[3] = int(simulate_num * 0.15)
 
-    print('mycarly_types=', mycarly_types)
+    print("mycarly_types=", mycarly_types)
     mydict = {}
     visual_data = []
     for i in range(len(unit_types)):
-        print('city_types =', i, '\n')
+        print("city_types =", i, "\n")
         generated_map = unit_types[i]
         for mycarly_type in range(len(mycarly_types)):
             car_setting = CarSetting(mycarly_type)
@@ -276,26 +284,34 @@ def main():
                 # time.sleep(random.uniform(0.1, 0.8))
             mydict[i, mycarly_type] = scores
 
-    print('\n'*3)
+    print("\n" * 3)
 
-    welcome = colored('#'*10+' This statistics:'+'#'*10, 'red', attrs=['reverse', 'blink'])
-    print(welcome, '\n')
+    welcome = colored(
+        "#" * 10 + " This statistics:" + "#" * 10, "red", attrs=["reverse", "blink"]
+    )
+    print(welcome, "\n")
     time.sleep(0.5)
     for i in range(len(unit_types)):
         type_data = []
         for mycarly_type in range(len(mycarly_types)):
-            print('city type ', i, ' with mycar_type ', mycarly_type, 
-                    ' simulate scores:', mydict[i, mycarly_type])
+            print(
+                "city type ",
+                i,
+                " with mycar_type ",
+                mycarly_type,
+                " simulate scores:",
+                mydict[i, mycarly_type],
+            )
             x = round(statistics.mean(mydict[i, mycarly_type]), 2)
             # 数据的总体方差
             p = round(statistics.pvariance(mydict[i, mycarly_type]), 2)
-            print(colored('mean simulate scores =','red'), x)
-            print(colored('pvariance simulate scores =','blue'), p)
+            print(colored("mean simulate scores =", "red"), x)
+            print(colored("pvariance simulate scores =", "blue"), p)
             type_data.append(x)
             # time.sleep(random.uniform(0.1, 0.5))
         visual_data.append(type_data)
     # print('#'*50,ALL_PATHS)
-    
+
     # visual_to_png(type_data)
     i2simulator.main(visual_data)
     hotmap(ALL_PATHS)
@@ -303,5 +319,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

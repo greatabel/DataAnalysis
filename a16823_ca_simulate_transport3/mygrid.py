@@ -13,8 +13,6 @@ class Grid:
             self.g = parent.g + 1
         else:
             self.g = 1
-            
+
         self.h = abs(self.x - end.x) + abs(self.y - end.y)
         self.f = self.g + self.h
-
-

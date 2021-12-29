@@ -32,7 +32,7 @@ def custom_map_2d_to_1d(x, width):
     return speedup, change_lane_rate, cular_scale
 
 
-def car_simulate_driving(way, width, cell,cell2, road_2d_matrix):
+def car_simulate_driving(way, width, cell, cell2, road_2d_matrix):
     for j in range(0, width - 1):
 
         # 获得当前位置街区的加速因子，换道印子，元胞扩大比例
@@ -55,7 +55,11 @@ def car_simulate_driving(way, width, cell,cell2, road_2d_matrix):
                 a = change_way(way, j, cell2, width, cell, road_2d_matrix)
                 if a == 0:
                     continue
-            elif cell2[way][j] != -1 and road_2d_matrix[way][j] == 2 and j + 5 + way > width:
+            elif (
+                cell2[way][j] != -1
+                and road_2d_matrix[way][j] == 2
+                and j + 5 + way > width
+            ):
                 a = change_way(way, j, cell2, width, cell, road_2d_matrix)
                 if a == 0:
                     continue
@@ -87,7 +91,9 @@ def car_simulate_driving(way, width, cell,cell2, road_2d_matrix):
                         road_2d_matrix[way][k] = 0
                         cell2[way][k - 1] = cell2[way][k]
                         cell2[way][k] = -1
-                    elif random.randint(1, 100) <= 5 and road_2d_matrix[way][k + 1] == 0:
+                    elif (
+                        random.randint(1, 100) <= 5 and road_2d_matrix[way][k + 1] == 0
+                    ):
                         road_2d_matrix[way][k + 1] = 1
                         road_2d_matrix[way][k] = 0
                         cell2[way][k + 1] = cell2[way][k]
@@ -110,7 +116,9 @@ def change_way(way, local, cell2, width, cell, road_2d_matrix):
                 if cell[cell2[way][local]][i] != 0:
                     m = 1
             if m == 0:
-                road_2d_matrix[cell2[way][local]][local + 1] = road_2d_matrix[way][local]
+                road_2d_matrix[cell2[way][local]][local + 1] = road_2d_matrix[way][
+                    local
+                ]
                 road_2d_matrix[way][local] = 0
                 leng[way] = leng[way] - 1
                 leng[cell2[way][local]] = leng[cell2[way][local]] + 1
@@ -160,7 +168,7 @@ def main(visual_data=None):
     # time.sleep(1)
 
     # show_simplify_to_path()
-    print('visual_data=', visual_data)
+    print("visual_data=", visual_data)
     length = 3
     width = 30
 
@@ -193,20 +201,44 @@ def main(visual_data=None):
         while True:
             if d % 4 == 0:
                 init_car_model(
-                    road_2d_matrix, leng, cell2, 0, i / step, 0.3, visual_data[0][0]/mysum
+                    road_2d_matrix,
+                    leng,
+                    cell2,
+                    0,
+                    i / step,
+                    0.3,
+                    visual_data[0][0] / mysum,
                 )
                 # init_car_model(road_2d_matrix, leng, cell2,  0, i/100, 0.3)
             if d % 3 == 0:
                 init_car_model(
-                    road_2d_matrix, leng, cell2, 1, i / step, 0.3, visual_data[0][1]/mysum
+                    road_2d_matrix,
+                    leng,
+                    cell2,
+                    1,
+                    i / step,
+                    0.3,
+                    visual_data[0][1] / mysum,
                 )
             if d % 5 == 0:
                 init_car_model(
-                    road_2d_matrix, leng, cell2, 2, i / step, 0.3, visual_data[0][2]/mysum
+                    road_2d_matrix,
+                    leng,
+                    cell2,
+                    2,
+                    i / step,
+                    0.3,
+                    visual_data[0][2] / mysum,
                 )
             if d % 7 == 0:
                 init_car_model(
-                    road_2d_matrix, leng, cell2, 2, i / step, 0.3, visual_data[0][3]/mysum
+                    road_2d_matrix,
+                    leng,
+                    cell2,
+                    2,
+                    i / step,
+                    0.3,
+                    visual_data[0][3] / mysum,
                 )
             cell = copy.deepcopy(road_2d_matrix)
             # 显示每一轮的图像
@@ -245,12 +277,12 @@ def main(visual_data=None):
     # plt.show(block=False)
     # plt.pause(0.2)
 
-    x = np.arange(0, 1, 1/step)
+    x = np.arange(0, 1, 1 / step)
     y = list1
     print("x=", x)
 
-
     visulize_to_png(x, y)
+
 
 if __name__ == "__main__":
     main()
