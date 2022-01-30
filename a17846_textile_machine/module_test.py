@@ -37,7 +37,7 @@ def mk_test_sens_slope(tmp, alpha=0.05):
     return slope, h, pval, zmk
 
 if __name__ == '__main__':
-    file = open("median/2448/2448_0.txt")
+    file = open("data/2448/2448_0.txt")
     dt = file.read()
     id = int(dt.split('"')[1])
     type = int(dt.split('"')[3])

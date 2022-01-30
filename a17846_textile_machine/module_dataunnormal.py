@@ -41,7 +41,7 @@ def mk_test_sens_slope(tmp, alpha=0.05):
 if __name__ == '__main__':
     all_results = []
     # path = glob.glob("C:\\Users\\shudo\\Desktop\\禄劝\\median\\**\\*.txt",recursive=True)
-    path = glob.glob("median/2448/*.txt",recursive=True)
+    path = glob.glob("data/2448/*.txt",recursive=True)
     for i_txt in path:
         file = open(i_txt)
         dt = file.read()
