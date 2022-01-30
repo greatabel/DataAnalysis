@@ -3,3 +3,4 @@ matplotlib==3.5.1
 pandas
 sklearn
 tqdm==4.62.3
+Flask

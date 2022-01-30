@@ -35,3 +35,13 @@ pip3 install --upgrade -r requirements.txt
 jupyter notebook i1data_analysis_and_ML.ipynb
 然后浏览器访问：http://localhost:8888/notebooks/i1data_analysis_and_ML.ipynb
 
+6.
+查看整体可视化部分 ，新开1个terminal输入：
+python3 i2wsgi.py
+
+浏览器访问：
+
+http://localhost:5000/home
+
+默认账号 greatabel1@126.com ps:abel
+自己也可以正常注册
