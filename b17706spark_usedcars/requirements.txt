@@ -3,3 +3,7 @@ matplotlib
 termcolor
 pdfreader
 findspark
+missingno
+branca
+category_encoders
+pyspark

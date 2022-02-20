@@ -35,18 +35,18 @@ def data_anlysis():
     df = spark.read.csv(inputFile)
 
     print("Loading vehicles from " + inputFile)
-    while True:
-        # prev_count = count_files_in_folder(inputPath)
-        # input = hiveCtx.read.json(inputFile)
-        # input.registerTempTable("vehicles")
-        topvehicless = df.show()
-        print(topvehicless)
 
-        print(colored("2. filter out now span data:", "blue", attrs=["reverse", "blink"]))
-        print('schema:')
-        print(df.printSchema())
+    # prev_count = count_files_in_folder(inputPath)
+    # input = hiveCtx.read.json(inputFile)
+    # input.registerTempTable("vehicles")
+    topvehicless = df.show()
+    print(topvehicless)
 
-    sc.stop()
+    print(colored("2. filter out now span data:", "blue", attrs=["reverse", "blink"]))
+    print('schema:')
+    print(df.printSchema())
+
+
 
 
 if __name__ == "__main__":
