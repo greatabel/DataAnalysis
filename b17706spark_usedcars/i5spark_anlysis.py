@@ -37,7 +37,7 @@ def data_anlysis():
     hiveCtx = HiveContext(sc)
     print("Loading vehicles from " + inputFile)
     while True:
-        prev_count = count_files_in_folder(inputPath)
+        # prev_count = count_files_in_folder(inputPath)
         input = hiveCtx.read.json(inputFile)
         input.registerTempTable("vehicles")
         topvehicless = hiveCtx.sql(
@@ -45,7 +45,7 @@ def data_anlysis():
         )
         print(
             "#" * 20,
-            "\n 1. According to lastest time order:",
+            "\n 1. According to lastest id order:",
             topvehicless.collect(),
             " record count:",
             len(topvehicless.collect()),
