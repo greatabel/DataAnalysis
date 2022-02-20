@@ -37,8 +37,8 @@ def data_anlysis():
     print("Loading vehicles from " + inputFile)
     while True:
         # prev_count = count_files_in_folder(inputPath)
-        input = hiveCtx.read.json(inputFile)
-        input.registerTempTable("vehicles")
+        # input = hiveCtx.read.json(inputFile)
+        # input.registerTempTable("vehicles")
         topvehicless = df.show()
         print(topvehicless)
 
