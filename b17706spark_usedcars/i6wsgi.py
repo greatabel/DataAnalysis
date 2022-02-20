@@ -19,6 +19,11 @@ from flask_cors import CORS
 from movie import create_app
 
 from i5data import *
+
+import recommandation
+import jellyfish
+
+
 # from movie.domain.model import Director, Review, Movie
 
 # from html_similarity import style_similarity, structural_similarity, similarity
@@ -279,6 +284,17 @@ def query_note(id):
         return "", 204
 
 
+@app.route("/recommend", methods=["GET", "DELETE"])
+def recommend():
+    """
+    查询社团详情、删除社团
+    """
+    if request.method == "GET":
+        choosed = recommandation.main()
+        print("给予离线交互数据进行协同推荐")
+        print(choosed, "#" * 20)
+        print("给予离线交互数据进行协同推荐")
+        return rt("recommend.html", choosed=choosed)
 ### -------------end of home
 
 

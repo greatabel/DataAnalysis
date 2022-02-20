@@ -7,3 +7,15 @@ missingno
 branca
 category_encoders
 pyspark
+Flask
+pandas
+pytest
+python-dotenv
+pytest-cov
+flask-wtf
+flask-cors
+Flask-Login
+flask_sqlalchemy
+requests
+jellyfish
+jupyterlab

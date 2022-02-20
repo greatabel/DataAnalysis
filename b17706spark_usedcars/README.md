@@ -15,8 +15,15 @@ pip install --upgrade -r requirements.txt
 
 5.
 模拟运行在:
-命令行底下运行: python3 i6wsgi.py
+命令行底下运行: 
+python3 i6wsgi.py
+
+
+开启另一个命令行运行，运行：
+jupyter notebook i5ml_spark_anlysis.ipynb
+
 可以运行可视化部分、查看分析结果部分，推荐系统部分
+
 
 
 
