@@ -2,9 +2,8 @@ import findspark
 
 findspark.init()
 # A simple demo for working with SparkSQL and vehicless
-from pyspark import SparkContext, SparkConf
-from pyspark.sql import HiveContext, Row
-from pyspark.sql.types import IntegerType
+import pyspark
+from pyspark.sql import SparkSession
 import json
 import sys
 import time
@@ -28,31 +27,24 @@ def count_files_in_folder(path):
 
 def data_anlysis():
 
-    inputFile =  "data/vehicles.csv"
+    inputFile =  r"data/vehicles.csv"
     
 
     # inputFile = 'tesvehicles.json'
-    conf = SparkConf().setAppName("SparkSQLvehicles")
-    sc = SparkContext()
-    hiveCtx = HiveContext(sc)
+    spark = SparkSession.Builder().appName('VH').getOrCreate()
+    df = spark.read.csv(inputFile)
+
     print("Loading vehicles from " + inputFile)
     while True:
         # prev_count = count_files_in_folder(inputPath)
         input = hiveCtx.read.json(inputFile)
         input.registerTempTable("vehicles")
-        topvehicless = hiveCtx.sql(
-            "SELECT id,url FROM vehicles LIMIT 20"
-        )
-        print(
-            "#" * 20,
-            "\n 1. According to lastest id order:",
-            topvehicless.collect(),
-            " record count:",
-            len(topvehicless.collect()),
-        )
+        topvehicless = df.show()
+        print(topvehicless)
 
         print(colored("2. filter out now span data:", "blue", attrs=["reverse", "blink"]))
-
+        print('schema:')
+        print(df.printSchema())
 
     sc.stop()
 
