@@ -41,7 +41,7 @@ def data_anlysis():
         input = hiveCtx.read.json(inputFile)
         input.registerTempTable("vehicles")
         topvehicless = hiveCtx.sql(
-            "SELECT region, price,year, price,year, FROM vehicles ORDER BY id LIMIT 20"
+            "SELECT * FROM vehicles ORDER BY id LIMIT 20"
         )
         print(
             "#" * 20,
