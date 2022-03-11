@@ -26,6 +26,13 @@ jupyter notebook i5ml_spark_anlysis.ipynb
 
 
 
+6.
+浏览器访问：
+
+http://localhost:5000/home
+
+默认账号 greatabel1@126.com ps:abel
+自己也可以正常注册
 
 
 --------------------
