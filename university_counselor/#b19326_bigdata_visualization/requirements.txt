@@ -2,11 +2,11 @@ numpy
 matplotlib
 termcolor
 pdfreader
-findspark
-missingno
-branca
-category_encoders
-pyspark
+#findspark
+#missingno
+#branca
+#category_encoders
+#pyspark
 Flask
 pandas
 pytest

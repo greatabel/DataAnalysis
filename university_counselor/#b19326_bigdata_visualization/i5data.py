@@ -3,92 +3,90 @@ import json
 class SourceDataDemo:
 
     def __init__(self):
-        self.title = '二手车大数据可视化展板'
-        self.counter = {'name': '美国二手车获取数据', 'value': 310000}
-        self.counter2 = {'name': '国内二手车获取数据', 'value': 30}
+        self.title = '商品购买大数据可视化展板'
+        self.counter = {'name': 'action_type table', 'value': 54925330}
+        self.counter2 = {'name': 'activity_log table', 'value': 7027943}
         self.echart1_data = {
-            'title': '种类分布',
+            'title': '男女性别分布',
             'data': [
-                {"name": "柴油车", "value": 20},
-                {"name": "汽油车", "value": 40},
-                {"name": "电动车", "value": 30},
+                {"name": "男", "value": 1643382},
+                {"name": "女", "value": 258644},
+                {"name": "未知", "value": 5062667},
 
 
             ]
         }
         self.echart2_data = {
-            'title': '汽车制造商',
+            'title': '单人重复购买最多次数排名',
             'data': [
-                {"name": "rissian", "value": 10},
-                {"name": "dryster", "value": 4},
-                {"name": "jeep", "value": 3},
-                {"name": "ford福特", "value": 3},
-                {"name": "audi奥迪", "value": 2},
+                {"name": "u265990", "value": 25},
+                {"name": "u246371", "value": 13},
+                {"name": "u216131", "value": 12},
+                {"name": "u262623", "value": 11},
+                {"name": "u50682", "value": 11},
        
             ]
         }
         self.echarts3_1_data = {
-            'title': '车龄分布',
+            'title': '年龄分布',
             'data': [
-                {"name": "2012", "value": 20},
-                {"name": "2013", "value": 30},
-                {"name": "2014", "value": 20},
-                {"name": "2015", "value": 15},
-                {"name": "2018", "value": 15},
+                {"name": "<18", "value": 1345565},
+                {"name": "[18,24]", "value": 260},
+                {"name": " [25,29]", "value": 733323},
+                {"name": " [30,34]", "value": 1916611},
+                {"name": "[35,39]", "value": 1460542},
             ]
         }
         self.echarts3_2_data = {
-            'title': '车主职业分布',
+            'title': 'label复购',
             'data': [
-                {"name": "电子商务", "value": 10},
-                {"name": "教育", "value": 20},
-                {"name": "IT/互联网", "value": 20},
-                {"name": "金融", "value": 30},
-                {"name": "freelancer", "value": 40},
-                {"name": "其他", "value": 50},
+                {"name": "重复买家", "value": 261477},
+                {"name": "非重复买家", "value":  6766466},
+        
             ]
         }
         self.echarts3_3_data = {
-            'title': '销售方式分布',
+            'title': '性别是否可区分分布',
             'data': [
-                {"name": "经销商", "value": 4},
-                {"name": "直营", "value": 5},
-                {"name": "网上", "value": 9},
-                {"name": "其他", "value": 8},
+                {"name": "可区分", "value": 643382+258644},
+                {"name": "不可区分", "value": 63250},
+         
             ]
         }
         self.echart4_data = {
-            'title': '时间趋势',
+            'title': '平均log时间趋势',
             'data': [
-                {"name": "电动车", "value": [3, 4, 3, 4, 3, 4, 3, 6, 2, 4, 2, 4, 3, 4, 3, 4, 3, 4, 3, 6, 2, 4, 4]},
-                {"name": "汽油车", "value": [5, 3, 5, 6, 1, 5, 3, 5, 6, 4, 6, 4, 8, 3, 5, 6, 1, 5, 3, 7, 2, 5, 8]},
+                {"name": "男", "value": [3, 4, 3, 4, 3, 4, 3, 6, 2, 4, 2, 4, 3, 4, 3, 4, 3, 4, 3, 6, 2, 4, 4]},
+                {"name": "女", "value": [5, 3, 5, 6, 1, 5, 3, 5, 6, 4, 6, 4, 8, 3, 5, 6, 1, 5, 3, 7, 2, 5, 8]},
             ],
             'xAxis': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '11', '12', '13', '14', '15', '16', '17',
                       '18', '19', '20', '21', '22', '23', '24'],
         }
         self.echart5_data = {
-            'title': '汽车地域分布',
+            'title': '品牌购买数量统计分布',
             'data': [
 
-                {"name": "美国", "value": 300000},
-                {"name": "中国", "value": 20},
-                {"name": "其他", "value": 9},
+                {"name": "no1", "value": 763345},
+                {"name": "no2", "value": 737545},
+                {"name": "no3", "value": 729555},
+                {"name": "no4", "value": 541075},
+                {"name": "no5", "value": 528003},
             ]
         }
         self.echart6_data = {
-            'title': '汽车地域分布比例',
+            'title': '行为分布：0点击，1加入购物车，2购买，3收藏',
             'data': [
-                {"name": "中国", "value": 64, "value2": 36, "color": "01", "radius": ['59%', '70%']},
-                {"name": "美国", "value": 1176, "value2": 214, "color": "02", "radius": ['49%', '60%']},
-                {"name": "欧洲", "value": 80, "value2": 20, "color": "03", "radius": ['39%', '50%']},
-                {"name": "其他", "value": 82, "value2": 18, "color": "04", "radius": ['29%', '40%']},
+                {"name": "点击", "value": 48550713, "value2": 36, "color": "01", "radius": ['59%', '70%']},
+                {"name": "购物车", "value": 3292144, "value2": 214, "color": "02", "radius": ['49%', '60%']},
+                {"name": "购买", "value": 3005723, "value2": 20, "color": "03", "radius": ['39%', '50%']},
+                {"name": "收藏", "value": 76750, "value2": 18, "color": "04", "radius": ['29%', '40%']},
                
             ]
         }
         self.map_1_data = {
             'symbolSize': 100,
             'data': [
-                {'name': '天津', 'value': 239},
+                {'name': '武汉', 'value': 239},
                 {'name': '北京', 'value': 121},
                 {'name': '其他', 'value': 203},
             ]
@@ -193,5 +191,5 @@ class SourceData(SourceDataDemo):
         按照 SourceDataDemo 的格式覆盖数据即可
         """
         super().__init__()
-        self.title = '二手车大数据可视化展板'
+        self.title = '商品购买大数据可视化展板'
 

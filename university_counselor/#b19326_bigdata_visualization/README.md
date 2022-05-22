@@ -19,8 +19,8 @@ pip install --upgrade -r requirements.txt
 python3 i6wsgi.py
 
 
-开启另一个命令行运行，运行：
-jupyter notebook i5ml_spark_anlysis.ipynb
+<!-- 开启另一个命令行运行，运行：
+jupyter notebook i5ml_spark_anlysis.ipynb -->
 
 可以运行可视化部分、查看分析结果部分
 
@@ -34,13 +34,20 @@ http://localhost:5000/home
 默认账号 greatabel1@126.com ps:abel
 自己也可以正常注册
 
+7.
+（可选）
+i0pyspark_analysis.ipynb 是利用java/spark/pyspark 进行处理和数据统计分析的部分 （已经缓存，属于可选部分，可以不用关系）
+如果需要查看pyspark分析部分，可以命令行运行：
+jupyter notebook i0pyspark_analysis.ipynb
+然后浏览器访问：
+http://localhost:8888/notebooks/i0pyspark_analysis.ipynb
+
 
 # --------------------
 工程说明部分：
 
-数据集主要是用ebay的数据集，二手车数据集 ebay开源出来的，主要分析的是美国二手车市场的数据分析。
 
-数据目前是晚上我临时搞的以前的，不是全部的spark上跑的数据。这个周六会更新。
+
 
 可视化和分析部分主要用到啦这些python库：
 NumPy 

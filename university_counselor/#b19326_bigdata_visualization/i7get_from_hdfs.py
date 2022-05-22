@@ -3,7 +3,8 @@ import pydoop.hdfs as hdfs
 
 b = hdfs.path.isdir("/data")
 
-want_file = 'traffic.csv'
+# 例子
+want_file = 'test_format2.csv'
 
 if b == True:
     print("---get test ---")
