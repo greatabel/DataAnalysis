@@ -8,8 +8,10 @@ def main():
 
     rows = []
     rows.append(first_row)
-    for i in range(1000):
+    for i in range(1000000*5):
         age = random.randint(60, 90)
+        if age > 80:
+            age = age  - 10
         bmi = random.randint(10, 30)
         drink = random.randint(0, 1)
         heart_disease = random.randint(0, 1)
@@ -24,7 +26,7 @@ def main():
         rows.append(row)
 
     print('len(rows)=',len(rows))
-    with open('mydata/health_data.csv', 'w') as myfile:
+    with open('mydata/my_health_data.csv', 'w') as myfile:
 
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
 

@@ -1,0 +1,10 @@
+numpy
+matplotlib
+termcolor
+findspark
+pyspark
+pandas
+pytest
+pytest-cov
+requests
+jupyterlab
