@@ -44,3 +44,5 @@ Flask-RESTful
 Vue
 整个平台的前端部分和可视化部分我们主要是使用vue+jquery+html5: Vue 是一套用于构建用户界面的渐进式 JavaScript 框架 ；同时它是一个典型的 MVVM 模型的框架（即：视图层-视图模型层-模型层）;HTML5是HTML的新标准，是一种超文本标记语言，是用来创建网页的标准标记语言，通过一系列的标识，来规范网络上的文档格式;区别：
         1.vue是一个渐进式 JavaScript 框架，而HTML5是一种超文本标记语言  2.在开发中vue框架通过mvvm的模式，解耦了视图层与模型层，而HTML5原生开中数据与标签紧耦合；    但是vue和html5可以进行结合:    vue是一个前端框架，但还是建立在HTML ，CSS ，JavaScript的基础之上的，通过编译之后依然是HTML+CSS+JavaScript组成。
+
+# -- 数据集简介 --- 

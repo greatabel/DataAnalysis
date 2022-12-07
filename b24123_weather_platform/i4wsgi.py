@@ -82,7 +82,6 @@ class Blog(db.Model):
         self.text = text
 
 
-
 # class TeacherWork(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     title = db.Column(db.String(80), unique=True)
@@ -145,25 +144,28 @@ class PageResult:
 # 获取city对应列表
 def read_city_kv():
     k_v = {}
-    csv_file = 'mydata/i0citycode_cityname.csv'
-    with open(csv_file, 'r',encoding='utf-8') as read_obj:
+    csv_file = "mydata/i0citycode_cityname.csv"
+    with open(csv_file, "r", encoding="utf-8") as read_obj:
         # pass the file object to reader() to get the reader object
         csv_reader = csv.reader(read_obj)
         # Iterate over each row in the csv using reader object
         for row in csv_reader:
             # row variable is a list that represents a row in csv
-            v, k = row[0].split('\t')
+            v, k = row[0].split("\t")
             # print(v,k)
             k_v[k] = v
     # print(k_v)
     return k_v
 
+
 cityname_code = read_city_kv()
 
 import time
-def compare_time(time1,time2):
-    s_time = time.mktime(time.strptime(time1,"%Y/%m/%d %H:%M:%S"))
-    e_time = time.mktime(time.strptime(time2,"%Y/%m/%d %H:%M:%S"))
+
+
+def compare_time(time1, time2):
+    s_time = time.mktime(time.strptime(time1, "%Y/%m/%d %H:%M:%S"))
+    e_time = time.mktime(time.strptime(time2, "%Y/%m/%d %H:%M:%S"))
     # print 's_time is:',s_time
     # print 'e_time is:',e_time
     return int(s_time) - int(e_time)
@@ -172,45 +174,48 @@ def compare_time(time1,time2):
 # 出发机场,到达机场,航班编号,计划起飞时间,计划到达时间,实际起飞时间,实际到达时间,飞机编号,航班是否取消,需验证标识
 def read_flight():
     mylist = []
-    csv_file = 'mydata/i1flight.csv'
-    with open(csv_file, 'r', encoding='utf-8') as read_obj:
+    csv_file = "mydata/i1flight.csv"
+    with open(csv_file, "r", encoding="utf-8") as read_obj:
         # pass the file object to reader() to get the reader object
         csv_reader = csv.reader(read_obj)
         # Iterate over each row in the csv using reader object
         for row in csv_reader:
             # row variable is a list that represents a row in csv
             # print(row)
-            p3 = ''
-            p4 = ''
-            p5 = ''
-            p6 = ''
-            if row[3] != '':
+            p3 = ""
+            p4 = ""
+            p5 = ""
+            p6 = ""
+            if row[3] != "":
                 time_tuple_3 = time.localtime(int(row[3]))
                 p3 = time.strftime("%Y/%m/%d %H:%M:%S", time_tuple_3)
                 # print("北京时间：", t3)
-            if row[4] != '':
+            if row[4] != "":
                 time_tuple_4 = time.localtime(int(row[4]))
                 p4 = time.strftime("%Y/%m/%d %H:%M:%S", time_tuple_4)
-            if row[5] != '':
+            if row[5] != "":
                 time_tuple_5 = time.localtime(int(row[5]))
                 p5 = time.strftime("%Y/%m/%d %H:%M:%S", time_tuple_5)
-            if row[6] != '':
+            if row[6] != "":
                 time_tuple_6 = time.localtime(int(row[6]))
                 p6 = time.strftime("%Y/%m/%d %H:%M:%S", time_tuple_6)
 
             # result = compare_time(p3,'2017/06/25 00:00:00')
             # print('result', result)
-            if p3 > '2017/06/25 10:00:00' and p3 < '2017/06/25 24:00:00':
-                mylist.append([row[0], row[1],row[2],p3, p4, p5, p6, row[7] ])
+            if p3 > "2017/06/25 10:00:00" and p3 < "2017/06/25 24:00:00":
+                mylist.append([row[0], row[1], row[2], p3, p4, p5, p6, row[7]])
     return mylist
 
 
 flights = read_flight()
-print(len(flights),flights[:10])
+print(len(flights), flights[:10])
 
-history_whether_625 = {'上海':"小雨转雷阵雨,22,26,2017/6/25",
-'武汉': "阵雨转阴,23,30,2017/6/25",
-'北京':"多云,20,31,2017/6/25"}
+history_whether_625 = {
+    "上海": "小雨转雷阵雨,22,26,2017/6/25",
+    "武汉": "阵雨转阴,23,30,2017/6/25",
+    "北京": "多云,20,31,2017/6/25",
+}
+
 
 @app.route("/home/<int:pagenum>", methods=["GET"])
 @app.route("/home", methods=["GET", "POST"])
@@ -218,7 +223,7 @@ def home(pagenum=1):
     global cityname_code, flights, history_whether_625
     print(cityname_code)
     print("home " * 10)
-    keyword = ''
+    keyword = ""
     blogs = Blog.query.all()
     user = None
     if "userid" in session:
@@ -236,32 +241,46 @@ def home(pagenum=1):
 
             # 实时api
             realtime_api = get_whether(keyword)
-            print('realtime_api', '->', realtime_api)
-            if realtime_api == 'error':
-                realtime_api = '晴朗'
+            print("realtime_api", "->", realtime_api)
+            if realtime_api == "error":
+                realtime_api = "晴朗"
             # citycode
             citycode = None
             if keyword in cityname_code:
                 citycode = cityname_code[keyword]
-                print('cityname_code=', citycode)
+                print("cityname_code=", citycode)
                 for row in flights:
                     # [['PEK', 'CAN', 'CA1351', '2017/06/01 07:35:00', '2017/06/01 10:55:00', '', '', '2277']]
                     if row[0] == citycode:
                         filter_flights.append(row)
-            print('filter_flights=',len(filter_flights), filter_flights[0:3])
+            print("filter_flights=", len(filter_flights), filter_flights[0:3])
 
         print("search_list=", search_list, "=>" * 5)
         # return rt("home.html", listing=PageResult(search_list, pagenum, 10), user=user, keyword=keyword,
         #         realtime_whether=keyword +'实时天气:'+'晴朗')
-        msg = ''
-        if keyword == '上海':
-            msg = '上海管制区航班延误黄色预警提示：6月26日上海管制区部分航路预计10:00至20:00受雷雨天气影响，通行能力下降30%左右。【空中交通网】'
-        return rt("home.html", listing=None, user=user, keyword=keyword,
-                realtime_whether=keyword +'实时天气:'+realtime_api, filter_flights=filter_flights,
-                old_whether=history_whether_625[keyword], msg=msg)
+        msg = ""
+        if keyword == "上海":
+            msg = (
+                "上海管制区航班延误黄色预警提示：6月26日上海管制区部分航路预计10:00至20:00受雷雨天气影响，通行能力下降30%左右。【空中交通网】"
+            )
+        return rt(
+            "home.html",
+            listing=None,
+            user=user,
+            keyword=keyword,
+            realtime_whether=keyword + "实时天气:" + realtime_api,
+            filter_flights=filter_flights,
+            old_whether=history_whether_625[keyword],
+            msg=msg,
+        )
         # return rt("home.html", listing=PageResult(search_list, pagenum, 2), user=user)
 
-    return rt("home.html", listing=PageResult(blogs, pagenum), user=user, realtime_whether=keyword +'实时天气:晴朗')
+    return rt(
+        "home.html",
+        listing=PageResult(blogs, pagenum),
+        user=user,
+        realtime_whether=keyword + "实时天气:晴朗",
+    )
 
 
 @app.route("/blogs/create", methods=["GET", "POST"])
@@ -449,15 +468,15 @@ def relationship():
     print(type(d), "#" * 10, d)
     return jsonify(d)
 
-@app.route('/index_a/')
-def index():
-    return rt('index-A.html')
-       
 
-@app.route('/index_b/')
+@app.route("/index_a/")
+def index():
+    return rt("index-A.html")
+
+
+@app.route("/index_b/")
 def index_b():
-    return rt('index-B.html')
-        
+    return rt("index-B.html")
 
 
 @login_manager.user_loader
@@ -479,7 +498,7 @@ def login():
 
             if email in admin_list:
                 session["isadmin"] = True
-                print('@'*20, 'setting isadmin')
+                print("@" * 20, "setting isadmin")
             session["userid"] = data.id
 
             print("login sucess", "#" * 20, session["logged_in"])
@@ -592,7 +611,7 @@ def upload_success():  # 按序读出分片内容，并写入新文件
     global last_upload_filename
     target_filename = request.args.get("filename")  # 获取上传文件的文件名
     last_upload_filename = target_filename
-    print('last_upload_filename=', last_upload_filename)
+    print("last_upload_filename=", last_upload_filename)
     task = request.args.get("task_id")  # 获取文件的唯一标识符
     chunk = 0  # 分片序号
     with open("./upload/%s" % target_filename, "wb") as target_file:  # 创建新文件
@@ -649,6 +668,7 @@ def custom_static(filename):
 
 
 if __name__ == "__main__":
-    db.create_all()
+    with app.app_context():
+        db.create_all()
 
     app.run(host="localhost", port=5000, threaded=False)
