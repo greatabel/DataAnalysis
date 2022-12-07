@@ -46,3 +46,11 @@ Vue
         1.vue是一个渐进式 JavaScript 框架，而HTML5是一种超文本标记语言  2.在开发中vue框架通过mvvm的模式，解耦了视图层与模型层，而HTML5原生开中数据与标签紧耦合；    但是vue和html5可以进行结合:    vue是一个前端框架，但还是建立在HTML ，CSS ，JavaScript的基础之上的，通过编译之后依然是HTML+CSS+JavaScript组成。
 
 # -- 数据集简介 --- 
+my_wheather_data.csv 是来自中国环境监测总站空气质量数据类型包括PM2.5, PM10, SO2, NO2, O3, CO, AQI等全国空气质量数据来自中国环境监测总站的全国城市空气质量实时发布平台，我们经过数据处理后的数据，
+处理后得到"barometric_value","humidity","ultraviolet_rays","average_quality","ozone_relative","record_id","pm1","pm2","pm3","pm4" 相关的一些可供预测和分析的数据
+参考： https://www.resdc.cn/data.aspx?DATAID=186
+
+original 是天气和城市相关、机场相关的数据集，属于航空部门数据集
+具体参考： https://www.heywhale.com/mw/dataset/59793a5a0d84640e9b2fedd3
+https://www.payititi.com/opendatasets/show-25932.html
+经过处理后变成了 i1fight.csv  my_wheater_data.csv
