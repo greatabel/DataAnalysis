@@ -54,3 +54,43 @@ original 是天气和城市相关、机场相关的数据集，属于航空部�
 具体参考： https://www.heywhale.com/mw/dataset/59793a5a0d84640e9b2fedd3
 https://www.payititi.com/opendatasets/show-25932.html
 经过处理后变成了 i1fight.csv  my_wheater_data.csv
+
+
+
+# ---  一些可能的疑问的解答 ----
+
+1. 那个用户注册登陆是怎么实现的
+具体你看structure_note.md 
+
+一个实现密码哈希的包是Werkzeug，当安装Flask时，你可能会在pip的输出中看到这个包，因为它是Flask的一个核心依赖项。
+
+管理用户登录状态，以便用户可以登录到应用，用户在导航到该应用的其他页面时，应用会“记得”该用户已经登录。
+它还提供了“记住我”的功能，允许用户在关闭浏览器窗口后再次访问应用时保持登录状态
+
+Flask-Login插件需要在用户模型上实现某些属性和方法。只要将这些必需项添加到模型中，
+Flask-Login就可以与基于任何数据库系统的用户模型一起工作
+这块是sqlchemy， 我们在i4wsgi.py里面有User class
+
+class User(db.Model):
+    """Create user table"""
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True)
+    password = db.Column(db.String(80))
+    nickname = db.Column(db.String(80))
+    school_class = db.Column(db.String(80))
+    school_grade = db.Column(db.String(80))
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+用户会话是Flask分配给每个连接到应用的用户的存储空间，Flask-Login通过在用户会话中存储其唯一标识符（ID）来跟踪登录用户。每当已登录的用户导航到新页面时，Flask-Login将从会话中检索用户的ID，然后将该用户实例加载到内存中。此时，相当于Login插件已知用户ID，需要返回具体用户，因此插件期望应用配置一个用户加载函数，可以调用该函数来加载给定ID的用户
+
+需要一个HTML模板以便在网页上显示这个表单，存储在moive/templates/home.html文件里
+
+2. 把脏数据过滤掉，根据相关性热图删掉了后面几列数据
+这个在mydata/my_wheather_data.csv获得数据前进行过一次错误或者不全的数据过滤了
+至于你说的相关性热图删掉了后面几列数据，则是根据数据规律和常识了。
+affinity analysis ----------------------------------------这个图里面完全没有规律的，肯定是不需要的；
+而根据常识，想record_id 这个肯定也是不需要的，因为和数据趋势没啥关系，这是数据集的标识
