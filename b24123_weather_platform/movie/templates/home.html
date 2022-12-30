@@ -78,11 +78,11 @@ div[class*="release_year"] {
         {% if session['isadmin'] %}
 
           <li class="nav-item active">
-        <a class="nav-link" href="/blogs"> 管理介绍博客 <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/blogs"> manage-blogs <span class="sr-only">(current)</span></a>
       </li>
 
     <li class="nav-item active">
-        <a class="nav-link" href="http://localhost:8888/notebooks/i1spark_ml.ipynb"> spark预测和可视化 <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="http://localhost:8888/notebooks/i1spark_ml.ipynb"> spark predict-and-visual <span class="sr-only">(current)</span></a>
       </li> 
 
 
@@ -92,14 +92,15 @@ div[class*="release_year"] {
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+
       <li class="nav-item active">
         <form class="form-inline my-2 my-lg-0 navbar-right" action="/home" method="POST">
 
                 <div class="form-group">
-                  <input type="text" name="keyword" id="keyword" placeholder="请输入城市进行搜索" class="form-control" autofocus>&nbsp;
+                  <input type="text" name="keyword" id="keyword" placeholder="Please enter cityname to search" class="form-control" autofocus>&nbsp;
                 </div>
             &nbsp;&nbsp;
-              <input type="submit" value="搜索一下" id="btnSearch" class="btn btn-success">
+              <input type="submit" value="Search" id="btnSearch" class="btn btn-success">
         </form>
       </li>
 
@@ -148,14 +149,14 @@ div[class*="release_year"] {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
       <div class="media-left">
-        <h1 class="media-heading">天气预测和大气数据</h1>
+        <h1 class="media-heading">weather and atmosphere</h1>
 
     </div>
     <span class="media-left">
         <img src="/static/images/company.png" style="height:73px;width:64px;">
     </span>
     <div class="media-body">
-        <h1 class="media-heading">分析预测综合平台</h1>
+        <h1 class="media-heading">Platform</h1>
 
     </div>
 </div>
@@ -208,9 +209,9 @@ div[class*="release_year"] {
     .
 {% endif %}
 <hr/>
-历史记录中的对应天气: {{ old_whether }}
+Corresponding weather in history: {{ old_whether }}
 <hr/>
-历史资料后来验证：<span style="color:red">{{ msg }} </span>
+Later verification of historical data：<span style="color:red">{{ msg }} </span>
 <hr/>
 {% if filter_flights is not none %}  
 
@@ -227,13 +228,13 @@ div[class*="release_year"] {
                     <thead>
                         <tr>
                             <!--special characters and spaces not allowed in data-field name-->
-                            <th data-field="columnA" data-filter-control="input" data-sortable="true">出发机场</th>
-                            <th data-field="columnB" data-filter-control="select" data-sortable="true">到达机场</th>
-                            <th data-field="columnC" data-filter-control="input" data-sortable="true">航班编号</th>
-                            <th data-field="columnC" data-filter-control="input" data-sortable="true">计划起飞时间</th>
-                            <th data-field="columnC" data-filter-control="input" data-sortable="true">计划到达时间</th>
-                            <th data-field="columnC" data-filter-control="input" data-sortable="true">实际起飞时间</th>
-                            <th data-field="columnC" data-filter-control="input" data-sortable="true">实际到达时间</th>
+                            <th data-field="columnA" data-filter-control="input" data-sortable="true">departure airport</th>
+                            <th data-field="columnB" data-filter-control="select" data-sortable="true">Arrive at the airport</th>
+                            <th data-field="columnC" data-filter-control="input" data-sortable="true">Arrive airport ID</th>
+                            <th data-field="columnC" data-filter-control="input" data-sortable="true">scheduled departure time</th>
+                            <th data-field="columnC" data-filter-control="input" data-sortable="true">Planned time of arrival</th>
+                            <th data-field="columnC" data-filter-control="input" data-sortable="true">actual departure time</th>
+                            <th data-field="columnC" data-filter-control="input" data-sortable="true">actual arrival time</th>
                         </tr>
                     </thead>
                     <tbody>

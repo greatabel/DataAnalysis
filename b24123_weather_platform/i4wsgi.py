@@ -268,7 +268,7 @@ def home(pagenum=1):
             listing=None,
             user=user,
             keyword=keyword,
-            realtime_whether=keyword + "实时天气:" + realtime_api,
+            realtime_whether=keyword + "realtime:" + realtime_api,
             filter_flights=filter_flights,
             old_whether=history_whether_625[keyword],
             msg=msg,
@@ -279,7 +279,7 @@ def home(pagenum=1):
         "home.html",
         listing=PageResult(blogs, pagenum),
         user=user,
-        realtime_whether=keyword + "实时天气:晴朗",
+        realtime_whether=keyword + "realtime:sunny",
     )
 
 
