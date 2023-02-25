@@ -23,23 +23,14 @@ python3 i1wsgi.py
 6.
 浏览器访问：
 
-http://localhost:5000/home
+访问不同的用户，比如用户user 1
+http://localhost:5000/index_a?id=1
+访问不同的用户，比如用户user 2
+http://localhost:5000/index_a?id=2
 
-已经注册好的管理员账号 可以直接登录：
-管理员1
-username: greatabel1@126.com
-password: abel
-你也可以自己注册和登录
 
-管理员2
-username: admin@126.com
-password: admin
-
--------------------
-一般用户测试账号:(geust_test)
-username:test@126.com
-password: test
-
-7.
-个人主页： http://localhost:5000/profile
-
+知识图谱的示例json文件放在：movie/static/kg_data下面的：
+data_1.json
+data_1.json
+...
+买家可以根据例子，增加和生成自己的json
