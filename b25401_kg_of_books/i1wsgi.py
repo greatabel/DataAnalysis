@@ -24,7 +24,7 @@ from flask import flash
 from movie import create_app
 
 
-import es_search
+# import es_search
 import logging
 
 
@@ -412,8 +412,18 @@ user_pass = {}
 
 @app.route("/statistics", methods=["GET"])
 def relationship():
+    # 加载哪个用户的知识图谱
+    userid = request.args.get('id')
+    print('kg want userid=', userid, '#'*30)
+
     # static/data/test_data.json
-    filename = os.path.join(app.static_folder, "data.json")
+    filename = os.path.join(app.static_folder, "kg_data/data_"+ userid +".json")
+    if os.path.isfile(filename):
+        print(filename, ' ## It is a file')
+    else:
+        filename = os.path.join(app.static_folder, "kg_data/default.json")
+        print(filename, ' ## use default file')
+
     # with open(filename) as test_file:
     with open(filename, "r", encoding="utf-8") as test_file:
         d = json.load(test_file)
