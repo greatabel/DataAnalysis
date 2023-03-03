@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[42]:
+# In[74]:
 
 
 # Sports_and_Outdoors.csv
@@ -18,26 +18,29 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
+from sklearn.model_selection import KFold
 
-# In[43]:
+
+
+# In[75]:
 
 
 df = pd.read_csv('Sports_and_Outdoors.csv', header=None, names=['product_id', 'user_id', 'rating', 'timestamp'])
 
 
-# In[44]:
+# In[76]:
 
 
 df.head()
 
 
-# In[45]:
+# In[77]:
 
 
 print("Length of the DataFrame:", len(df))
 
 
-# In[46]:
+# In[78]:
 
 
 df = df.drop('timestamp', axis=1) #Dropping timestamp
@@ -45,7 +48,7 @@ df = df.drop('timestamp', axis=1) #Dropping timestamp
 df_copy = df.copy(deep=True)
 
 
-# In[47]:
+# In[79]:
 
 
 # Convert the user_id column from string to integer
@@ -55,20 +58,20 @@ df['user_id'] = pd.factorize(df['user_id'])[0]
 df['product_id'] = pd.factorize(df['product_id'])[0]
 
 
-# In[48]:
+# In[80]:
 
 
 #Check Data types
 df.dtypes
 
 
-# In[49]:
+# In[81]:
 
 
 df.head()
 
 
-# In[50]:
+# In[82]:
 
 
 # Plot the distribution of user ratings
@@ -87,7 +90,7 @@ plt.ylabel('Count')
 plt.show()
 
 
-# In[51]:
+# In[83]:
 
 
 # Calculate the average rating for each product
@@ -124,7 +127,7 @@ plt.ylabel('Average Rating')
 plt.show()
 
 
-# In[52]:
+# In[111]:
 
 
 counts = df['user_id'].value_counts()
@@ -135,7 +138,53 @@ print('Number of unique USERS in the final data = ', df_final['user_id'].nunique
 print('Number of unique PRODUCTS in the final data = ', df_final['product_id'].nunique())
 
 
-# In[53]:
+# In[112]:
+
+
+# from surprise import Dataset
+# from surprise import Reader
+# from surprise import SVD
+# from surprise.model_selection import cross_validate
+# from surprise.model_selection import train_test_split
+
+# df_copy = df_final.copy(deep=True)
+# # Convert the user_id column from string to integer and map to integers
+# # df['user_id'] = pd.factorize(df['user_id'])[0]
+# # df['product_id'] = pd.factorize(df['product_id'])[0]
+
+# # Define the scale of the rating values
+# reader = Reader(rating_scale=(1, 5))
+
+# # Load the dataset into Surprise format
+# data = Dataset.load_from_df(df[['user_id', 'product_id', 'rating']], reader)
+
+# # Split the dataset into training and testing sets
+# trainset, testset = train_test_split(data, test_size=.25)
+
+# # Define the SVD model with 50 latent factors and regularization parameter of 0.01
+# model = SVD(n_factors=50, reg_all=0.01)
+
+# # Train the model on the training set
+# model.fit(trainset)
+
+# # Evaluate the model using RMSE and MAE metrics
+# results = cross_validate(model, data, measures=['RMSE', 'MAE'], cv=5, verbose=True)
+
+# # Print the average RMSE and MAE across the 5 folds
+# print('Average RMSE:', results['test_rmse'].mean())
+# print('Average MAE:', results['test_mae'].mean())
+
+# # Predict the ratings for the test set
+# predictions = model.test(testset)
+
+# # Print the first 10 predicted ratings
+# for pred in predictions[:10]:
+#     print('User:', pred.uid, 'Product:', pred.iid, 'Rating:', pred.est)
+
+
+
+
+# In[113]:
 
 
 # Calculate some basic statistics about the dataset
@@ -150,7 +199,62 @@ print('Number of unique products:', n_products)
 print('Average rating:', np.mean(df['rating']))
 
 
-# In[54]:
+# In[114]:
+
+
+# Aggregate the duplicate ratings by taking the mean
+df_final_agg = df_final.groupby(['user_id', 'product_id'])['rating'].mean().reset_index()
+
+# Pivot the dataframe to create the interaction matrix
+final_ratings_matrix = df_final_agg.pivot(index='user_id', columns='product_id', values='rating').fillna(0)
+
+# Print the shape and density of the matrix
+print('Shape of final_ratings_matrix: ', final_ratings_matrix.shape)
+
+given_num_of_ratings = np.count_nonzero(final_ratings_matrix)
+print('given_num_of_ratings = ', given_num_of_ratings)
+
+possible_num_of_ratings = final_ratings_matrix.shape[0] * final_ratings_matrix.shape[1]
+print('possible_num_of_ratings = ', possible_num_of_ratings)
+
+density = (given_num_of_ratings/possible_num_of_ratings)
+density *= 100
+print ('density: {:4.2f}%'.format(density))
+
+final_ratings_matrix.head()
+
+
+# In[115]:
+
+
+from sklearn.metrics.pairwise import cosine_similarity
+
+from sklearn.metrics import mean_squared_error
+
+
+
+def similar_users(user_index, interactions_matrix):
+    similarity = []
+    for user in range(0, interactions_matrix.shape[0]):
+        #finding cosine similarity between the user_index and each user
+        sim = cosine_similarity([interactions_matrix.loc[user_index]], [interactions_matrix.loc[user]])
+        #Appending the user and the corresponding similarity score with user_index as a tuple
+        similarity.append((user, sim))
+        
+    similarity.sort(key=lambda x: x[1], reverse=True)
+    most_similar_users = [Tuple[0] for Tuple in similarity] 
+    #Extract the user from each tuple in the sorted list
+    similarity_score = [Tuple[1] for Tuple in similarity]   
+    ##Extracting the similarity score from each tuple in the sorted list
+   
+    #Remove the original user and its similarity score and keep only other similar users 
+    most_similar_users.remove(user_index)
+    similarity_score.remove(similarity_score[0])
+       
+    return most_similar_users, similarity_score
+
+
+# In[116]:
 
 
 #Calculate the average rating for each product 
@@ -169,21 +273,21 @@ final_rating = final_rating.sort_values(by='Average Rating', ascending=False)
 final_rating.head()
 
 
-# In[55]:
+# In[117]:
 
 
 def my_top_n_products(final_rating, n, min_interaction):
     
-    #Finding movies with minimum number of interactions
+
     recommendations = final_rating[final_rating['Ratings Count'] >= min_interaction]
     
-    #Sorting values w.r.t average rating 
+
     recommendations = recommendations.sort_values(by='Average Rating', ascending=False)
     
     return recommendations.index[:n]
 
 
-# In[56]:
+# In[118]:
 
 
 list(my_top_n_products(final_rating, 5, 50))
@@ -195,7 +299,9 @@ list(my_top_n_products(final_rating, 5, 50))
 
 
 
-# In[ ]:
+# In[110]:
+
+
 
 
 
