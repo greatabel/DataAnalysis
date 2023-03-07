@@ -155,3 +155,17 @@ print("Gradient Boosting Tree Mean Squared Error (MSE) on test data = %g" % gbt_
 
 # Combine the models using weighted averaging
 
+'''
+1. PySpark：Apache Spark的Python API，用于分布式数据处理和计算。它提供了广泛的算法和工具，包括机器学习和数据处理。
+https://spark-reference-doc-cn.readthedocs.io/zh_CN/latest/programming-guide/quick-start.html
+
+2. 线性回归：一种广泛使用的机器学习算法，用于建立线性模型并预测连续变量。在本例中，我们使用线性回归来预测未来的需求。
+https://aws.amazon.com/cn/what-is/linear-regression/
+
+3. 随机森林回归：一种集成学习算法，将多个决策树组合起来，以提高预测准确性。在本例中，我们使用随机森林回归来预测未来的需求。
+https://help.aliyun.com/document_detail/439734.html
+
+4. 梯度提升树回归：一种集成学习算法，通过迭代地训练多个决策树来提高预测准确性。
+https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87%E6%8A%80%E6%9C%AF
+
+'''

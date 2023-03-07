@@ -87,6 +87,46 @@ def main():
         rmse = np.sqrt(np.mean(np.square(noisy_data - data)))
         print("RMSE:", rmse)
 
+# from scipy.linalg import svd_angles
+
+# # 计算原始数据的前k个主成分
+# u, s, vh = np.linalg.svd(data)
+# pca_data = u[:, :k]
+
+# # 计算添加噪声后数据的前k个主成分
+# u_noisy, s_noisy, vh_noisy = np.linalg.svd(noisy_data)
+# pca_noisy_data = u_noisy[:, :k]
+
+# # 计算前k个主成分所张成的子空间之间的主角度
+# angles = svd_angles(pca_data.T, pca_noisy_data.T)
+
+# print(f"子空间之间的主角度: {angles}")
+
+
+
+# 这个函数生成一个大小为 $p \times p$ 的对称矩阵，然后将它与一个随机的大小为 $p \times k$ 的矩阵相乘，
+# 从而得到一个大小为 $p \times k$ 的矩阵。函数中的 epsilon 和 sensitivity 参数与 local_gaussian_mechanism 函数中的含义相同。
+# 您可以调用这个函数来生成任意大小的大小为 $p \times k$ 的噪声矩阵，其中 $p \geq k$。
+
+# # def generate_noisy_matrix(p, k, epsilon, sensitivity):
+#     # 生成一个大小为 p x p 的对称矩阵
+#     data = np.random.rand(p, p)
+#     data = (data + data.T) / 2
+
+#     # 计算噪声标准差
+#     sigma = sensitivity / epsilon
+
+#     # 生成高斯噪声
+#     noise = np.random.normal(loc=0, scale=sigma, size=(p, p))
+
+#     # 将噪声加到数据上
+#     noisy_data = data + noise
+
+#     # 将数据与一个大小为 p x k 的随机矩阵相乘，得到一个大小为 p x k 的矩阵
+#     random_matrix = np.random.rand(p, k)
+#     noisy_matrix = np.dot(noisy_data, random_matrix)
+
+#     return noisy_matrix
 
 if __name__ == "__main__":
     main()
