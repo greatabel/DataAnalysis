@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 # 生成时间序列
 start_date = datetime(2021, 1, 1, 0, 0, 0)
-end_date = datetime(2023, 12, 31, 23, 0, 0)
+end_date = datetime(2022, 12, 31, 23, 0, 0)
 time_series = [start_date + timedelta(hours=i) for i in range(int((end_date - start_date).total_seconds() / 3600) + 1)]
 
 # 生成每天的demand记录
