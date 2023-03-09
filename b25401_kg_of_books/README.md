@@ -23,10 +23,10 @@ python3 i1wsgi.py
 6.
 浏览器访问：
 
-访问不同的用户，比如用户user 1
-http://localhost:5000/index_a?id=1
-访问不同的用户，比如用户user 2
-http://localhost:5000/index_a?id=2
+访问不同的用户，比如用户user 101
+http://localhost:5000/index_a?id=101
+访问不同的用户，比如用户user 102
+http://localhost:5000/index_a?id=102
 
 
 知识图谱的示例json文件放在：movie/static/kg_data下面的：

@@ -417,7 +417,7 @@ def relationship():
     print('kg want userid=', userid, '#'*30)
 
     # static/data/test_data.json
-    filename = os.path.join(app.static_folder, "kg_data/data_"+ userid +".json")
+    filename = os.path.join(app.static_folder, "kg_data/"+ userid +".json")
     if os.path.isfile(filename):
         print(filename, ' ## It is a file')
     else:
