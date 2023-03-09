@@ -23,7 +23,7 @@ from sklearn.model_selection import KFold
 
 
 # In[75]:
-
+#数据集太大，我放在需求文件夹了，只留下sample
 
 df = pd.read_csv('Sports_and_Outdoors.csv', header=None, names=['product_id', 'user_id', 'rating', 'timestamp'])
 
