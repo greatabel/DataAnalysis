@@ -1,5 +1,6 @@
 import csv
 import random
+import string
 from datetime import datetime, timedelta
 
 # 生成时间序列
@@ -18,18 +19,22 @@ for day in range((end_date - start_date).days + 1):
         if max_demand < 0:
             max_demand = 0
         demand = random.randint(0, max_demand)
-        data.append((time_series[day*24+i], demand))
+        order_movement_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=18))
+        record_number_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=16))
+        vin = ''.join(random.choices(string.ascii_uppercase + string.digits, k=17))
+        batch_number = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+        data.append((time_series[day*24+i], demand, order_movement_id, record_number_id, vin, batch_number))
         demand_total += demand
-    daily_demand_totals.append(demand_total)
+    daily_demand_totals.append((start_date + timedelta(days=day), demand_total))
 
 # 写入数据到CSV文件
 with open('data/records.csv', 'w', newline='') as f:
     writer = csv.writer(f)
-    writer.writerow(['timestamp', 'demand'])
+    writer.writerow(['timestamp', 'demand', 'Order Movement ID', 'record number id', 'VIN', 'Batch Number'])
     writer.writerows(data)
 
 with open('data/daily_demand_totals.csv', 'w', newline='') as f:
     writer = csv.writer(f)
     writer.writerow(['date', 'demand'])
     for day, demand_total in enumerate(daily_demand_totals):
-        writer.writerow([start_date + timedelta(days=day), demand_total])
+        writer.writerow([demand_total[0], demand_total[1]])
