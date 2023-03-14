@@ -87,6 +87,7 @@ def main():
         rmse = np.sqrt(np.mean(np.square(noisy_data - data)))
         print("RMSE:", rmse)
 
+
 # from scipy.linalg import svd_angles
 
 # # 计算原始数据的前k个主成分
@@ -101,7 +102,6 @@ def main():
 # angles = svd_angles(pca_data.T, pca_noisy_data.T)
 
 # print(f"子空间之间的主角度: {angles}")
-
 
 
 # 这个函数生成一个大小为 $p \times p$ 的对称矩阵，然后将它与一个随机的大小为 $p \times k$ 的矩阵相乘，
