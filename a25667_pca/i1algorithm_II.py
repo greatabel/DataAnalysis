@@ -4,11 +4,15 @@ from sklearn.datasets import fetch_covtype
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from scipy.stats import norm
+import os
+import joblib
+
 
 """
 保护数据隐私的同时，找到一个低维空间，我们可以将数据投影到这个空间
 最大化保留原始数据结构的情况下降低数据维度
 """
+
 
 
 def local_gaussian_mechanism_high_dimension(data, epsilon, delta, rho, k):
@@ -32,6 +36,16 @@ def local_gaussian_mechanism_high_dimension(data, epsilon, delta, rho, k):
         )
     cov_matrix /= n
 
+    # 计算稀疏程度参数 s
+    s = np.mean(np.count_nonzero(data, axis=0))
+
+    # 检查输入的 k 是否满足 k ≤ s ≤ p 的条件
+
+    if not (k <= s <= p):
+        raise ValueError("k must satisfy the condition k ≤ s ≤ p")
+    else:
+        print(k,s,p, "==> satisfy the condition k ≤ s ≤ p")
+
     # 使用 PCA 主成分分析
     pca = PCA(n_components=k)
     pca.fit(cov_matrix)
@@ -40,10 +54,65 @@ def local_gaussian_mechanism_high_dimension(data, epsilon, delta, rho, k):
 
     return principal_components
 
+# def local_gaussian_mechanism_high_dimension(data, epsilon, delta, rho, k):
+#     # 计算噪声标准偏差
+#     sigma = np.sqrt(2 * np.log(1.25 / delta))
 
+#     # 生成高斯噪音
+#     p, n = data.shape
+#     noise = np.random.normal(loc=0, scale=sigma, size=(p, p, n))
+#     for i in range(n):
+#         noise[:, :, i] = np.triu(noise[:, :, i]) + np.triu(noise[:, :, i], 1).T
+
+#     # 给数据添加噪音
+#     noisy_data = data + noise
+
+#     # 计算协方差矩阵
+#     cov_matrix = np.zeros((p, p))
+#     for i in range(n):
+#         cov_matrix += np.einsum(
+#             "ij, kj -> ik", noisy_data[:, :, i], noisy_data[:, :, i]
+#         )
+#     cov_matrix /= n
+
+#     # 使用 PCA 主成分分析
+#     pca = PCA(n_components=k)
+#     pca.fit(cov_matrix)
+#     # 主成分是带噪声数据的最佳线性投影
+#     principal_components = pca.components_.T
+
+
+#     return principal_components
+
+
+def load_local_covtype_data(local_folder):
+    samples_path = os.path.join(local_folder, "samples_py3")
+    targets_path = os.path.join(local_folder, "targets_py3")
+
+    if os.path.exists(samples_path) and os.path.exists(targets_path):
+        X = joblib.load(samples_path)
+        y = joblib.load(targets_path)
+        return X, y
+    else:
+        raise FileNotFoundError("Local COVERTYPE 数据集文件未找到。")
+
+# covtype = fetch_covtype()
+# X, y = covtype.data, covtype.target
+
+# 加载 covtype 数据集
 covtype = fetch_covtype()
-X, y = covtype.data, covtype.target
 
+# X, _ = covtype.data, covtype.target
+local_data_folder = "covertype"
+
+try:
+    # 尝试加载 COVERTYPE 数据集
+    covtype = fetch_covtype()
+    print("----from internent---")
+    X, y = covtype.data, covtype.target
+except Exception as e:
+    print("无法下载 COVERTYPE 数据集，尝试从本地加载数据集。")
+    X, y = load_local_covtype_data(local_data_folder)
 
 scaler = StandardScaler()
 X = scaler.fit_transform(X)
@@ -107,3 +176,7 @@ plt.show()
 
 
 print("\n\n")
+
+
+print("\n\n")
+

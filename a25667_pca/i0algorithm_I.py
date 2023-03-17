@@ -1,132 +1,106 @@
 import numpy as np
-from sklearn.datasets import fetch_covtype
+from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
-from scipy.stats import norm
-
+from sklearn.datasets import fetch_covtype
 import matplotlib.pyplot as plt
-import seaborn as sns
+import os
+import joblib
 
 
-def local_gaussian_mechanism(data, epsilon, sensitivity):
-    print("#" * 20, "local_gaussian_mechanism\n")
-    # 计算噪声标准差
-    sigma = sensitivity / epsilon
+def load_local_covtype_data(local_folder):
+    samples_path = os.path.join(local_folder, "samples_py3")
+    targets_path = os.path.join(local_folder, "targets_py3")
 
-    # 生成高斯噪声
-    noise = np.random.normal(loc=0, scale=sigma, size=len(data))
+    if os.path.exists(samples_path) and os.path.exists(targets_path):
+        X = joblib.load(samples_path)
+        y = joblib.load(targets_path)
+        return X, y
+    else:
+        raise FileNotFoundError("Local COVERTYPE 数据集文件未找到。")
 
-    # 将噪声加到数据上
-    noisy_data = data + noise
 
-    return noisy_data
+def local_gaussian_mechanism(X, epsilon, delta, k):
+    n, p = X.shape
+
+    # 计算 sigma
+    sigma = np.sqrt(2 * np.log(1.25 / delta)) / epsilon
+
+    # 为每个数据点生成 Zi
+    X_tilde = []
+    for x_i in X:
+        Zi = np.zeros((p, p))
+        for i in range(p):
+            for j in range(i, p):
+                noise = np.random.normal(0, sigma**2)
+                Zi[i, j] = noise
+                Zi[j, i] = noise
+
+        x_i_tilde = x_i @ x_i.T + Zi
+        X_tilde.append(x_i_tilde)
+
+    # 计算 S_tilde
+    S_tilde = np.sum(X_tilde, axis=0) / n
+
+    # 在 S_tilde 上执行 PCA 并提取主要的 the principal k-subspace of S ̃ .
+    pca = PCA(n_components=k)
+    pca.fit(S_tilde)
+    V_tilde_k = pca.components_.T
+
+    return V_tilde_k, S_tilde
+
+
+def visualize_data(X, X_noisy, title):
+    pca = PCA(n_components=2)
+    X_pca = pca.fit_transform(X)
+    X_noisy_pca = pca.fit_transform(X_noisy)
+
+    plt.scatter(X_pca[:, 0], X_pca[:, 1], alpha=0.5, label="source_data")
+    plt.scatter(
+        X_noisy_pca[:, 0], X_noisy_pca[:, 1], alpha=0.5, label="with_noise_data"
+    )
+    plt.legend(loc="best")
+    plt.title(title)
+    plt.show()
 
 
 def main():
     # 加载 covtype 数据集
     covtype = fetch_covtype()
-    X, y = covtype.data, covtype.target
 
-    # 对数据进行标准化
+    # X, _ = covtype.data, covtype.target
+    local_data_folder = "covertype"
+
+    try:
+        # 尝试加载 COVERTYPE 数据集
+        covtype = fetch_covtype()
+        print("----from internent---")
+        X, _ = covtype.data, covtype.target
+    except Exception as e:
+        print("无法下载 COVERTYPE 数据集，尝试从本地加载数据集。")
+        X, _ = load_local_covtype_data(local_data_folder)
+
+    # 跑全集，就注释掉这里
+    subset_size = int(len(X) * 0.001)
+    X = X[:subset_size]
+
+    # 标准化数据
     scaler = StandardScaler()
     X = scaler.fit_transform(X)
 
-    # 取第一列数据作为例子进行隐私保护处理
-    data = X[:, 0]
+    # 设置隐私参数
+    epsilon = 0.5
+    delta = 0.001
 
-    # 计算数据敏感度
-    sensitivity = np.max(data) - np.min(data)
+    # 为不同的 k 值运行实验
+    for k in range(1, 4):
+        # 应用局部高斯机制
+        V_tilde_k, S_tilde = local_gaussian_mechanism(X, epsilon, delta, k)
+        print(f"S_tilde {k}-sub：\n", V_tilde_k)
 
-    # Define a list of epsilon values
-    epsilon_values = [0.1, 0.2, 0.5, 0.8, 1]
+        if k == 2:
+            # 对于其他维度，我认为可视化没有意义
+            visualize_data(X, S_tilde, f"visual:k = {k}")
 
-    # Loop through the epsilon values and run the local_gaussian_mechanism function
-    for epsilon in epsilon_values:
-        # 对数据进行隐私保护处理
-        noisy_data = local_gaussian_mechanism(data, epsilon, sensitivity)
-
-        # 打印原始数据和处理后的数据
-        print(f"当隐私预算为{epsilon}时：")
-        print("原始数据：", data)
-        print("处理后的数据：", noisy_data)
-
-        plt.hist(data, bins=50, alpha=0.5, label="Original")
-        plt.hist(noisy_data, bins=50, alpha=0.5, label="Noisy")
-        plt.legend(loc="upper right")
-        plt.title("Histogram of Original and Noisy Data")
-        plt.show()
-
-        print("直方图可见#局部高斯机制算法#添加的噪声怎么改变了数据的分布")
-
-        sns.boxplot(data=[data, noisy_data], width=0.3)
-        plt.xticks([0, 1], ["Original", "Noisy"])
-        plt.title("Box Plot of Original and Noisy Data")
-        plt.show()
-
-        print("箱形图可以向我们展示数据在 #局部高斯机制算法# 前后的分布、异常值的存在以及添加噪声后中位数的变化")
-
-        # 打印原始数据和处理后的数据
-        print("原始数据：", data)
-        print("处理后的数据：", noisy_data)
-
-        # 计算MSE
-        mse = np.mean(np.square(noisy_data - data))
-        print("MSE:", mse)
-
-        # 计算ER
-        er = np.sum(np.abs(noisy_data - data)) / np.sum(np.abs(data))
-        print("ER:", er)
-
-        snr = 10 * np.log10(
-            np.sum(np.square(data)) / np.sum(np.square(noisy_data - data))
-        )
-        print("SNR:", snr)
-
-        mae = np.mean(np.abs(noisy_data - data))
-        print("MAE:", mae)
-
-        rmse = np.sqrt(np.mean(np.square(noisy_data - data)))
-        print("RMSE:", rmse)
-
-
-# from scipy.linalg import svd_angles
-
-# # 计算原始数据的前k个主成分
-# u, s, vh = np.linalg.svd(data)
-# pca_data = u[:, :k]
-
-# # 计算添加噪声后数据的前k个主成分
-# u_noisy, s_noisy, vh_noisy = np.linalg.svd(noisy_data)
-# pca_noisy_data = u_noisy[:, :k]
-
-# # 计算前k个主成分所张成的子空间之间的主角度
-# angles = svd_angles(pca_data.T, pca_noisy_data.T)
-
-# print(f"子空间之间的主角度: {angles}")
-
-
-# 这个函数生成一个大小为 $p \times p$ 的对称矩阵，然后将它与一个随机的大小为 $p \times k$ 的矩阵相乘，
-# 从而得到一个大小为 $p \times k$ 的矩阵。函数中的 epsilon 和 sensitivity 参数与 local_gaussian_mechanism 函数中的含义相同。
-# 您可以调用这个函数来生成任意大小的大小为 $p \times k$ 的噪声矩阵，其中 $p \geq k$。
-
-# # def generate_noisy_matrix(p, k, epsilon, sensitivity):
-#     # 生成一个大小为 p x p 的对称矩阵
-#     data = np.random.rand(p, p)
-#     data = (data + data.T) / 2
-
-#     # 计算噪声标准差
-#     sigma = sensitivity / epsilon
-
-#     # 生成高斯噪声
-#     noise = np.random.normal(loc=0, scale=sigma, size=(p, p))
-
-#     # 将噪声加到数据上
-#     noisy_data = data + noise
-
-#     # 将数据与一个大小为 p x k 的随机矩阵相乘，得到一个大小为 p x k 的矩阵
-#     random_matrix = np.random.rand(p, k)
-#     noisy_matrix = np.dot(noisy_data, random_matrix)
-
-#     return noisy_matrix
 
 if __name__ == "__main__":
     main()
