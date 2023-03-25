@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[42]:
+# In[10]:
 
 
 from pyspark.sql import SparkSession
@@ -16,7 +16,7 @@ from matplotlib.font_manager import FontProperties
 import pandas as pd
 
 
-# In[43]:
+# In[11]:
 
 
 # 获取已安装字体的路径
@@ -28,7 +28,7 @@ import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-# In[44]:
+# In[12]:
 
 
 # 创建SparkSession
@@ -42,7 +42,39 @@ behavior_df = spark.read.csv("data/user_behavior_data.csv", header=True, inferSc
 
 
 
-# In[45]:
+# In[13]:
+
+
+# 统计用户数据中的记录数量
+user_count = user_df.count()
+
+# 统计用户行为数据中的记录数量
+behavior_count = behavior_df.count()
+
+# 打印结果
+print("用户数据中的记录数量：", user_count)
+print("用户行为数据中的记录数量：", behavior_count)
+
+
+# In[16]:
+
+
+# 计算用户数据中各特征之间的相关系数
+# Convert the Spark DataFrame to a Pandas DataFrame
+user_df_pd = user_df.toPandas()
+
+# Calculate the correlation matrix
+corr_matrix = user_df_pd.corr()
+
+# Visualize the correlation matrix
+sns.heatmap(corr_matrix, annot=True)
+plt.show()
+
+
+
+
+
+# In[4]:
 
 
 # 训练ALS模型，用于商品推荐
@@ -56,7 +88,7 @@ user_recs = model.recommendForAllUsers(10)
 print('#'*20)
 
 
-# In[46]:
+# In[5]:
 
 
 # 将用户画像和推荐结果连接起来
@@ -84,7 +116,7 @@ plt.show()
 
 
 
-# In[56]:
+# In[6]:
 
 
 # 绘制用户地理位置云图
@@ -103,7 +135,7 @@ plt.title('城市分布图', fontproperties=font)
 plt.show()
 
 
-# In[57]:
+# In[7]:
 
 
 # 生成特征列和标签列
@@ -114,7 +146,7 @@ user_recs_with_profile = user_recs_with_profile.withColumn("label",
                                             user_recs_with_profile["gender"].isin(["Male"]).cast("double"))
 
 
-# In[62]:
+# In[8]:
 
 
 # 计算用户标签，使用逻辑回归算法
@@ -135,7 +167,7 @@ new_user_recs_with_profile = new_user_recs_with_profile.withColumn("label",
 new_user_labels = lr_model.transform(new_user_recs_with_profile)
 
 
-# In[63]:
+# In[9]:
 
 
 # 显示用户
@@ -145,7 +177,7 @@ user_df.show()
 
 
 
-# In[64]:
+# In[10]:
 
 
 # 显示推荐结果
@@ -155,7 +187,7 @@ user_recs_with_profile.show()
 
 
 
-# In[65]:
+# In[11]:
 
 
 # 显示标签结果

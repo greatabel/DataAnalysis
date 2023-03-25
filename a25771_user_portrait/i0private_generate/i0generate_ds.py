@@ -18,18 +18,34 @@ cities = [
 ]
 
 for i in range(5000):
-    city, latitude, longitude = random.choice(cities)
+    age = random.randint(18, 65)
+    gender = random.choice(["Male", "Female"])
+    
+    if age < 30:
+        city, latitude, longitude = random.choice(cities[:2]) if random.random() < 0.8 else random.choice(cities[2:])
+    elif gender == "Male":
+        city, latitude, longitude = random.choice(cities[2:4]) if random.random() < 0.9 else random.choice(cities[:2] + cities[4:])
+    else:
+        city, latitude, longitude = random.choice(cities)
+    
     user_data = user_data.append({
         "userId": i,
-        "age": random.randint(18, 65),
-        "gender": random.choice(["Male", "Female"]),
+        "age": age,
+        "gender": gender,
         "city": city,
         "longitude": longitude,
         "latitude": latitude,
-
     }, ignore_index=True)
 
 user_data.to_csv("../data/user_data.csv", index=False)
+
+print('#'*20)
+# 生成用户行为数据
+def weighted_rating_choice(user_id, threshold=2500):
+    if user_id < threshold:
+        return random.choices([1, 2, 3, 4, 5], weights=[1, 2, 4, 8, 16])[0]
+    else:
+        return random.choices([1, 2, 3, 4, 5], weights=[16, 8, 4, 2, 1])[0]
 
 # 生成用户行为数据
 user_behavior_data = pd.DataFrame(columns=["userId", "itemId", "rating"])
@@ -39,7 +55,7 @@ for i in range(5000):
             user_behavior_data = user_behavior_data.append({
                 "userId": i,
                 "itemId": j,
-                "rating": random.randint(1, 5),
+                "rating": weighted_rating_choice(i),
             }, ignore_index=True)
 
 user_behavior_data.to_csv("../data/user_behavior_data.csv", index=False)

@@ -27,7 +27,7 @@ from movie import create_app
 import logging
 
 
-import recommandation
+# import recommandation
 
 # from movie.domain.model import Director, Review, Movie
 
