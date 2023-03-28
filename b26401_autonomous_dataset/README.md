@@ -16,7 +16,7 @@ pip install --upgrade -r requirements.txt
 
 5.
 模拟运行在:
-ython3 i0data_explore.py
+ython3 i1data_explore.py
 
 
 
