@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 from termcolor import colored
+from mpl_toolkits.mplot3d import Axes3D
+
+
 
 from i0common import *
 
@@ -140,6 +143,30 @@ sns.histplot(data=sizes)
 plt.title("Instance Size Distribution")
 plt.show()
 
+print('1-2 3d x,y z 实例大小分布')
+sizes = pd.DataFrame(df2["size"].tolist(), columns=["x", "y", "z"])
+
+fig = plt.figure(figsize=(12, 6))
+ax = fig.add_subplot(111, projection='3d')
+hist, xedges, yedges = np.histogram2d(sizes['x'], sizes['y'], bins=(50,50))
+xpos, ypos = np.meshgrid(xedges[:-1] + xedges[1:], yedges[:-1] + yedges[1:])
+xpos = xpos.flatten() / 2.
+ypos = ypos.flatten() / 2.
+zpos = np.zeros_like(xpos)
+dx = (xedges[1] - xedges[0]) * np.ones_like(zpos)
+dy = (yedges[1] - yedges[0]) * np.ones_like(zpos)
+dz = hist.flatten()
+ax.bar3d(xpos, ypos, zpos, dx, dy, dz, zsort='average', color='b', alpha=0.6)
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+plt.title("Instance Size Distribution")
+plt.show()
+
+
+
+
+
 # 示例2: 平移分布
 print(colored("示例2:", "blue"), "实例平移分布。这个图展示了数据集中不同实例（如车辆、行人等）在三维空间（x、y、z轴）中的位置分布情况。")
 
@@ -161,6 +188,14 @@ plt.figure(figsize=(12, 6))
 sns.histplot(data=rotations)
 plt.title("Instance Rotation Distribution")
 plt.show()
+
+
+# print('3-2 3d 三维空间中的旋转（四元数表示：x、y、z、w）分布情况')
+# translations = pd.DataFrame(df2["translation"].tolist(), columns=["x", "y", "z"])
+
+# fig = px.histogram_3d(translations, x='x', y='y', z='z')
+# fig.update_layout(title='Instance Translation Distribution', scene=dict(xaxis_title='x', yaxis_title='y', zaxis_title='z'))
+# fig.show()
 
 
 # 势力4: 统计饼图
