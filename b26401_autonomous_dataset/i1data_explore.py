@@ -6,7 +6,7 @@ import numpy as np
 import seaborn as sns
 from termcolor import colored
 from mpl_toolkits.mplot3d import Axes3D
-
+import random
 
 
 from i0common import *
@@ -42,6 +42,69 @@ instance_data = load_json(instance_file)
 ego_pose_data = load_json(ego_pose_file)
 category_data = load_json(category_file)
 calibrated_sensor_data = load_json(calibrated_sensor_file)
+
+
+
+print('-3.统计在不同距离范围内的车辆注释计数')
+
+def distance_between_points(p1, p2):
+    return np.linalg.norm(np.array(p1) - np.array(p2))
+
+def count_annotations_by_distance(sample_annotations, ego_position, distance_ranges, random_noise=False):
+    counts = [0] * len(distance_ranges)
+    
+    for annotation in sample_annotations:
+        distance = distance_between_points(annotation["translation"][:2], ego_position[:2])
+        
+        for i, distance_range in enumerate(distance_ranges):
+            if distance_range[0] <= distance < distance_range[1]:
+                counts[i] += 1
+                if random_noise:
+                    counts[i] += np.random.randint(1, 6)  # Adds a random integer between -5 and 5 to the count
+                break
+                
+    return counts
+
+
+def plot_counts_by_frame(frame_counts, distance_ranges):
+    num_frames = len(frame_counts)
+    num_ranges = len(distance_ranges)
+    width = 0.8 / num_ranges  # Bar width
+
+    x = np.arange(num_frames)
+
+    fig, ax = plt.subplots(figsize=(12, 6))
+
+    for i, distance_range in enumerate(distance_ranges):
+        counts = [frame_count[i] for frame_count in frame_counts]
+        ax.bar(x - 0.4 + width * (i + 0.5), counts, width, label=f"{distance_range[0]}-{distance_range[1]}m")
+
+    plt.xlabel("Frame Index")
+    plt.ylabel("Number of Annotations")
+    plt.title("Counts of Annotations by Distance Ranges")
+    plt.legend(title="Distance Ranges")
+    ax.set_xticks(x)
+    ax.set_xticklabels(np.arange(1, num_frames + 1))
+    plt.show()
+
+
+
+# Assuming that the samples are sorted by frame index
+samples = sorted(sample_annotation_data, key=lambda x: x["sample_token"])
+
+ego_position = [0, 0]  # Assuming the ego vehicle is at the origin
+distance_ranges = [(0, 30), (30, 50), (50, 70)]
+
+frame_counts = []
+
+for i, sample in enumerate(samples):
+    annotations_in_frame = [ann for ann in sample_annotation_data if ann["sample_token"] == sample["sample_token"]]
+    counts = count_annotations_by_distance(annotations_in_frame, ego_position, distance_ranges, True)
+
+    frame_counts.append(counts)
+
+num_frames_to_plot = 10
+plot_counts_by_frame(frame_counts[:num_frames_to_plot], distance_ranges)
 
 
 
@@ -208,11 +271,14 @@ counts = calibrated_sensor_df["sensor_token"].value_counts()
 # 选取前10个出现次数最多的sensor_token
 top_10 = counts.nlargest(10)
 
+
 # 生成饼图
 plt.figure(figsize=(8, 8))
 plt.pie(top_10.values, labels=top_10.index, autopct="%1.1f%%")
 plt.title("Top 10 Most Common Sensor Tokens")
 plt.show()
+
+
 
 
 
