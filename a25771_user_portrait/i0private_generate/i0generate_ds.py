@@ -41,8 +41,26 @@ user_data.to_csv("../data/user_data.csv", index=False)
 
 print('#'*20)
 # 生成用户行为数据
-def weighted_rating_choice(user_id, threshold=2500):
-    if user_id < threshold:
+import pandas as pd
+import random
+
+# ... 之前的代码不变 ...
+
+def age_city_related_item(age, city):
+    if age < 30:
+        if city in ("上海", "北京"):
+            return random.randint(0, 49)
+        else:
+            return random.randint(50, 99)
+    elif city in ("广州", "深圳"):
+        return random.randint(0, 74)
+    else:
+        return random.randint(25, 99)
+
+def weighted_rating_by_age(age):
+    if age < 30:
+        return random.choices([1, 2, 3, 4, 5], weights=[1, 2, 4, 8, 16])[0]
+    elif age < 45:
         return random.choices([1, 2, 3, 4, 5], weights=[1, 2, 4, 8, 16])[0]
     else:
         return random.choices([1, 2, 3, 4, 5], weights=[16, 8, 4, 2, 1])[0]
@@ -50,12 +68,14 @@ def weighted_rating_choice(user_id, threshold=2500):
 # 生成用户行为数据
 user_behavior_data = pd.DataFrame(columns=["userId", "itemId", "rating"])
 for i in range(5000):
+    user_age = user_data.loc[i, "age"]
+    user_city = user_data.loc[i, "city"]
     for j in range(100):
         if random.random() < 0.2:
             user_behavior_data = user_behavior_data.append({
                 "userId": i,
-                "itemId": j,
-                "rating": weighted_rating_choice(i),
+                "itemId": age_city_related_item(user_age, user_city),
+                "rating": weighted_rating_by_age(user_age),
             }, ignore_index=True)
 
 user_behavior_data.to_csv("../data/user_behavior_data.csv", index=False)

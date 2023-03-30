@@ -299,25 +299,29 @@ def query_note(id):
 
 
 ### -------------end of home
+with open("user_recommendations.json", "r") as f:
+    user_recs_dict = [json.loads(line) for line in f]
+
+
+def get_recommendations(user_id):
+    recommendations = [rec for rec in user_recs_dict if rec["userId"] == user_id]
+    if not recommendations:
+        return None
+    return recommendations
+
+
 @app.route("/recommend", methods=["GET", "DELETE"])
 def recommend():
     """
     查询cousre item 推荐
     """
     if request.method == "GET":
-        choosed = recommandation.main()
-        print("给予离线交互数据进行协同推荐")
-        print(choosed, "#" * 20)
-        print("给予离线交互数据进行协同推荐")
-
-        # 添加一些冷启动的推荐, 弥补协同过滤启动数据不足的问题
-        blogs = Blog.query.all()
-        r_index = random.randint(0, len(blogs) - 1)
-        cold_r = blogs[r_index].title
-
-        print(cold_r, "#####in cold start")
-        choosed.append(cold_r)
-        return rt("recommend.html", choosed=choosed)
+        id = session["userid"]
+        print(id, "#" * 20, "in recommend")
+        recs = get_recommendations(id)
+        if recs:
+            print("recs=", recs)
+        return rt("recommend.html", choosed=recs)
 
 
 ### -------------start of profile
