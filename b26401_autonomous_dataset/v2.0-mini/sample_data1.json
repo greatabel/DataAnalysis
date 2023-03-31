@@ -1,0 +1,23 @@
+[
+    {
+        "token": "data1",
+        "calibrated_sensor_token": "sensor1",
+        "width": 1280,
+        "height": 720,
+        "fileformat": "jpg"
+    },
+    {
+        "token": "data2",
+        "calibrated_sensor_token": "sensor2",
+        "width": 1280,
+        "height": 720,
+        "fileformat": "jpg"
+    },
+    {
+        "token": "data3",
+        "calibrated_sensor_token": "sensor3",
+        "width": 1280,
+        "height": 720,
+        "fileformat": "jpg"
+    }
+]
