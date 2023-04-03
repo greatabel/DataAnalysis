@@ -232,6 +232,7 @@ plt.show()
 
 # 示例2: 平移分布
 print(colored("示例2:", "blue"), "实例平移分布。这个图展示了数据集中不同实例（如车辆、行人等）在三维空间（x、y、z轴）中的位置分布情况。")
+sns.set_theme(style="whitegrid")
 
 translations = pd.DataFrame(df2["translation"].tolist(), columns=["x", "y", "z"])
 plt.figure(figsize=(12, 6))
