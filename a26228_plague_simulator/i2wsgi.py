@@ -240,7 +240,7 @@ def sir_model(params):
     else:
         weighted_max_infected = max_infected_raw * (1 - social_distancing_rate)
 
-    max_infected = weighted_max_infected
+    max_infected = int(weighted_max_infected)
 
     return {
         "result": np.random.rand(),
