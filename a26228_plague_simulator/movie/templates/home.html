@@ -226,10 +226,10 @@ div[class*="release_year"] {
         <div class="card mb-4">
           <div class="card-body">
             <h5 class="card-title">{{ r.title|safe }}</h5>
-            <p class="card-text">{{ r.text[:500]|safe }} ...</p>
+            <p class="card-text">{{ r.text[:300]|safe }} ...</p>
           </div>
           <a href="/blogs/{{r.id}}">
-            <img src="/static/images/ppt_cover/{{ r.id % 10 }}.jpeg" class="card-img-bottom img-fluid" style="width: 100%; height: auto;">
+            <img src="/static/images/ppt_cover/{{ r.id % 10 }}.jpg" class="card-img-bottom img-fluid" style="width: 100%; height: 500px;">
           </a>
           <!-- adjust width of image as needed -->
         </div>
@@ -258,7 +258,7 @@ div[class*="release_year"] {
 
         <div class="col-md-4">
         <figure>
-            <img src="/static/images/app_data/{{ r % 10 }}.png" class="img-fluid" style="height:250px;width:500px;">
+            <img src="/static/images/ppt_cover/slide{{ r % 10 }}.jpg" class="img-fluid" style="height:250px;width:500px;">
         </figure>
             <div name="title"> </div>  
             <!-- <div class="release_year">{{r.release_year}}</div>  -->
