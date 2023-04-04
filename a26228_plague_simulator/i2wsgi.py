@@ -25,8 +25,8 @@ from movie import create_app
 
 # import es_search
 import logging
-
-
+import numpy as np
+from scipy.integrate import odeint
 
 
 app = create_app()
@@ -132,53 +132,131 @@ class PageResult:
     def __repr__(self):  # used for page linking
         return "/home/{}".format(self.page + 1)  # view the next page
 
+
+
 # ---- ---- ---- ---- 模拟器 start ----- ---- ---- 
 
+initial_population = 1000000
 
 
+def generate_random_city():
+    # 随机生成纬度，排除南极洲和北极
+    while True:
+        latitude = np.random.uniform(-90, 90)
+        if -60 <= latitude <= 66.5:
+            break
+
+    # 随机生成经度
+    longitude = np.random.uniform(-180, 180)
+
+    return {
+        "name": f"City {chr(np.random.randint(65, 91))}",
+        "coordinates": [latitude, longitude]
+    }
+
+
+def generate_transmission_routes(cities):
+    transmission_routes = []
+    for i, city1 in enumerate(cities):
+        for city2 in cities[i+1:]:
+            transmission_routes.append({"from": city1["coordinates"], "to": city2["coordinates"]})
+    return transmission_routes
+
+
+def sir_derivatives(y, t, infection_rate, recovery_rate):
+    global initial_population
+    S, I, R = y
+    dSdt = -infection_rate * S * I / initial_population
+    dIdt = infection_rate * S * I / initial_population - recovery_rate * I
+    dRdt = recovery_rate * I
+    return dSdt, dIdt, dRdt
+
+'''
+# https://www.math.uci.edu/~chenlong/CAMtips/Coronavirus/SIRperturbationCH.html
+SIR 模型把人群分成三类：
+
+: 易感人群；
+: 感染人群；
+: 痊愈人群
+'''
 def sir_model(params):
     # 读取参数
     disease = params['disease']
     scenario = params['scenario']
     strategy = params['strategy']
+    print('strategy=',strategy)
+    global initial_population
+    infected = 10
 
     # 根据参数设置模型参数
-    # 注意：这里仅为示例，实际应用中需要根据真实数据设定参数
     if disease == 'disease1':
         infection_rate = 0.2
+        recovery_rate = 0.05
     else:
         infection_rate = 0.3
+        recovery_rate = 0.1
 
     if scenario == 'scenario1':
         population_density = 1000
     else:
         population_density = 2000
-
+    vaccination_rate = 1
     if strategy == 'vaccination':
         vaccination_rate = 0.8
     elif strategy == 'quarantine':
         quarantine_rate = 0.7
     else:
         social_distancing_rate = 0.6
+
     # 随机生成传播点和路线数据（在实际应用中，需要根据模型计算结果生成这些数据）
-    outbreak_points = [
-        {"name": "City A", "coordinates": [np.random.uniform(-90, 90), np.random.uniform(-180, 180)]},
-        {"name": "City B", "coordinates": [np.random.uniform(-90, 90), np.random.uniform(-180, 180)]}
-    ]
-    transmission_routes = [
-        {"from": outbreak_points[0]["coordinates"], "to": outbreak_points[1]["coordinates"]}
-    ]
+    outbreak_points = [generate_random_city() for _ in range(8)]
+    transmission_routes = generate_transmission_routes(outbreak_points)
+
+    # 设置初始条件
+    S0 = initial_population - infected
+    I0 = infected
+    R0 = 0
+
+    # 时间轴
+    t = np.linspace(0, 100, 100)
+
+    # 求解SIR模型
+    y0 = S0, I0, R0
+    ret = odeint(sir_derivatives, y0, t, args=(infection_rate, recovery_rate))
+    S, I, R = ret.T
+    print('S, I, R = ',len(S),len(I), len(R) )
+
+    peak_infection_time = t[np.argmax(I)]
+    # max_infected = np.max(I) 
+    total_recovered = R[-1]
+
+    max_infected_raw = np.max(I)
+
+    # 计算策略权重
+    if strategy == 'vaccination':
+        weighted_max_infected = max_infected_raw * (1 - vaccination_rate)
+    elif strategy == 'quarantine':
+        weighted_max_infected = max_infected_raw * (1 - quarantine_rate)
+    else:
+        weighted_max_infected = max_infected_raw * (1 - social_distancing_rate)
+
+    max_infected = weighted_max_infected
 
     return {
         "result": np.random.rand(),
         "outbreak_points": outbreak_points,
-        "transmission_routes": transmission_routes
+        "transmission_routes": transmission_routes,
+        "peak_infection_time": peak_infection_time,
+        "max_infected": max_infected,
+        "total_recovered": total_recovered
     }
+
 
 @app.route('/simulate', methods=['POST'])
 def simulate():
     params = request.json
     result = sir_model(params)
+    print('request','-'*10, result)
     return jsonify({"result": result})
 
 

@@ -18,15 +18,16 @@ pip install --upgrade -r requirements.txt
 模拟运行在:
 python3 i2wsgi.py
 
-新开一个cmd：
-jupyter notebook i2gps_algroithm_spark.ipynb
 
 
 
 6.
 浏览器访问：
+http://localhost:5000/mysimulation
 
+首页在：
 http://localhost:5000/home
+
 
 已经注册好的管理员账号 可以直接登录：
 管理员1
