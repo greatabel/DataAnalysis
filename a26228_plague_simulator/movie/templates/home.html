@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>用户画像平台</title>
+    <title>大流行病模拟器</title>
 
     <!-- Bootstrap core CSS -->
     <style type="text/css">
@@ -52,6 +52,10 @@ div[class*="release_year"] {
 }
 
 
+a[href="/mysimulation"] {
+  background-color: yellow;
+}
+
     </style>
     <link rel='stylesheet' href='/static/bootstrap-4.5.2-dist/css/bootstrap.min.css'>
     <script type="text/javascript" src="/static/d3/d3.js"></script>
@@ -92,6 +96,17 @@ div[class*="release_year"] {
       <a class="nav-link" href="/blogs">管理流行病种类 <span class="sr-only">(current)</span></a>
     </li>
   {% endif %}
+
+
+        <li class="nav-item active" style="margin-right: 20px;">
+      <a class="nav-link" href="/mysimulation">
+  <strong><span style="color: red;">simulator</span></strong>
+  <span class="sr-only">(current)</span>
+</a>
+
+
+    </li>
+
 
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

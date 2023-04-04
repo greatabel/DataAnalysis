@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pandemic Simulator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+ 
+</head>
+<body>
+    <h1>Pandemic Simulator</h1>
+
+    <label for="disease">Choose a disease:</label>
+    <select id="disease">
+        <option value="disease1">Disease 1</option>
+        <option value="disease2">Disease 2</option>
+    </select>
+
+    <label for="scenario">Choose a scenario:</label>
+    <select id="scenario">
+        <option value="scenario1">Scenario 1</option>
+        <option value="scenario2">Scenario 2</option>
+    </select>
+
+    <label for="strategy">Choose a response strategy:</label>
+    <select id="strategy">
+        <option value="vaccination">Vaccination</option>
+        <option value="quarantine">Quarantine</option>
+        <option value="socialDistancing">Social Distancing</option>
+    </select>
+
+    <button id="simulateBtn">Run Simulation</button>
+    <div id="result"></div>
+
+<div id="map" style="height: 500px;"></div>
+    <script>
+
+function updateMap(outbreakPoints, transmissionRoutes) {
+    var layersToRemove = [];
+
+    // 将需要删除的图层添加到数组中
+    map.eachLayer(function (layer) {
+        if (layer instanceof L.Marker || layer instanceof L.Polyline) {
+            layersToRemove.push(layer);
+        }
+    });
+
+    // 删除数组中的图层
+    layersToRemove.forEach(function (layer) {
+        map.removeLayer(layer);
+    });
+
+    // 添加新的传播点到地图
+    outbreakPoints.forEach(function (point) {
+        L.marker(point.coordinates).addTo(map).bindPopup(point.name);
+    });
+
+    // 添加新的传播路线到地图
+    transmissionRoutes.forEach(function (route) {
+        L.polyline([route.from, route.to], { color: 'red' }).addTo(map);
+    });
+}
+
+
+function addAirportMarkers(airports) {
+    airports.forEach(function (airport) {
+        var marker = L.marker(airport.coordinates).addTo(map);
+        marker.bindPopup(
+            `<strong>${airport.name}</strong><br/>` +
+            `Airport Code: ${airport.code}`
+        );
+    });
+}
+
+
+$(document).ready(function () {
+    // 读取机场信息并添加到地图上
+    $.getJSON("/static/airports.json", function (airports) {
+        addAirportMarkers(airports);
+    });
+});
+
+$("#simulateBtn").click(function () {
+    // 获取用户选择的参数
+    var disease = $("#disease").val();
+    var scenario = $("#scenario").val();
+    var strategy = $("#strategy").val();
+
+    // 发起模拟请求
+    $.ajax({
+        url: "/simulate",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+            "disease": disease,
+            "scenario": scenario,
+            "strategy": strategy
+        }),
+        success: function (response) {
+            // 显示模拟结果
+            $("#result").html("Simulation result: " + response.result);
+
+            // 根据返回的数据更新地图上的传播点和路线
+            updateMap(response.outbreak_points, response.transmission_routes);
+        }
+    });
+});
+
+
+        // 初始化地图
+var map = L.map('map').setView([20, 0], 2);
+
+// 添加地图图层
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+// 示例传播点数据
+var outbreakPoints = [
+    { "name": "New York", "coordinates": [40.7128, -74.0060] },
+    { "name": "London", "coordinates": [51.5074, -0.1278] },
+    { "name": "Tokyo", "coordinates": [35.6895, 139.6917] }
+];
+
+// 添加传播点到地图
+outbreakPoints.forEach(function (point) {
+    L.marker(point.coordinates).addTo(map).bindPopup(point.name);
+});
+
+// 示例传播路线数据
+var transmissionRoutes = [
+    {
+        "from": [40.7128, -74.0060],
+        "to": [51.5074, -0.1278]
+    },
+    {
+        "from": [51.5074, -0.1278],
+        "to": [35.6895, 139.6917]
+    }
+];
+
+// 添加传播路线到地图
+transmissionRoutes.forEach(function (route) {
+    L.polyline([route.from, route.to], { color: 'red' }).addTo(map);
+});
+
+    </script>
+
+
+</body>
+</html>

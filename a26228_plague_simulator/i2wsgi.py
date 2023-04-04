@@ -132,6 +132,63 @@ class PageResult:
     def __repr__(self):  # used for page linking
         return "/home/{}".format(self.page + 1)  # view the next page
 
+# ---- ---- ---- ---- 模拟器 start ----- ---- ---- 
+
+
+
+def sir_model(params):
+    # 读取参数
+    disease = params['disease']
+    scenario = params['scenario']
+    strategy = params['strategy']
+
+    # 根据参数设置模型参数
+    # 注意：这里仅为示例，实际应用中需要根据真实数据设定参数
+    if disease == 'disease1':
+        infection_rate = 0.2
+    else:
+        infection_rate = 0.3
+
+    if scenario == 'scenario1':
+        population_density = 1000
+    else:
+        population_density = 2000
+
+    if strategy == 'vaccination':
+        vaccination_rate = 0.8
+    elif strategy == 'quarantine':
+        quarantine_rate = 0.7
+    else:
+        social_distancing_rate = 0.6
+    # 随机生成传播点和路线数据（在实际应用中，需要根据模型计算结果生成这些数据）
+    outbreak_points = [
+        {"name": "City A", "coordinates": [np.random.uniform(-90, 90), np.random.uniform(-180, 180)]},
+        {"name": "City B", "coordinates": [np.random.uniform(-90, 90), np.random.uniform(-180, 180)]}
+    ]
+    transmission_routes = [
+        {"from": outbreak_points[0]["coordinates"], "to": outbreak_points[1]["coordinates"]}
+    ]
+
+    return {
+        "result": np.random.rand(),
+        "outbreak_points": outbreak_points,
+        "transmission_routes": transmission_routes
+    }
+
+@app.route('/simulate', methods=['POST'])
+def simulate():
+    params = request.json
+    result = sir_model(params)
+    return jsonify({"result": result})
+
+
+@app.route('/mysimulation')
+def mysimulation():
+    return rt('simulate.html')
+
+
+# ---- ---- ---- ---- 模拟器 end ----- ---- ---- 
+
 
 @app.route("/home/<int:pagenum>", methods=["GET"])
 @app.route("/home", methods=["GET", "POST"])
