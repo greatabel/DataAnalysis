@@ -139,21 +139,28 @@ class PageResult:
 initial_population = 1000000
 
 
-def generate_random_city():
-    # 随机生成纬度，排除南极洲和北极
-    while True:
-        latitude = np.random.uniform(-90, 90)
-        if -60 <= latitude <= 66.5:
-            break
+# 主要大陆块的经纬度边界
+CONTINENTS = [
+    {'name': 'North America', 'latitude': (15, 75), 'longitude': (-170, -50)},
+    {'name': 'South America', 'latitude': (-60, 15), 'longitude': (-80, -35)},
+    {'name': 'Europe', 'latitude': (35, 70), 'longitude': (-10, 60)},
+    {'name': 'Africa', 'latitude': (-35, 35), 'longitude': (-20, 55)},
+    {'name': 'Asia', 'latitude': (0, 60), 'longitude': (40, 180)},
+    {'name': 'Australia', 'latitude': (-45, -10), 'longitude': (110, 155)},
+]
 
-    # 随机生成经度
-    longitude = np.random.uniform(-180, 180)
+def generate_random_city():
+    # 随机选择一个大陆
+    continent = np.random.choice(CONTINENTS)
+    
+    # 在选定的大陆范围内随机生成纬度和经度
+    latitude = np.random.uniform(*continent['latitude'])
+    longitude = np.random.uniform(*continent['longitude'])
 
     return {
         "name": f"City {chr(np.random.randint(65, 91))}",
         "coordinates": [latitude, longitude]
     }
-
 
 def generate_transmission_routes(cities):
     transmission_routes = []
