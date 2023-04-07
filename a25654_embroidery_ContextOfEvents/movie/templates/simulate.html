@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界流行病可视模拟器</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+ 
+</head>
+<body>
+    <h1>世界流行病可视模拟器</h1>
+
+    <label for="disease">选择流行病：</label>
+    <select id="disease">
+        <option value="disease1">新冠</option>
+        <option value="disease2">天花</option>
+    </select>
+
+    <label for="scenario">选择场景:</label>
+    <select id="scenario">
+        <option value="scenario1">人员正常密度</option>
+        <option value="scenario2">人员密集密度</option>
+    </select>
+
+    <label for="strategy">选择响应策略：</label>
+    <select id="strategy">
+        <option value="vaccination">接种</option>
+        <option value="quarantine">隔离</option>
+        <option value="socialDistancing">社交距离</option>
+    </select>
+
+    <button id="simulateBtn">Run Simulation</button>
+    <div id="result"></div>
+
+<div id="map" style="height: 700px;"></div>
+    <script>
+
+function updateMap(outbreakPoints, transmissionRoutes) {
+    var layersToRemove = [];
+
+    // 将需要删除的图层添加到数组中
+    map.eachLayer(function (layer) {
+        if (layer instanceof L.Marker || layer instanceof L.Polyline) {
+            layersToRemove.push(layer);
+        }
+    });
+
+    // 删除数组中的图层
+    layersToRemove.forEach(function (layer) {
+        map.removeLayer(layer);
+    });
+
+    // 添加新的传播点到地图
+    outbreakPoints.forEach(function (point) {
+        L.marker(point.coordinates).addTo(map).bindPopup(point.name);
+    });
+
+    // 添加新的传播路线到地图
+    var newRoutes = [];
+    transmissionRoutes.forEach(function (route) {
+        newRoutes.push(L.polyline([], { color: 'red' }));
+        newRoutes[newRoutes.length - 1].addTo(map);
+        animateRoute(newRoutes[newRoutes.length - 1], route.from, route.to);
+    });
+}
+
+function animateRoute(route, from, to) {
+    var i = 0;
+    var steps = 50; // number of steps to use in animation
+
+    var latStep = (to[0] - from[0]) / steps;
+    var lngStep = (to[1] - from[1]) / steps;
+
+    function animate() {
+        if (i > steps) {
+            return;
+        }
+        route.addLatLng([from[0] + i * latStep, from[1] + i * lngStep]);
+        i++;
+        setTimeout(animate, 20);
+    }
+
+    animate();
+}
+
+
+
+function addAirportMarkers(airports) {
+    airports.forEach(function (airport) {
+        var marker = L.marker(airport.coordinates).addTo(map);
+        marker.bindPopup(
+            `<strong>${airport.name}</strong><br/>` +
+            `Airport Code: ${airport.code}`
+        );
+    });
+}
+
+
+$(document).ready(function () {
+    // 读取机场信息并添加到地图上
+    $.getJSON("/static/airports.json", function (airports) {
+        addAirportMarkers(airports);
+    });
+});
+
+$("#simulateBtn").click(function () {
+    // 获取用户选择的参数
+    var disease = $("#disease").val();
+    var scenario = $("#scenario").val();
+    var strategy = $("#strategy").val();
+
+    // 发起模拟请求
+    $.ajax({
+        url: "/simulate",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+            "disease": disease,
+            "scenario": scenario,
+            "strategy": strategy
+        }),
+        success: function (response) {
+            var max_infected = response.result['max_infected'];
+            console.log(max_infected);
+            console.log('###');
+
+            // 显示模拟结果
+            $("#result").html("Simulation result: " + max_infected);
+
+            // Check if outbreak_points and transmission_routes are defined before calling updateMap
+            if (response.result['outbreak_points'] && response.result['transmission_routes']) {
+                // 根据返回的数据更新地图上的传播点和路线
+                updateMap(response.result['outbreak_points'] , response.result['transmission_routes']);
+            } else {
+                console.error("Outbreak points or transmission routes are undefined.");
+            }
+        }
+
+
+
+    });
+});
+
+
+        // 初始化地图
+var map = L.map('map').setView([20, 0], 2);
+
+// 添加地图图层
+// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+// }).addTo(map);
+
+//高德更快
+L.tileLayer('https://webst0{s}.is.autonavi.com/appmaptile?style=7&x={x}&y={y}&z={z}', {
+        subdomains: ['1', '2', '3', '4'],
+        attribution: '&copy; <a href="https://www.amap.com/">高德地图</a>'
+    }).addTo(map);
+
+// 示例传播点数据
+var outbreakPoints = [
+    { "name": "New York", "coordinates": [40.7128, -74.0060] },
+    { "name": "London", "coordinates": [51.5074, -0.1278] },
+    { "name": "Tokyo", "coordinates": [35.6895, 139.6917] }
+];
+
+// 添加传播点到地图
+outbreakPoints.forEach(function (point) {
+    L.marker(point.coordinates).addTo(map).bindPopup(point.name);
+});
+
+// 示例传播路线数据
+var transmissionRoutes = [
+    {
+        "from": [40.7128, -74.0060],
+        "to": [51.5074, -0.1278]
+    },
+    {
+        "from": [51.5074, -0.1278],
+        "to": [35.6895, 139.6917]
+    }
+];
+
+// 添加传播路线到地图
+transmissionRoutes.forEach(function (route) {
+    L.polyline([route.from, route.to], { color: 'red' }).addTo(map);
+});
+
+    </script>
+
+
+</body>
+</html>
