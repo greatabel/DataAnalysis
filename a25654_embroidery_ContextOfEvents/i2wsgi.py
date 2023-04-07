@@ -132,53 +132,7 @@ class PageResult:
         return "/home/{}".format(self.page + 1)  # view the next page
 
 
-# ---- ---- ---- ---- 模拟器 start ----- ---- ----
 
-initial_population = 1000000
-
-
-# 主要大陆块的经纬度边界
-CONTINENTS = [
-    {"name": "North America", "latitude": (15, 75), "longitude": (-170, -50)},
-    {"name": "South America", "latitude": (-60, 15), "longitude": (-80, -35)},
-    {"name": "Europe", "latitude": (35, 70), "longitude": (-10, 60)},
-    {"name": "Africa", "latitude": (-35, 35), "longitude": (-20, 55)},
-    {"name": "Asia", "latitude": (0, 60), "longitude": (40, 180)},
-    {"name": "Australia", "latitude": (-45, -10), "longitude": (110, 155)},
-]
-
-
-def generate_random_city():
-    # 随机选择一个大陆
-    continent = np.random.choice(CONTINENTS)
-
-    # 在选定的大陆范围内随机生成纬度和经度
-    latitude = np.random.uniform(*continent["latitude"])
-    longitude = np.random.uniform(*continent["longitude"])
-
-    return {
-        "name": f"City {chr(np.random.randint(65, 91))}",
-        "coordinates": [latitude, longitude],
-    }
-
-
-def generate_transmission_routes(cities):
-    transmission_routes = []
-    for i, city1 in enumerate(cities):
-        for city2 in cities[i + 1 :]:
-            transmission_routes.append(
-                {"from": city1["coordinates"], "to": city2["coordinates"]}
-            )
-    return transmission_routes
-
-
-def sir_derivatives(y, t, infection_rate, recovery_rate):
-    global initial_population
-    S, I, R = y
-    dSdt = -infection_rate * S * I / initial_population
-    dIdt = infection_rate * S * I / initial_population - recovery_rate * I
-    dRdt = recovery_rate * I
-    return dSdt, dIdt, dRdt
 
 
 
@@ -413,8 +367,18 @@ user_pass = {}
 
 @app.route("/statistics", methods=["GET"])
 def relationship():
+    # 加载哪个用户的知识图谱
+    userid = request.args.get('id')
+    print('kg want userid=', userid, '#'*30)
+
     # static/data/test_data.json
-    filename = os.path.join(app.static_folder, "data.json")
+    filename = os.path.join(app.static_folder, "kg_data/"+ userid +".json")
+    if os.path.isfile(filename):
+        print(filename, ' ## It is a file')
+    else:
+        filename = os.path.join(app.static_folder, "kg_data/default.json")
+        print(filename, ' ## use default file')
+
     # with open(filename) as test_file:
     with open(filename, "r", encoding="utf-8") as test_file:
         d = json.load(test_file)

@@ -111,8 +111,8 @@ a:active {
 </style>
 </head>
 <body class="bg_rgba">
-<div id="float_banner"><a id="now" href="http://localhost:5000/index_a/">Center_View</a>&nbsp;&nbsp;&nbsp;
-    <a href="http://localhost:5000/index_b/">Flat_View</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="location.reload()">Refresh</a></div> 
+<div id="float_banner"><a id="now" href="http://localhost:5000/index_a/">居中视角</a>&nbsp;&nbsp;&nbsp;
+    <a href="http://localhost:5000/index_b/">平铺视角</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="location.reload()">Refresh</a></div> 
 <div class='main'>
     <div id="keyword">
 
@@ -124,5 +124,32 @@ a:active {
 <script src="/static/d3.v3.min.js"></script>
 <!-- <script type="text/javascript" src="/static/d3/d3.js"></script> -->
 <script src="/static/key.js"></script>
+
+<script>
+    // 在页面加载完成时执行以下代码
+    $(document).ready(function() {
+        // 检查URL中是否包含id参数
+        var id = getParameterByName('id');
+        if (id) {
+            // 如果有，将id参数添加到其他的URL中
+            $('#float_banner a').each(function() {
+                var href = $(this).attr('href');
+                href += (href.indexOf('?') > -1 ? '&' : '?') + 'id=' + id;
+                $(this).attr('href', href);
+            });
+        }
+    });
+
+    // 获取URL中的参数
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+</script>
 </body>
 </html>
