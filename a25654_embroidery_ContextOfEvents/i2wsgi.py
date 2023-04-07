@@ -367,14 +367,15 @@ user_pass = {}
 
 @app.route("/statistics", methods=["GET"])
 def relationship():
-    # 加载哪个用户的知识图谱
+    # 加载哪个刺绣的知识图谱
     userid = request.args.get('id')
-    print('kg want userid=', userid, '#'*30)
+    if userid is not None:
+        print('kg want userid=', userid, '#'*30)
 
-    # static/data/test_data.json
-    filename = os.path.join(app.static_folder, "kg_data/"+ userid +".json")
-    if os.path.isfile(filename):
-        print(filename, ' ## It is a file')
+        # static/data/test_data.json
+        filename = os.path.join(app.static_folder, "kg_data/"+ userid +".json")
+        if os.path.isfile(filename):
+            print(filename, ' ## It is a file')
     else:
         filename = os.path.join(app.static_folder, "kg_data/default.json")
         print(filename, ' ## use default file')
