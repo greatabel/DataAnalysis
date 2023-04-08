@@ -84,17 +84,80 @@ sample_data.json文件包含了与传感器记录的数据样本相关的信息�
 # plt.grid()
 # plt.show()
 
+# 版本2
+# import matplotlib.pyplot as plt
+# import numpy as np
+
+# def plot_sensor_fov(x, y, rotation, color, label):
+#     width = 60
+#     height = 40
+#     corners = np.array([[-width/2, -height/2, 1], [width/2, -height/2, 1], [width/2, height/2, 1], [-width/2, height/2, 1]])
+#     rot_matrix = np.array([[np.cos(rotation), -np.sin(rotation)], [np.sin(rotation), np.cos(rotation)]])
+#     transformed_corners = np.dot(rot_matrix, corners[:, :2].T).T
+#     transformed_corners += np.array([x, y])
+#     plt.fill(transformed_corners[:, 0], transformed_corners[:, 1], color, alpha=0.5, label=label)
+
+# plt.figure(figsize=(10, 10))
+
+# # Front camera
+# plot_sensor_fov(4, 0, np.radians(0), 'red', 'Front Camera')
+
+# # Rear camera
+# plot_sensor_fov(-4, 0, np.radians(180), 'blue', 'Rear Camera')
+
+# # Front-left and front-right cameras
+# plot_sensor_fov(2, 2, np.radians(-30), 'green', 'Front-left Camera')
+# plot_sensor_fov(2, -2, np.radians(30), 'purple', 'Front-right Camera')
+
+# # Rear-left and rear-right cameras
+# plot_sensor_fov(-2, 2, np.radians(210), 'orange', 'Rear-left Camera')
+# plot_sensor_fov(-2, -2, np.radians(-210), 'cyan', 'Rear-right Camera')
+
+# # Lidar sensor
+# plot_sensor_fov(0, 0, np.radians(0), 'brown', 'Lidar Sensor')
+
+# # Vehicle shape
+# vehicle = plt.Rectangle((-4, -2), 8, 4, fill=False, edgecolor='black', linewidth=1.5)
+# plt.gca().add_patch(vehicle)
+
+# plt.xlim(-20, 20)
+# plt.ylim(-20, 20)
+# plt.xlabel('X')
+# plt.ylabel('Y')
+# plt.title('Sensor FOV Coverage')
+# plt.grid(True)
+# plt.gca().set_aspect('equal', adjustable='box')
+# plt.legend(loc='upper right')
+# plt.show()
+
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.interpolate import BSpline, make_interp_spline
+
+from scipy.interpolate import splprep, splev
 
 def plot_sensor_fov(x, y, rotation, color, label):
     width = 60
     height = 40
-    corners = np.array([[-width/2, -height/2, 1], [width/2, -height/2, 1], [width/2, height/2, 1], [-width/2, height/2, 1]])
+    n_points = 10
+    np.random.seed(42)
+    randomness = np.random.normal(0, 1, (n_points, 2))
+    
+    corners = np.array([np.linspace(-width/2, width/2, n_points), -height/2 * np.ones(n_points)]).T + randomness
+    corners = np.vstack((corners, np.array([np.linspace(width/2, width/2, n_points), np.linspace(-height/2, height/2, n_points)]).T + randomness))
+    corners = np.vstack((corners, np.array([np.linspace(width/2, -width/2, n_points), height/2 * np.ones(n_points)]).T + randomness))
+    corners = np.vstack((corners, np.array([np.linspace(-width/2, -width/2, n_points), np.linspace(height/2, -height/2, n_points)]).T + randomness))
+    
     rot_matrix = np.array([[np.cos(rotation), -np.sin(rotation)], [np.sin(rotation), np.cos(rotation)]])
-    transformed_corners = np.dot(rot_matrix, corners[:, :2].T).T
+    transformed_corners = np.dot(rot_matrix, corners.T).T
     transformed_corners += np.array([x, y])
-    plt.fill(transformed_corners[:, 0], transformed_corners[:, 1], color, alpha=0.5, label=label)
+
+    tck, u = splprep(transformed_corners.T, s=0, per=True)
+    new_u = np.linspace(0, 1, len(transformed_corners) * 10)
+    new_points = np.array(splev(new_u, tck)).T
+
+    plt.fill(new_points[:, 0], new_points[:, 1], color, alpha=0.5, label=label)
+
 
 plt.figure(figsize=(10, 10))
 
@@ -128,5 +191,6 @@ plt.grid(True)
 plt.gca().set_aspect('equal', adjustable='box')
 plt.legend(loc='upper right')
 plt.show()
+
 
 

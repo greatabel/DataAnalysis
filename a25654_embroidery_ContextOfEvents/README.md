@@ -15,11 +15,12 @@ terminal底下进入工程目录下，在requirements.txt同级目录下运行�
 pip install --upgrade -r requirements.txt
 
 5.
-模拟运行在:
+网站后端服务运行在:
 python3 i2wsgi.py
 
+添加新的知识图谱数据到data/i0successor.csv后，
 开另外一个命令行，输入：
-jupyter notebook i1mytransformaer.ipynb
+python3 i1data_process.py
 
 
 6.

@@ -17,5 +17,3 @@ flask_sqlalchemy
 requests
 Jinja2==3.1.2
 jupyter==1.0.0
-fasttext==1.23.3
-jieba==0.42.1

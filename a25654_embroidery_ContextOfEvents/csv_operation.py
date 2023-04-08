@@ -14,3 +14,12 @@ def csv_reader(filename, directory="./"):
             if len(row) > 0 and row[0] != '"':
                 mylist.append(row[0].split("\t"))
         return mylist
+
+
+def read_csv_data(filepath):
+    data = []
+    with open(filepath, newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            data.append(row)
+    return data

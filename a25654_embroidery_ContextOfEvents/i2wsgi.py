@@ -20,13 +20,15 @@ from flask import make_response
 
 # from flask_wtf.csrf import CSRFProtect
 from flask import flash
-
+from flask import  Markup
 from movie import create_app
 
 # import es_search
 import logging
 import numpy as np
 from scipy.integrate import odeint
+from csv_operation import *
+from datetime import datetime
 
 
 app = create_app()
@@ -395,6 +397,51 @@ def index():
 @app.route("/index_b/")
 def index_b():
     return rt("index-B.html")
+
+
+# @app.route('/vis_events', methods=['GET'])
+# def get_events():
+#     data = read_csv_data('data/i1history.csv')
+#     events = []
+#     for i, row in enumerate(data):
+#         t = row["event"].replace("\n", "<br>")
+#         print(t)
+#         event = {
+#             "id": i + 1,
+#             "content": t, 
+#             "start": row["time"],
+#         }
+#         events.append(event)
+#     return jsonify(events)
+
+@app.route('/vis_events')
+def vis_events():
+    # 从 CSV 文件加载事件
+    events = read_csv_data('data/i1history.csv')
+
+    # 转换事件的时间格式
+    for event in events:
+        event["time"] = datetime.strptime(event["time"], '%Y.%m').date()
+
+    # 将事件转换为 Vis.js 时间轴所需的格式
+    data = []
+    for i, row in enumerate(events):
+        event = {
+            "id": i + 1,
+            "content": Markup(row["event"].replace("\n", "<br>")), # 使用 Markup 类
+            "start": row["time"],
+        }
+        data.append(event)
+
+    # 将事件作为 JSON 格式返回
+    return jsonify(data)
+
+# 事件脉络
+@app.route("/sequence_vis")
+def sequence_vis():
+    return rt("sequence_vis.html")
+
+
 
 
 @login_manager.user_loader
