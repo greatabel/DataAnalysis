@@ -27,6 +27,29 @@ from movie import create_app
 import logging
 from os import listdir
 
+# 大屏可视化
+from pyspark.sql import SparkSession
+from pyspark.ml.recommendation import ALS
+from pyspark.ml.classification import LogisticRegression
+from pyspark.ml.feature import VectorAssembler
+
+# 可视化用户画像
+import matplotlib.pyplot as plt
+import seaborn as sns
+from matplotlib.font_manager import FontProperties
+import pandas as pd
+from pyspark.ml.clustering import KMeans
+
+# 获取已安装字体的路径
+font_path = 'SourceHanSansCN-Regular.otf'
+
+# 创建字体属性对象
+font = FontProperties(fname=font_path)
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
+
+
 
 # import recommandation
 
@@ -301,6 +324,86 @@ def recommend():
         return rt("recommend.html", choosed=recs, image_files=image_files)
 
 
+### -------------start of visualization bigscreen
+
+
+@app.route("/plot")
+def plot():
+    # 创建SparkSession
+    spark = SparkSession.builder.appName("UserPortrait").getOrCreate()
+
+    # 加载用户数据
+    user_df = spark.read.csv("data/user_data.csv", header=True, inferSchema=True)
+
+    # 加载用户行为数据
+    behavior_df = spark.read.csv("data/user_behavior_data.csv", header=True, inferSchema=True)
+
+
+
+    # In[6]:
+
+
+    # 统计用户数据中的记录数量
+    user_count = user_df.count()
+
+    # 统计用户行为数据中的记录数量
+    behavior_count = behavior_df.count()
+
+    # 打印结果
+    print("用户数据中的记录数量：", user_count)
+    print("用户行为数据中的记录数量：", behavior_count)
+
+
+    # In[7]:
+
+
+    # 计算用户数据中各特征之间的相关系数
+    # Convert the Spark DataFrame to a Pandas DataFrame
+    user_df_pd = user_df.toPandas()
+
+    # 将性别从分类变量转换为数值变量
+    user_df_pd['gender_numeric'] = user_df_pd['gender'].map({'Male': 0, 'Female': 1})
+
+    # 重新计算相关性矩阵
+    corr_matrix = user_df_pd.corr()
+    
+    # 将相关矩阵转换为 JSON，以便在模板中使用
+    corr_matrix_json = corr_matrix.to_json(orient="split")
+    print('#'*30, corr_matrix_json)
+    
+    # 计算年龄分布直方图数据
+    age_histogram_data = user_df_pd['age'].value_counts().reset_index()
+    age_histogram_data.columns = ['age', 'count']
+    age_histogram_json = age_histogram_data.to_json(orient="records")
+
+    # 将数据添加到模板
+
+
+    # 计算性别分布柱状图数据
+    gender_count_data = user_df_pd['gender'].value_counts().reset_index()
+    gender_count_data.columns = ['gender', 'count']
+    gender_count_json = gender_count_data.to_json(orient="records")
+    
+    behavior_df_pd = behavior_df.toPandas()
+    # 计算年龄与评分关系散点图数据
+    user_behavior_df_pd = pd.merge(user_df_pd, behavior_df_pd, on="userId")
+    age_rating_scatter_data = user_behavior_df_pd[["age", "rating", "gender"]]
+    age_rating_scatter_json = age_rating_scatter_data.to_json(orient="records")
+
+    # 将数据添加到模板
+    return rt("plot.html", corr_matrix=corr_matrix_json, 
+        age_histogram=age_histogram_json, gender_count=gender_count_json, age_rating_scatter=age_rating_scatter_json)
+
+
+
+### -------------end of visualization bigscreen
+
+
+
+
+
+
+
 ### -------------start of profile
 
 
@@ -520,14 +623,14 @@ def upload_ppt():
     return redirect(url_for("add_ppt"))
 
 
-@app.route("/student_work", methods=["POST"])
-def student_work():
-    return redirect(url_for("student_index"))
+# @app.route("/student_work", methods=["POST"])
+# def student_work():
+#     return redirect(url_for("student_index"))
 
 
-@app.route("/student_index", methods=["GET"])
-def student_index():
-    return rt("student_index.html")
+# @app.route("/student_index", methods=["GET"])
+# def student_index():
+#     return rt("student_index.html")
 
 
 # @app.route("/", methods=["GET"])

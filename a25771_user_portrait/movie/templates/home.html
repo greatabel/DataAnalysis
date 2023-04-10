@@ -166,35 +166,29 @@ div[class*="release_year"] {
       </div>
     </div>
 
-    <div class="container">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="release_year">Page 1 of about all results</div>
+            <br/>
+        </div>
+    </div>
 
-       <div class="row">
-         <div class="col-md-12"> <div class="release_year">Page 1 of about all results  </div>
-         <br/>
-         </div>
-       </div>
+    <div class="row">
+        <div class="col-md-4">
+            <a href="http://localhost:8888/notebooks/i1user_figure_spark.ipynb" style="color: blue; font-weight: bold; text-decoration: underline;">spark分析</a>
+        </div>
+        <div class="col-md-4">
+          <a href="/plot" style="color: purple; font-weight: bold; text-decoration: underline;"> 可视化</a>
+            
+        </div>
+        <div class="col-md-4">
+           <a href="/recommend" style="color: red; font-weight: bold; text-decoration: underline;"> Recommendation</a>
+            
+        </div>
+    </div>
+</div>
 
-       <div class="row">
-
-         <div class="col-md-3"> 
-
-         <a href="http://localhost:8888/notebooks/i1user_figure_spark.ipynb" style="color: red; font-weight: bold; text-decoration: underline;">spark分析</a>
-
-
-          </div>
-         <div class="col-md-3">  </div>
-
-         <div class="col-md-3">  
-          <a href="/recommend" style="color: red; font-weight: bold; text-decoration: underline;"> Recommendation</a>
-
-          </div>
-
-         <div class="col-md-3"> 
-          <!-- <a href="/index_a"><font color="green">  Knowledge-Graph </font> </a>  -->
-      </div>
-
-         </div>
-       </div>
           
 <!-- 
           {% for r in listing %}
@@ -224,12 +218,15 @@ div[class*="release_year"] {
     <div class="row">
       <div class="col-md-12">
         <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title">{{ r.title|safe }}</h5>
-            <p class="card-text">{{ r.text[:500]|safe }} ...</p>
+          <div class="card-body text-center">
+            <h5 class="card-title">
+           <a href="/blogs/{{r.id}}">  {{ r.title|safe }} </a>
+
+           </h5>
+            <p class="card-text">{{ r.text[:300]|safe }} ...</p>
           </div>
           <a href="/blogs/{{r.id}}">
-            <img src="/static/images/ppt_cover/{{ r.id % 10 }}.jpeg" class="card-img-bottom img-fluid" style="width: 100%; height: auto;">
+            <img src="/static/images/ppt_cover/{{ r.id % 10 }}.jpeg" class="card-img-bottom img-fluid" style="width: 100%; height: 500px;">
           </a>
           <!-- adjust width of image as needed -->
         </div>
@@ -238,7 +235,6 @@ div[class*="release_year"] {
   </div>
   {% endfor %}
 </div>
-
 
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[20]:
+# In[3]:
 
 
 from pyspark.sql import SparkSession
@@ -17,7 +17,7 @@ import pandas as pd
 from pyspark.ml.clustering import KMeans
 
 
-# In[21]:
+# In[4]:
 
 
 # 获取已安装字体的路径
@@ -29,7 +29,7 @@ import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-# In[22]:
+# In[5]:
 
 
 # 创建SparkSession
@@ -43,7 +43,7 @@ behavior_df = spark.read.csv("data/user_behavior_data.csv", header=True, inferSc
 
 
 
-# In[23]:
+# In[6]:
 
 
 # 统计用户数据中的记录数量
@@ -57,7 +57,7 @@ print("用户数据中的记录数量：", user_count)
 print("用户行为数据中的记录数量：", behavior_count)
 
 
-# In[24]:
+# In[7]:
 
 
 # 计算用户数据中各特征之间的相关系数
@@ -78,7 +78,16 @@ plt.show()
 
 
 
-# In[25]:
+# # 热力图的商务分析
+# '''
+# 矩阵中的每个单元格表示两个变量之间的相关系数，范围从 -1（完全负相关）到 1（完全正相关）。如果值接近零，则表示两个变量之间没有显著相关性。
+# 
+# 在电商平台的场景中，相关性矩阵可以帮助我们了解用户数据中不同特征之间的关联程度。通过观察相关性矩阵的热力图，
+# 我们可以发现哪些特征之间存在较强的关联，从而更好地理解用户行为和属性。
+# 这可以会为电商平台提供有价值的见解，以优化用户体验、制定更有效的市场策略等
+# '''
+
+# In[8]:
 
 
 # 训练ALS模型，用于商品推荐
@@ -92,7 +101,13 @@ user_recs = model.recommendForAllUsers(10)
 print('#'*20)
 
 
-# In[26]:
+# In[ ]:
+
+
+
+
+
+# In[9]:
 
 
 # 将用户画像和推荐结果连接起来
@@ -120,7 +135,7 @@ plt.show()
 
 
 
-# In[27]:
+# In[10]:
 
 
 sns.countplot(data=user_df_pd, x="gender")
@@ -130,7 +145,7 @@ plt.title('性别分布', fontproperties=font)
 plt.show()
 
 
-# In[28]:
+# In[11]:
 
 
 # 用户行为数据转换为 Pandas DataFrame
@@ -147,13 +162,23 @@ plt.title('年龄与评分关系', fontproperties=font)
 plt.show()
 
 
-# In[ ]:
+# # 年龄与评分关系的分析
+# '''
+# 展示了电商平台上用户的年龄与他们对商品的评分之间的关系。
+# 在图中，x轴表示用户的年龄，y轴表示用户给商品的评分。数据点根据用户性别着色，
+# 使得我们可以观察到不同性别用户在年龄与评分关系上的差异。
+# 
+# 通过这个图表，可以帮助我们了解不同年龄和性别的用户在对商品评价方面的行为。
+# 
+# 可以观察到某个年龄段的用户是否对商品评分更高或更低，
+# 
+# 或者某个性别的用户在某个年龄段是否倾向于给予更高或更低的评分。
+# 这些可以帮助电商平台了解其目标用户群体，
+# 并根据这些发现调整推荐策略
+# '''
+# 
 
-
-
-
-
-# In[29]:
+# In[12]:
 
 
 sns.histplot(data=behavior_df_pd, x="rating", bins=5)
@@ -175,7 +200,7 @@ plt.show()
 
 
 
-# In[30]:
+# In[13]:
 
 
 # 绘制用户地理位置云图
@@ -194,7 +219,7 @@ plt.title('城市分布图', fontproperties=font)
 plt.show()
 
 
-# In[31]:
+# In[14]:
 
 
 # 生成特征列和标签列
@@ -205,7 +230,7 @@ user_recs_with_profile = user_recs_with_profile.withColumn("label",
                                             user_recs_with_profile["gender"].isin(["Male"]).cast("double"))
 
 
-# In[40]:
+# In[15]:
 
 
 # 生成特征列和标签列
@@ -234,7 +259,7 @@ new_user_recs_with_profile = new_user_recs_with_profile.withColumn("label",
 new_user_labels = lr_model.transform(new_user_recs_with_profile)
 
 
-# In[33]:
+# In[16]:
 
 
 # 显示用户
@@ -244,7 +269,7 @@ user_df.show()
 
 
 
-# In[34]:
+# In[21]:
 
 
 # 显示推荐结果
@@ -254,7 +279,7 @@ user_recs_with_profile.show()
 
 
 
-# In[35]:
+# In[22]:
 
 
 # 显示标签结果
@@ -262,16 +287,45 @@ print("标签结果：")
 new_user_labels.show()
 
 
-# In[43]:
+# In[30]:
 
 
 # 导入项目数据 ，我们预设的电商不同房间和类别
 
-item_data = [("75", "Room75", " Ecommerce_categoryA(娱乐)"), 
+item_data = [("1", "Room1", " Ecommerce_categoryA(娱乐)"),
+             ("49", "Room49", " Ecommerce_categoryA(娱乐)"),
+             ("50", "Room50", " Ecommerce_categoryB(学习)"),
+             ("53", "Room53", " Ecommerce_categoryA(娱乐)"),
+             ("68", "Room68", " Ecommerce_categoryB(学习)"), 
+             
+             ("75", "Room75", " Ecommerce_categoryA(娱乐)"), 
              ("76", "Room76", " Ecommerce_categoryB（学习）"), 
              ("77", "Room77", " Ecommerce_categoryC（在线虚拟产品）"),
              ("78", "Room78", " Ecommerce_categoryD（运动）"),
+             ("85", "Room85", " Ecommerce_categoryD（运动）"),
+            ("86", "Room86", " Ecommerce_categoryA(娱乐)"),
+            ("87", "Room87", " Ecommerce_categoryB(学习)"),
+            ("88", "Room88", " Ecommerce_categoryA(娱乐)"),
+            ("89", "Room89", " Ecommerce_categoryB(学习)"),
+            ("90", "Room90", " Ecommerce_categoryA(娱乐)"),
 
+            ("91", "Room91", " Ecommerce_categoryB(学习)"),
+            ("92", "Room92", " Ecommerce_categoryC（在线虚拟产品）"),
+            ("93", "Room93", " Ecommerce_categoryD（运动）"),
+            ("94", "Room94", " Ecommerce_categoryC(在线虚拟产品)"),
+            ("95", "Room95", " Ecommerce_categoryB(学习)"),
+
+            ("96", "Room96", " Ecommerce_categoryA(娱乐)"),
+            ("97", "Room97", " Ecommerce_categoryB（学习）"),
+            ("98", "Room98", " Ecommerce_categoryC（在线虚拟产品）"),
+            ("99", "Room99", " Ecommerce_categoryD（运动）"),
+            ("100", "Room100", " Ecommerce_categoryA(娱乐)"),
+            ("101", "Room101", " Ecommerce_categoryB(学习)"),
+            ("102", "Room102", " Ecommerce_categoryC（在线虚拟产品）"),
+            ("103", "Room103", " Ecommerce_categoryD（运动）"),
+            ("104", "Room104", " Ecommerce_categoryA(娱乐)"),
+            ("105", "Room105", " Ecommerce_categoryB(学习)"),
+             
              ]
 
 item_df = spark.createDataFrame(item_data, schema=["itemId", "itemName", "itemCategory"])
@@ -288,13 +342,29 @@ user_recs_exploded = user_recs_exploded.select("userId", "recommendation.itemId"
 # 将推荐结果与项目数据关联
 user_recs_with_item_info = user_recs_exploded.join(item_df, on="itemId", how="left")
 
+# Filter out recommendations with null itemName
+user_recs_with_item_info_filtered = user_recs_with_item_info.filter(user_recs_with_item_info.itemName.isNotNull())
 
-user_recs_with_item_info_pd = user_recs_with_item_info.toPandas()
-user_recs_with_item_info_pd.to_json('user_recommendations.json', orient='records', lines=True)
+
+
+
+user_recs_with_item_info_filtered_pd = user_recs_with_item_info_filtered.toPandas()
+user_recs_with_item_info_filtered_pd.to_json('user_recommendations_filtered.json', orient='records', lines=True)
+
 
 
 # 显示带有项目详细信息的推荐结果
-user_recs_with_item_info.show()
+user_recs_with_item_info_filtered.show()
+
+
+# In[31]:
+
+
+# Filter 出来 userId = 2，is me
+user_recs_filtered = user_recs_with_item_info_filtered.filter(user_recs_with_item_info.userId == 2)
+
+
+user_recs_filtered.show()
 
 
 # # part2
@@ -390,6 +460,29 @@ plt.show()
 print("Jaccard Similarity: {:.2f}%".format(jaccard_similarity * 100))
 
 
+
+# # GBT Confusion Matrix的分析
+# '''
+# 
+# 我们是想评估基于GBT（梯度提升树）分类器在预测用户性别（男性或女性）时的性能。
+# 
+# 电商平台上，我们使用用户的年龄、地理位置等特征来预测用户的性别。
+# 
+# 通过计算了Jaccard相似度，它是一种用于比较预测标签与真实标签之间相似度的指标。这个值越接近满分，预测性能就越好。
+# 
+# 可视化混淆矩阵：这部分代码将混淆矩阵以图形的形式展示出来。混淆矩阵是一个二维矩阵，用于描述分类器在预测结果中的表现。
+# 
+# 横轴表示预测标签（预测性别），纵轴表示实际标签（真实性别）。矩阵的每个单元格表示预测结果与实际结果的组合数量。
+# 
+# 混淆矩阵的对角线表示正确的预测结果，其它元素表示错误的预测结果。
+# 
+# 这个值越高，表示GBT分类器在预测用户性别方面表现越好。计算Jaccard相似度和绘制混淆矩阵，
+# 
+# 帮助我们了解GBT分类器在预测电商平台用户性别方面的表现。
+# 
+# 这有助于我们了解分类器的性能和准确性，从而对其进行优化。
+# 
+# '''
 
 # In[42]:
 
