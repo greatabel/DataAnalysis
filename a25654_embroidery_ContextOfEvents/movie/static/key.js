@@ -9,8 +9,18 @@ function getL(word1,rela){
     res= temp.toFixed(2).toString();
     return res+"%";
     }
-// d3.json("data/data.json",function(error,root){
-d3.json("http://localhost:5000/statistics",function(error,root){
+
+
+function displayId(id) {
+  console.log('ID is:', id);
+}
+
+const params = new URLSearchParams(location.search);
+const id = params.get('id');
+displayId(id);
+
+d3.json("http://localhost:5000/statistics?id="+id,function(error,root){
+
 // d3.json("http://localhost:5000/statistics").then( data => {
 //     console.log(data);
 //     var root = data;
@@ -282,7 +292,7 @@ d3.json("http://localhost:5000/statistics",function(error,root){
             }
         }
         var temp = (((name[0].charCodeAt()+name[1].charCodeAt())*52.54652768)-parseInt((name[0].charCodeAt()+name[1].charCodeAt())*52.54652768)).toFixed(2);
-        tooltip.html("知识图谱 " + name + "【Value：" + parseInt(10+(r-5)*3.5+temp*2)+"."+temp.toString().split(".")[1] + "%】")
+        tooltip.html("KG " + name + "【Value：" + parseInt(10+(r-5)*3.5+temp*2)+"."+temp.toString().split(".")[1] + "%】")
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY + 20) + "px")
             .style("opacity",1.0);

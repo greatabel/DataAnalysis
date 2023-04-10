@@ -9,7 +9,18 @@ function getL(word1,rela){
     res= temp.toFixed(2).toString();
     return res+"%";
     }
-d3.json("http://localhost:5000/statistics",function(error,root){
+
+function displayId(id) {
+  console.log('ID is:', id);
+}
+
+const params = new URLSearchParams(location.search);
+const id = params.get('id');
+displayId(id);
+
+d3.json("http://localhost:5000/statistics?id="+id,function(error,root){
+
+
 
     var links = [];
     for(var i=0;i<root.length;i++){

@@ -414,10 +414,19 @@ def index_b():
 #         events.append(event)
 #     return jsonify(events)
 
-@app.route('/vis_events')
+@app.route('/vis_events',methods=["GET"])
 def vis_events():
-    # 从 CSV 文件加载事件
-    events = read_csv_data('data/i1history.csv')
+    events = None
+    lang = request.args.get('lang')
+
+    if lang == "en":
+        print('kg want userid=', lang, '#'*30)
+
+                # 从 CSV 文件加载事件
+        events = read_csv_data('data/i1history_en.csv')
+    else:
+        # 从 CSV 文件加载事件
+        events = read_csv_data('data/i1history.csv')
 
     # 转换事件的时间格式
     for event in events:
