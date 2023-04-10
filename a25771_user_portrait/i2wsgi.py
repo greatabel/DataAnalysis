@@ -25,6 +25,7 @@ from movie import create_app
 
 # import es_search
 import logging
+from os import listdir
 
 
 # import recommandation
@@ -272,7 +273,7 @@ def query_note(id):
 
 
 ### -------------end of home
-with open("user_recommendations.json", "r") as f:
+with open("user_recommendations_filtered.json", "r") as f:
     user_recs_dict = [json.loads(line) for line in f]
 
 
@@ -294,7 +295,10 @@ def recommend():
         recs = get_recommendations(id)
         if recs:
             print("recs=", recs)
-        return rt("recommend.html", choosed=recs)
+        # Get the list of image filenames in the recommends folder
+        image_files = [f for f in listdir('movie/static/images/ppt_cover/recommends') if f.endswith('.jpg')]
+
+        return rt("recommend.html", choosed=recs, image_files=image_files)
 
 
 ### -------------start of profile
