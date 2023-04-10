@@ -22,10 +22,8 @@ python3 i2wsgi.py
 
 
 6.
-浏览器访问：
-http://localhost:5000/mysimulation
 
-首页在：
+浏览器访问 首页在：
 http://localhost:5000/home
 
 

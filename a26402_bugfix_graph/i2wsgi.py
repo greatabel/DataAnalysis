@@ -512,24 +512,25 @@ user_pass = {}
 @app.route("/statistics", methods=["GET"])
 def relationship():
     # 加载哪个刺绣的知识图谱
-    queryid = request.args.get('id')
+    queryid = request.args.get("id")
+
     if queryid is not None:
-        print('kg want queryid=', queryid, '#'*30)
+        print("-" * 20)
+        print("##kg want queryid=", queryid, "#" * 30)
 
         # static/data/test_data.json
-        filename = os.path.join(app.static_folder, "kg_data/"+ queryid +".json")
+        filename = os.path.join(app.static_folder, "kg_data/" + queryid + ".json")
         if os.path.isfile(filename):
-            print(filename, ' ## It is a file')
+            print(filename, " ## It is a file")
     else:
         filename = os.path.join(app.static_folder, "kg_data/default.json")
-        print(filename, ' ## use default file')
+        print(filename, " ## use default file")
 
     # with open(filename) as test_file:
     with open(filename, "r", encoding="utf-8") as test_file:
         d = json.load(test_file)
     print(type(d), "#" * 10, d)
     return jsonify(d)
-
 
 
 @app.route("/index_a/")
