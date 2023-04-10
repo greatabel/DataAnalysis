@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>vis.js时间轴示例</title>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/vis-timeline/standalone/umd/vis-timeline-graph2d.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/vis-timeline/styles/vis-timeline-graph2d.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+</head>
+<body>
+  <div id="timeline"></div>
+  <style>
+    .vis-item-content {
+      white-space: pre-wrap !important;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript">
+    // 创建一个空的数据集
+    var items = new vis.DataSet();
+
+    // 从 Flask API 获取事件
+    $.ajax({
+      url: '/vis_events',
+      type: 'GET',
+      success: function(events) {
+        // 添加事件
+        items.add(events);
+
+        // 创建一个时间轴
+        var container = document.getElementById('timeline');
+        // set time format using Moment.js
+          var options = {
+            height: '400px',
+            locale: 'en_EN',
+            timeAxis: {
+              scale: 'month',
+              step: 1,
+              
+              
+            },
+          };
+        var timeline = new vis.Timeline(container, items, options);
+      }
+    });
+  </script>
+</body>
+</html>
