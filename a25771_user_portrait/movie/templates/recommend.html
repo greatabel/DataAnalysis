@@ -151,31 +151,30 @@ div[class*="release_year"] {
 
  </div> -->
 
-<div class="col-md-12 mt-5">
-  <h2>Recommendations</h2>
-  <p class="lead">Based on the data above, we recommend the following categroy goods to the current user using <span class="text-danger font-weight-bold">画像系统和机器学习</span>:</p>
-  <div class="row">
+<div class="container">
 
-{% for rec in choosed %}
-<div class="col-md-6">
-  <div class="card h-100">
-    <img class="recommend-image" src="{{ url_for('static', filename='images/ppt_cover/recommends/' + rec.itemId|string + '.jpg') if (rec.itemId|string + '.jpg') in image_files else url_for('static', filename='images/ppt_cover/recommends/default.jpg') }}" class="card-img-top" alt="Item image">
-    <div class="card-body">
-      <h5 class="card-title">Item ID: {{ rec.itemId }}</h5>
-      <p class="card-text">User ID: {{ rec.userId }}</p>
-      <p class="card-text">Rating: {{ rec.rating|round(2) }}</p>
-      <p class="card-text">Item Name: {% if rec.itemName %}{{ rec.itemName }}{% else %}Not available{% endif %}</p>
-      <p class="card-text">Item Category: {% if rec.itemCategory %}{{ rec.itemCategory }}{% else %}Not available{% endif %}</p>
+  <div class="col-md-12 mt-5">
+    <h2>Recommendations</h2>
+    <p class="lead">Based on the data above, we recommend the following categroy goods to the current user using <span class="text-danger font-weight-bold">画像系统和机器学习</span>:</p>
+    <div class="row">
+      {% for rec in choosed %}
+      <div class="col-md-6 mb-4">
+        <div class="card h-100 shadow">
+          <img class="recommend-image" src="{{ url_for('static', filename='images/ppt_cover/recommends/' + rec.itemId|string + '.jpg') if (rec.itemId|string + '.jpg') in image_files else url_for('static', filename='images/ppt_cover/recommends/default.jpg') }}" class="card-img-top" alt="Item image">
+          <div class="card-body">
+            <h5 class="card-title">Item ID: {{ rec.itemId }}</h5>
+            <p class="card-text">User ID: {{ rec.userId }}</p>
+            <p class="card-text">Rating: {{ rec.rating|round(2) }}</p>
+            <p class="card-text">Item Name: {% if rec.itemName %}{{ rec.itemName }}{% else %}Not available{% endif %}</p>
+            <p class="card-text">Item Category: {% if rec.itemCategory %}{{ rec.itemCategory }}{% else %}Not available{% endif %}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
   </div>
 </div>
-{% endfor %}
 
-
-
-
-  </div>
-</div>
 
 
     
