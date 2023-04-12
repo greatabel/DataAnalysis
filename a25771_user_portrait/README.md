@@ -32,7 +32,14 @@ http://localhost:5000/home
 管理员1
 username: greatabel1@126.com
 password: abel
+
+管理员2
+admin@126.com   
+ps：admin
+
 你也可以自己注册和登录
+
+
 
 
 -------------------
