@@ -124,6 +124,7 @@ a[href="/recommend"] {
       <div class="input-group">
         <input type="text" name="keyword" id="keyword" placeholder="输入关键词搜索" class="form-control" autofocus>
         <div class="input-group-append">
+          &nbsp;
           <input type="submit" value="让我们来搜索" id="btnSearch" class="btn btn-success">
         </div>
       </div>
@@ -267,51 +268,40 @@ a[href="/recommend"] {
 <br/><br/>
 <br/><br/>
 
-      <div class="row">
-       <div class="col-md-12"> <div class="release_year">Topic introduction</div>
-       </div>
-       </div>
+
       <!-- Example row of columns -->
-      <div class="row">
+<div class="row">
+    <div class="col-md-12">
+        <div class="release_year">Topic introduction</div>
+    </div>
+</div>
 
-          {% for r in range(1,3) %}
-
+<!-- Example row of columns -->
+<div class="row">
+    {% for r in range(1, 3) %}
         <div class="col-md-4">
-        <figure>
-            <img src="/static/images/app_data/{{ r % 10 }}.png" class="img-fluid" style="height:250px;width:500px;">
-        </figure>
-            <div name="title"> </div>  
-            <!-- <div class="release_year">{{r.release_year}}</div>  -->
+            <figure>
+                <img src="/static/images/app_data/{{ r % 10 }}.png" class="img-fluid" style="height:250px;width:500px;">
+            </figure>
+            <div name="title"></div>  
         </div>
-
-           {% endfor %}
-
-
-
-    
-
-
-
-<!--         <div class="col-md-4">
-          <h2>Cost effective</h2>
-          <p>No need to buy hardware either for your tables or for your kitchen. Management and usage all directly from this page.</p>
-       </div> -->
-        <div class="col-md-4">
-          <h2>Register now</h2>
-
-
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li> <font color="red">{{ message }}</font> </li>
     {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
 
+    {% if not session['logged_in'] %}
+        <div class="col-md-4">
+            <h2>Register now</h2>
 
-             <form class="form-horizontal" action="/register" method="POST">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class=flashes>
+                    {% for message in messages %}
+                        <li><font color="red">{{ message }}</font></li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+            <form class="form-horizontal" action="/register" method="POST">
                 <div class="form-group">
                     <div class="col-sm-9">
                         <input type="email" name="email" id="email" placeholder="Email address/Username" class="form-control">
@@ -333,9 +323,20 @@ a[href="/recommend"] {
                         <input type="submit" value="Register" class="btn btn-primary btn-block">
                     </div>
                 </div>
-            </form> <!-- /form -->
+            </form>
         </div>
-      </div>
+    {% else %}
+
+            <div class="col-md-4">
+                <figure>
+                    <img src="/static/images/app_data/0.png" class="img-fluid" style="height:250px;width:500px;">
+                </figure>
+                <div name="title"></div>  
+            </div>
+
+    {% endif %}
+</div>
+
 
         <div class="container">
 
