@@ -241,7 +241,7 @@ a[href="/recommend"] {
         <div class="card mb-4">
           <div class="card-body text-center">
             <h5 class="card-title">
-           <a href="/blogs/{{r.id}}">  {{ r.title|safe }} </a>
+           <a href="/blogs/{{r.id}}">  {{ r.extract_info|safe }} </a>
 
            </h5>
             <p class="card-text">{{ r.text[:300]|safe }} ...</p>

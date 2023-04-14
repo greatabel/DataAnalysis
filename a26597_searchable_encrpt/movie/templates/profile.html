@@ -109,7 +109,11 @@ div[class*="release_year"] {
     <h5>special field of study: {{user.school_grade}}</h5>
     <hr/>
     <p>password: ******** </p>
-
+    <hr/>
+    <h5>Key: {{user.key}}</h5>
+    <hr/>
+    <h5>Allow others to search: {{ 'Yes' if user.allow_other_to_search else 'No' }}</h5>
+    <hr/>
     <br/>
     <a href="/profiles/update/{{user.id}}" id="{{user.id}}">Update Profile</a>
 </div>

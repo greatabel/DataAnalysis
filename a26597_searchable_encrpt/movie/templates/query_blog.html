@@ -110,8 +110,8 @@ div[class*="release_year"] {
 <img src="/static/images/app_data/{{blog.id % 10 }}.jpg" class="img-fluid" style="height:250px;width:500px;">
         </figure> -->
 <br/>
-    <span>file 下载url:</span>
-        <a href="{{ url_for('file_download', filename=blog.title) }}">{{blog.title}}</a><br/>
+    <span>file 解码下载:</span>
+        <a href="{{ url_for('file_download', filename=blog.title) }}">{{blog.extract_info}}</a><br/>
     <hr/>
 
      {% if session['isadmin'] %}

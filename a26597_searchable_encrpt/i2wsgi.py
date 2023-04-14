@@ -26,7 +26,7 @@ from movie import create_app
 # import es_search
 import logging
 from os import listdir
-
+from cryptography.fernet import Fernet
 
 # import recommandation
 
@@ -60,6 +60,9 @@ CORS(app)
 
 
 # ---start  数据库 ---
+app.config['UPLOAD_FOLDER'] = 'upload'
+KEY = ''
+k_v = {}
 
 print("#" * 20, os.path.abspath("movie/campus_data.db"), "#" * 20)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.abspath(
@@ -73,6 +76,20 @@ last_upload_filename = None
 admin_list = ["admin@126.com", "greatabel1@126.com"]
 
 
+# class User(db.Model):
+#     """Create user table"""
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     username = db.Column(db.String(80), unique=True)
+#     password = db.Column(db.String(80))
+#     nickname = db.Column(db.String(80))
+#     school_class = db.Column(db.String(80))
+#     school_grade = db.Column(db.String(80))
+
+#     def __init__(self, username, password):
+#         self.username = username
+#         self.password = password
+
 class User(db.Model):
     """Create user table"""
 
@@ -82,10 +99,14 @@ class User(db.Model):
     nickname = db.Column(db.String(80))
     school_class = db.Column(db.String(80))
     school_grade = db.Column(db.String(80))
+    key = db.Column(db.String(500))  # New field: key
+    allow_other_to_search = db.Column(db.Integer)  # New field: allow_other_to_search
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, key, allow_other_to_search):
         self.username = username
         self.password = password
+        self.key = key
+        self.allow_other_to_search = allow_other_to_search
 
 
 class Blog(db.Model):
@@ -97,15 +118,17 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # ppt标题
     title = db.Column(db.String(100))
+    extract_info = db.Column(db.String(300))
     # ppt正文
     text = db.Column(db.Text)
 
-    def __init__(self, title, text):
+    def __init__(self, title, text, extract_info=''):
         """
         初始化方法
         """
         self.title = title
         self.text = text
+        self.extract_info = extract_info
 
 
 
@@ -149,12 +172,15 @@ def home(pagenum=1):
 
     blogs = Blog.query.all()
     blogs = list(reversed(blogs))
+    # print('blogs[0].extract_info=',blogs[0].extract_info)
     user = None
     if "userid" in session:
         user = User.query.filter_by(id=session["userid"]).first()
     else:
         print("userid not in session")
     print("in home", user, "blogs=", len(blogs), "*" * 20)
+    global KEY
+    KEY = user.key
     if request.method == "POST":
         search_list = []
         keyword = request.form["keyword"]
@@ -308,35 +334,69 @@ def query_profile():
         return "", 204
 
 
+# @app.route("/profiles/update/<id>", methods=["GET", "POST"])
+# def update_profile(id):
+#     """
+#     更新ppt
+#     """
+#     if request.method == "GET":
+#         # 根据ID查询ppt详情
+#         user = User.query.filter_by(id=id).first_or_404()
+#         # 渲染修改笔记页面HTML模板
+#         return rt("update_profile.html", user=user)
+#     else:
+#         # 获取请求的ppt标题和正文
+#         password = request.form["password"]
+#         nickname = request.form["nickname"]
+#         school_class = request.form["school_class"]
+#         school_grade = request.form["school_grade"]
+
+#         # 更新ppt
+#         user = User.query.filter_by(id=id).update(
+#             {
+#                 "password": password,
+#                 "nickname": nickname,
+#                 "school_class": school_class,
+#                 "school_grade": school_grade,
+#             }
+#         )
+#         # 提交才能生效
+#         db.session.commit()
+#         # 修改完成之后重定向到ppt详情页面
+#         return redirect("/profile")
 @app.route("/profiles/update/<id>", methods=["GET", "POST"])
 def update_profile(id):
     """
-    更新ppt
+    Update user profile
     """
     if request.method == "GET":
-        # 根据ID查询ppt详情
+        # 根据ID查询用户详情
         user = User.query.filter_by(id=id).first_or_404()
-        # 渲染修改笔记页面HTML模板
+        # 渲染修改用户页面HTML模板
         return rt("update_profile.html", user=user)
     else:
-        # 获取请求的ppt标题和正文
+        # 获取请求的用户信息
         password = request.form["password"]
         nickname = request.form["nickname"]
         school_class = request.form["school_class"]
         school_grade = request.form["school_grade"]
+        key = request.form["key"]
+        allow_other_to_search = int(request.form["allow_other_to_search"])
 
-        # 更新ppt
+        # 更新用户信息
         user = User.query.filter_by(id=id).update(
             {
                 "password": password,
                 "nickname": nickname,
                 "school_class": school_class,
                 "school_grade": school_grade,
+                "key": key,
+                "allow_other_to_search": allow_other_to_search,
             }
         )
         # 提交才能生效
         db.session.commit()
-        # 修改完成之后重定向到ppt详情页面
+        # 修改完成之后重定向到用户详情页面
         return redirect("/profile")
 
 
@@ -447,7 +507,7 @@ def register():
     # salt = PH.get_salt()
     # hashed = PH.get_hash(pw1 + salt)
     print("register", email, pw1)
-    new_user = User(username=email, password=pw1)
+    new_user = User(username=email, password=pw1, key='',allow_other_to_search=0)
     db.session.add(new_user)
     db.session.commit()
 
@@ -476,7 +536,7 @@ def add_ppt():
 
 @app.route("/upload_ppt", methods=["POST"])
 def upload_ppt():
-
+    global k_v
     # detail = request.form.get("detail")
     # 从表单请求体中获取请求数据
 
@@ -484,7 +544,9 @@ def upload_ppt():
     text = request.form.get("detail")
 
     # 创建一个ppt对象
-    blog = Blog(title=title, text=text)
+    extract_info = k_v[title]
+    print('####upload_ppt extract_info=', extract_info)
+    blog = Blog(title=title, text=text, extract_info=extract_info)
     db.session.add(blog)
     # 必须提交才能生效
     db.session.commit()
@@ -520,26 +582,73 @@ def upload_part():  # 接收前端上传的一个分片
     return rt("index.html")
 
 
+# @app.route("/file/merge", methods=["GET"])
+# def upload_success():  # 按序读出分片内容，并写入新文件
+#     global last_upload_filename
+#     target_filename = request.args.get("filename")  # 获取上传文件的文件名
+#     last_upload_filename = target_filename
+#     print("last_upload_filename=", last_upload_filename)
+#     task = request.args.get("task_id")  # 获取文件的唯一标识符
+#     chunk = 0  # 分片序号
+#     with open("./upload/%s" % target_filename, "wb") as target_file:  # 创建新文件
+#         while True:
+#             try:
+#                 filename = "./upload/%s%d" % (task, chunk)
+#                 source_file = open(filename, "rb")  # 按序打开每个分片
+#                 target_file.write(source_file.read())  # 读取分片内容写入新文件
+#                 source_file.close()
+#             except IOError as msg:
+#                 break
+
+#             chunk += 1
+#             os.remove(filename)  # 删除该分片，节约空间
+
+#     return rt("index.html")
+
 @app.route("/file/merge", methods=["GET"])
-def upload_success():  # 按序读出分片内容，并写入新文件
+def upload_success():
     global last_upload_filename
     target_filename = request.args.get("filename")  # 获取上传文件的文件名
     last_upload_filename = target_filename
     print("last_upload_filename=", last_upload_filename)
     task = request.args.get("task_id")  # 获取文件的唯一标识符
     chunk = 0  # 分片序号
+    encrypted_file_content = b""
+
+    o_chunk = 0  # 分片序号
     with open("./upload/%s" % target_filename, "wb") as target_file:  # 创建新文件
         while True:
             try:
-                filename = "./upload/%s%d" % (task, chunk)
+                filename = "./upload/%s%d" % (task, o_chunk)
                 source_file = open(filename, "rb")  # 按序打开每个分片
                 target_file.write(source_file.read())  # 读取分片内容写入新文件
                 source_file.close()
             except IOError as msg:
                 break
 
-            chunk += 1
+            o_chunk += 1
             os.remove(filename)  # 删除该分片，节约空间
+
+    while True:
+        try:
+            filename = "./upload/%s%d" % (task, chunk)
+            with open(filename, "rb") as source_file:
+                encrypted_file_content += source_file.read()  # 读取分片内容
+                os.remove(filename)  # 删除该分片，节约空间
+        except IOError as msg:
+            break
+        chunk += 1
+
+    # 加密文件名和内容
+    global KEY, k_v
+    encrypted_filename = Fernet(KEY).encrypt(target_filename.encode()).decode()
+    encrypted_content = Fernet(KEY).encrypt(encrypted_file_content)
+    print('target_filename=>',target_filename.encode(),' encrypted_filename=>',encrypted_filename)
+    k_v[target_filename] = encrypted_filename
+    print('##k_v[target_filename]', k_v[target_filename])
+    # 保存加密后的文件内容
+    with open(os.path.join(app.config['UPLOAD_FOLDER'], encrypted_filename), 'wb') as f:
+        f.write(encrypted_content)
 
     return rt("index.html")
 
@@ -582,6 +691,11 @@ def custom_static(filename):
 
 
 if __name__ == "__main__":
+    # # 生成一个密钥并打印，用于加密和解密
+    # KEY = Fernet.generate_key()
+    # print(f"Server Key: {KEY.decode()}")
+    # UQ3wcaralfsIEBDR08pY_oaUWUGcf3EL-puTMmuUXnM=
+
     with app.app_context():
         db.create_all()
 

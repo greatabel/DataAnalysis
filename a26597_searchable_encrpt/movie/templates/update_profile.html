@@ -1,17 +1,23 @@
 <h1>Update Profile</h1>
 <!-- HTML表单 -->
 <form action="/profiles/update/{{user.id}}" method="POST">
-    <label>name：</label>
+    <label>Name：</label>
     <input type="text" name="nickname" value="{{user.nickname}}">
     <br><br>
-    <label>password：</label>
+    <label>Password：</label>
     <input type="text" name="password" value="{{user.password}}">
     <br><br>
     <label>Profession:</label>
     <input type="text" name="school_class" value="{{user.school_class}}">
     <br><br>
-    <label>special field of study::</label>
+    <label>Special field of study:</label>
     <input type="text" name="school_grade" value="{{user.school_grade}}">
+    <br><br>
+    <label>Key:</label>
+    <input type="text" name="key" value="{{user.key}}">
+    <br><br>
+    <label>Allow others to search:</label>
+    <input type="checkbox" name="allow_other_to_search" value="1" {% if user.allow_other_to_search %}checked{% endif %}>
     <br><br>
     <input type="submit" value="Submit">
 </form>
