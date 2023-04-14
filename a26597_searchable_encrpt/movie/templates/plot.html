@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大屏可视化</title>
+    <style>
+        /* 添加自定义样式 */
+    </style>
+</head>
+<body>
+    <h1>大屏可视化</h1>
+    <div id="heatmap"></div>
+
+<div id="age_histogram"></div>
+<div id="geo_scatter"></div>
+
+<div id="age_histogram"></div>
+<div id="gender_countplot"></div>
+<div id="age_rating_scatter"></div>
+
+
+
+<script src="/static/plotly-latest.min.js"></script>
+<script>
+    // 从 Flask 应用接收相关矩阵
+    var corr_matrix_data = JSON.parse('{{ corr_matrix | safe }}');
+    var corr_matrix = corr_matrix_data.data;
+    var columns = corr_matrix_data.columns;
+    
+    // 准备 Plotly 绘图数据
+    var data = [
+        {
+            z: corr_matrix,
+            x: columns,
+            y: columns,
+            type: 'heatmap',
+            colorscale: 'Viridis'
+        }
+    ];
+
+    // 设定 Plotly 绘图布局
+    var layout = {
+        title: '相关性矩阵',
+        xaxis: {title: '特征'},
+        yaxis: {title: '特征'},
+    };
+
+    // 绘制热图
+    Plotly.newPlot('heatmap', data, layout);
+
+
+     // 从 Flask 应用接收年龄分布直方图数据
+    var age_histogram_data = JSON.parse('{{ age_histogram | safe }}');
+
+    // 准备年龄分布直方图数据
+    var age_histogram_trace = {
+        x: age_histogram_data.map(d => d.age),
+        y: age_histogram_data.map(d => d.count),
+        type: 'bar'
+    };
+
+    // 设定年龄分布直方图布局
+    var age_histogram_layout = {
+        title: '年龄分布直方图',
+        xaxis: {title: '年龄'},
+        yaxis: {title: '频数'},
+    };
+
+    // 绘制年龄分布直方图
+    Plotly.newPlot('age_histogram', [age_histogram_trace], age_histogram_layout);
+
+    var gender_count_data = JSON.parse('{{ gender_count | safe }}');
+
+    // 准备性别分布柱状图数据
+    var gender_count_trace = {
+        x: gender_count_data.map(d => d.gender),
+        y: gender_count_data.map(d => d.count),
+        type: 'bar'
+    };
+
+    // 设定性别分布柱状图布局
+    var gender_count_layout = {
+        title: '性别分布',
+        xaxis: {title: '性别'},
+        yaxis: {title: '频数'},
+    };
+
+    // 绘制性别分布柱状图
+    Plotly.newPlot('gender_countplot', [gender_count_trace], gender_count_layout);
+
+    // 从 Flask 应用接收年龄与评分关系散点图数据
+    var age_rating_scatter_data = JSON.parse('{{ age_rating_scatter | safe }}');
+
+    // 准备年龄与评分关系散点图数据
+
+    var age_rating_scatter_trace = {
+        x: age_rating_scatter_data.map(d => d.age),
+        y: age_rating_scatter_data.map(d => d.rating),
+        mode: 'markers',
+        text: age_rating_scatter_data.map(d => d.gender),
+        marker: {
+            size: 8,
+            color: age_rating_scatter_data.map(d => d.gender === 'Male' ? 'blue' : 'red'),
+            opacity: 0.7
+        }
+    };
+
+    // 设定年龄与评分关系散点图布局
+    var age_rating_scatter_layout = {
+        title: '年龄与评分关系',
+        xaxis: {title: '年龄'},
+        yaxis: {title: '评分'},
+        legend: {
+            x: 1,
+            y: 1,
+            traceorder: 'normal',
+            font: {family: 'sans-serif', size: 12, color: '#000'},
+            bgcolor: '#E2E2E2',
+            bordercolor: '#FFFFFF',
+            borderwidth: 2
+        }
+    };
+
+    // 绘制年龄与评分关系散点图
+    Plotly.newPlot('age_rating_scatter', [age_rating_scatter_trace], age_rating_scatter_layout);
+
+</script>
+
+</body>
+</html>
