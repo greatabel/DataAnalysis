@@ -11,6 +11,12 @@ https://docs.python.org/zh-cn/3/tutorial/venv.html
 
 4.
 4.1
+ubuntu上：
+sudo apt-get update
+sudo apt-get install build-essential libssl-dev libffi-dev python3-dev
+
+
+4.2
 terminal底下进入工程目录下，在requirements.txt同级目录下运行：
 pip install --upgrade -r requirements.txt
 
@@ -18,8 +24,7 @@ pip install --upgrade -r requirements.txt
 模拟运行在:
 python3 i2wsgi.py
 
-新开一个cmd：
-jupyter notebook i2gps_algroithm_spark.ipynb
+
 
 
 

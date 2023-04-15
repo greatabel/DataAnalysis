@@ -60,8 +60,8 @@ CORS(app)
 
 
 # ---start  数据库 ---
-app.config['UPLOAD_FOLDER'] = 'upload'
-KEY = ''
+app.config["UPLOAD_FOLDER"] = "upload"
+KEY = ""
 k_v = {}
 
 print("#" * 20, os.path.abspath("movie/campus_data.db"), "#" * 20)
@@ -89,6 +89,7 @@ admin_list = ["admin@126.com", "greatabel1@126.com"]
 #     def __init__(self, username, password):
 #         self.username = username
 #         self.password = password
+
 
 class User(db.Model):
     """Create user table"""
@@ -122,15 +123,13 @@ class Blog(db.Model):
     # ppt正文
     text = db.Column(db.Text)
 
-    def __init__(self, title, text, extract_info=''):
+    def __init__(self, title, text, extract_info=""):
         """
         初始化方法
         """
         self.title = title
         self.text = text
         self.extract_info = extract_info
-
-
 
 
 ### -------------start of home
@@ -168,6 +167,7 @@ class PageResult:
 @app.route("/home", methods=["GET", "POST"])
 def home(pagenum=1):
     print("home " * 10)
+    global KEY
     app.logger.info("home info log")
 
     blogs = Blog.query.all()
@@ -176,11 +176,12 @@ def home(pagenum=1):
     user = None
     if "userid" in session:
         user = User.query.filter_by(id=session["userid"]).first()
+        KEY = user.key
     else:
         print("userid not in session")
     print("in home", user, "blogs=", len(blogs), "*" * 20)
-    global KEY
-    KEY = user.key
+
+    
     if request.method == "POST":
         search_list = []
         keyword = request.form["keyword"]
@@ -507,7 +508,7 @@ def register():
     # salt = PH.get_salt()
     # hashed = PH.get_hash(pw1 + salt)
     print("register", email, pw1)
-    new_user = User(username=email, password=pw1, key='',allow_other_to_search=0)
+    new_user = User(username=email, password=pw1, key="", allow_other_to_search=0)
     db.session.add(new_user)
     db.session.commit()
 
@@ -545,7 +546,7 @@ def upload_ppt():
 
     # 创建一个ppt对象
     extract_info = k_v[title]
-    print('####upload_ppt extract_info=', extract_info)
+    print("####upload_ppt extract_info=", extract_info)
     blog = Blog(title=title, text=text, extract_info=extract_info)
     db.session.add(blog)
     # 必须提交才能生效
@@ -605,6 +606,7 @@ def upload_part():  # 接收前端上传的一个分片
 
 #     return rt("index.html")
 
+
 @app.route("/file/merge", methods=["GET"])
 def upload_success():
     global last_upload_filename
@@ -643,11 +645,16 @@ def upload_success():
     global KEY, k_v
     encrypted_filename = Fernet(KEY).encrypt(target_filename.encode()).decode()
     encrypted_content = Fernet(KEY).encrypt(encrypted_file_content)
-    print('target_filename=>',target_filename.encode(),' encrypted_filename=>',encrypted_filename)
+    print(
+        "target_filename=>",
+        target_filename.encode(),
+        " encrypted_filename=>",
+        encrypted_filename,
+    )
     k_v[target_filename] = encrypted_filename
-    print('##k_v[target_filename]', k_v[target_filename])
+    print("##k_v[target_filename]", k_v[target_filename])
     # 保存加密后的文件内容
-    with open(os.path.join(app.config['UPLOAD_FOLDER'], encrypted_filename), 'wb') as f:
+    with open(os.path.join(app.config["UPLOAD_FOLDER"], encrypted_filename), "wb") as f:
         f.write(encrypted_content)
 
     return rt("index.html")
@@ -689,14 +696,19 @@ def custom_static(filename):
 
 # --------------------------
 
+host = "localhost"
+env_flask = os.environ.get("FLASK_ENV")
+print("env_flask=====", env_flask)
+if env_flask == "production":
+    # Development settings
+    host = "0.0.0.0"
+
 
 if __name__ == "__main__":
-    # # 生成一个密钥并打印，用于加密和解密
-    # KEY = Fernet.generate_key()
-    # print(f"Server Key: {KEY.decode()}")
-    # UQ3wcaralfsIEBDR08pY_oaUWUGcf3EL-puTMmuUXnM=
-
     with app.app_context():
+        app.config["JSON_AS_ASCII"] = False
         db.create_all()
 
-        app.run(host="localhost", port=5000, threaded=False)
+        print("host =====", host)
+        app.run(host=host, port=5000, threaded=False)
+

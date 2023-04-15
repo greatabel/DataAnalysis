@@ -1,7 +1,3 @@
-pyspark==3.2.0
-matplotlib==3.4.3
-seaborn==0.11.2
-pandas==1.3.4
 pytest
 python-dotenv
 pytest-cov
@@ -10,9 +6,8 @@ flask-cors
 Flask-Login
 flask_sqlalchemy
 requests
-
-termcolor
-#pdfreader
-flask_caching==2.0.2
+flask_caching
 Werkzeug==2.0.0
-termcolor==2.2.0
+termcolor
+setuptools_rust
+cryptography
