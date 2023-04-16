@@ -307,6 +307,27 @@ def get_recommendations(user_id):
     return recommendations
 
 
+def generate_random_recs(user_id, num_recs=4):
+    random_recs = []
+    item_categories = ['Ecommerce_categoryA(娱乐)', 'Ecommerce_categoryB(娱乐)']
+    generated_item_ids = set()
+
+    while len(random_recs) < num_recs:
+        item_id = random.randint(1, 10)  # 假设最大的itemId为10
+        if item_id not in generated_item_ids:
+            generated_item_ids.add(item_id)
+            random_recs.append({
+                "itemId": item_id,
+                "userId": user_id,  # 使用传入的user_id
+                "rating": round(random.uniform(1, 5), 2),  # 生成一个1到5之间的随机评分
+                "itemName": "room"+str(item_id),  # 您可以根据实际情况填写这些字段
+                "itemCategory": random.choice(item_categories)  # 随机选择一个分类
+            })
+
+    return random_recs
+
+
+
 @app.route("/recommend", methods=["GET", "DELETE"])
 def recommend():
     """
@@ -318,6 +339,8 @@ def recommend():
         recs = get_recommendations(id)
         if recs:
             print("recs=", recs)
+        else:
+            recs = generate_random_recs(id)
         # Get the list of image filenames in the recommends folder
         image_files = [f for f in listdir('movie/static/images/ppt_cover/recommends') if f.endswith('.jpg')]
 
