@@ -222,7 +222,7 @@ def home(pagenum=1):
 @app.route("/blogs/create", methods=["GET", "POST"])
 def create_blog():
     """
-    创建ppt文章
+    创建商品
     """
     if request.method == "GET":
         # 如果是GET请求，则渲染创建页面
@@ -241,58 +241,7 @@ def create_blog():
         return redirect("/blogs")
 
 
-@app.route("/blogs", methods=["GET"])
-def list_notes():
-    """
-    查询ppt列表
-    """
-    blogs = Blog.query.all()
 
-    # 渲染ppt列表页面目标文件，传入blogs参数
-    return rt("list_blogs.html", blogs=blogs)
-
-
-@app.route("/blogs/update/<id>", methods=["GET", "POST"])
-def update_note(id):
-    """
-    更新cousre
-    """
-    if request.method == "GET":
-        # 根据ID查询ppt详情
-        blog = Blog.query.filter_by(id=id).first_or_404()
-        # 渲染修改笔记页面HTML模板
-        return rt("update_blog.html", blog=blog)
-    else:
-        # 获取请求的ppt标题和正文
-        title = request.form["title"]
-        text = request.form["text"]
-
-        # 更新ppt
-        blog = Blog.query.filter_by(id=id).update({"title": title, "text": text})
-        # 提交才能生效
-        db.session.commit()
-        # 修改完成之后重定向到ppt详情页面
-        return redirect("/blogs/{id}".format(id=id))
-
-
-@app.route("/blogs/<id>", methods=["GET", "DELETE"])
-def query_note(id):
-    """
-    查询cousre详情、删除cousre
-    """
-    if request.method == "GET":
-        # 到数据库查询ppt详情
-        blog = Blog.query.filter_by(id=id).first_or_404()
-        print(id, blog, "in query_blog", "@" * 20)
-        # 渲染ppt详情页面
-        return rt("query_blog.html", blog=blog)
-    else:
-        # 删除ppt
-        blog = Blog.query.filter_by(id=id).delete()
-        # 提交才能生效
-        db.session.commit()
-        # 返回204正常响应，否则页面ajax会报错
-        return "", 204
 
 
 ### -------------end of home
@@ -331,7 +280,7 @@ def generate_random_recs(user_id, num_recs=4):
 @app.route("/recommend", methods=["GET", "DELETE"])
 def recommend():
     """
-    查询cousre item 推荐
+    查询商品 item 推荐
     """
     if request.method == "GET":
         id = session["userid"]
@@ -423,17 +372,10 @@ def plot():
 
 
 
-
-
-
-
-### -------------start of profile
-
-
 @app.route("/profile", methods=["GET", "DELETE"])
 def query_profile():
     """
-    查询cousre详情、删除ppt
+    查询商品详情、删除ppt
     """
 
     id = session["userid"]
@@ -646,19 +588,6 @@ def upload_ppt():
     return redirect(url_for("add_ppt"))
 
 
-# @app.route("/student_work", methods=["POST"])
-# def student_work():
-#     return redirect(url_for("student_index"))
-
-
-# @app.route("/student_index", methods=["GET"])
-# def student_index():
-#     return rt("student_index.html")
-
-
-# @app.route("/", methods=["GET"])
-# def index():
-#     return rt("index.html")
 
 
 @app.route("/file/upload", methods=["POST"])
