@@ -27,6 +27,8 @@ from movie import create_app
 import logging
 from os import listdir
 from cryptography.fernet import Fernet
+import copy
+
 
 # import recommandation
 
@@ -189,11 +191,15 @@ def home(pagenum=1):
         if keyword is not None:
             for blog in blogs:
                 if keyword in blog.title or keyword in blog.text:
-                    blog.title = replace_html_tag(blog.title, keyword)
-                    print(blog.title)
-                    blog.text = replace_html_tag(blog.text, keyword)
+                    # 对blog对象进行深拷贝
+                    blog_copy = copy.deepcopy(blog)
+                    
+                    blog_copy.title = replace_html_tag(blog.title, keyword)
+                    print(blog_copy.title)
+                    blog_copy.text = replace_html_tag(blog.text, keyword)
 
-                    search_list.append(blog)
+                    search_list.append(blog_copy)
+
 
             # if len(search_list) == 0 and keyword in ["天气", "心情"]:
             #     es_content = es_search.mysearch(keyword)
@@ -545,7 +551,13 @@ def upload_ppt():
     text = request.form.get("detail")
 
     # 创建一个ppt对象
-    extract_info = k_v[title]
+    if title in k_v:
+        extract_info = k_v[title]
+    else:
+        # 处理title不存在于k_v字典中的情况
+        # 例如：设置默认值或者返回错误信息
+        extract_info = 'upload is not success'
+
     print("####upload_ppt extract_info=", extract_info)
     blog = Blog(title=title, text=text, extract_info=extract_info)
     db.session.add(blog)
