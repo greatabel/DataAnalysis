@@ -18,3 +18,8 @@ pip install --upgrade -r requirements.txt
 terminal底执行；
 jupyter notebook i3predict_model.ipynb     
 
+另开一个terminal：
+python3 i2wsgi.py
+
+访问：
+http://localhost:5000/home

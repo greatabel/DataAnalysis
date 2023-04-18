@@ -410,20 +410,6 @@ def update_profile(id):
 ### -------------end of profile
 
 
-@app.route("/course/<id>", methods=["GET"])
-def course_home(id):
-    """
-    查询ppt详情、删除ppt
-    """
-    if request.method == "GET":
-        # 到数据库查询ppt详情
-        blog = Blog.query.filter_by(id=id).first_or_404()
-        teacherWork = TeacherWork.query.filter_by(course_id=id).first()
-        print(id, blog, "in query_blog", "@" * 20)
-        # 渲染ppt详情页面
-        return rt("course.html", blog=blog, teacherWork=teacherWork)
-    else:
-        return "", 204
 
 
 login_manager = flask_login.LoginManager(app)
