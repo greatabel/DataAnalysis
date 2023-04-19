@@ -51,12 +51,6 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 
 
-# import recommandation
-
-# from movie.domain.model import Director, Review, Movie
-
-# from html_similarity import style_similarity, structural_similarity, similarity
-# from common import set_js_file
 
 app = create_app()
 app.secret_key = "ABCabc123"
@@ -191,22 +185,7 @@ def home(pagenum=1):
 
                     search_list.append(blog)
 
-            # if len(search_list) == 0 and keyword in ["天气", "心情"]:
-            #     es_content = es_search.mysearch(keyword)
-            #     search_list.append(es_content)
-            # for movie in notice_list:
-            #     if movie.director.director_full_name == keyword:
-            #         search_list.append(movie)
 
-            #     for actor in movie.actors:
-            #         if actor.actor_full_name == keyword:
-            #             search_list.append(movie)
-            #             break
-
-            #     for gene in movie.genres:
-            #         if gene.genre_name == keyword:
-            #             search_list.append(movie)
-            #             break
         print("search_list=", search_list, "=>" * 5)
         return rt(
             "home.html",
@@ -437,30 +416,14 @@ def update_profile(id):
 ### -------------end of profile
 
 
-@app.route("/course/<id>", methods=["GET"])
-def course_home(id):
-    """
-    查询ppt详情、删除ppt
-    """
-    if request.method == "GET":
-        # 到数据库查询ppt详情
-        blog = Blog.query.filter_by(id=id).first_or_404()
-        teacherWork = TeacherWork.query.filter_by(course_id=id).first()
-        print(id, blog, "in query_blog", "@" * 20)
-        # 渲染ppt详情页面
-        return rt("course.html", blog=blog, teacherWork=teacherWork)
-    else:
-        return "", 204
+
 
 
 login_manager = flask_login.LoginManager(app)
 user_pass = {}
 
 
-# @app.route("/call_bash", methods=["GET"])
-# def call_bash():
-#     i0bash_caller.open_client("")
-#     return {}, 200
+
 
 
 @app.route("/statistics", methods=["GET"])
@@ -474,14 +437,6 @@ def relationship():
     return jsonify(d)
 
 
-@app.route("/index_a/")
-def index():
-    return rt("index-A.html")
-
-
-@app.route("/index_b/")
-def index_b():
-    return rt("index-B.html")
 
 
 @login_manager.user_loader
@@ -508,12 +463,8 @@ def login():
 
             print("login sucess", "#" * 20, session["logged_in"])
 
-            # w = TeacherWork.query.get(1)
-            # print('w=', w, w.answer, w.title)
-            # if w is not None:
-            #     session['title'] = w.title
-            #     session['detail'] = w.detail
-            #     session['answer'] = w.answer
+
+     
 
             return redirect(url_for("home", pagenum=1))
         else:
