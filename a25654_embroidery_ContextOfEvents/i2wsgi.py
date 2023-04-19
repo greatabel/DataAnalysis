@@ -28,7 +28,52 @@ import logging
 import numpy as np
 from scipy.integrate import odeint
 from csv_operation import *
-from datetime import datetime
+
+from datetime import date
+from datetime import datetime, timedelta
+
+
+SECONDS_PER_DAY = 24 * 60 * 60
+MILLISECONDS_PER_SECOND = 1000
+
+def bce_date_to_ordinal(bce_date):
+    days_since_year_0 = (abs(bce_date.year) - 1) * 365 + (abs(bce_date.year) // 4)  # 处理闰年
+    days_since_year_0 += (bce_date.month - 1) * 30 + bce_date.day  # 假设每个月都有30天
+    return days_since_year_0
+
+def date_to_unix_timestamp(date_obj):
+    if isinstance(date_obj, BCEDate):
+        ref_date = BCEDate(1, 1, 1)
+        days_since_year_0 = bce_date_to_ordinal(date_obj) - bce_date_to_ordinal(ref_date)
+        unix_timestamp = -days_since_year_0 * SECONDS_PER_DAY * MILLISECONDS_PER_SECOND
+    else:
+        datetime_obj = datetime.combine(date_obj, datetime.min.time())  # 将 datetime.date 对象转换为 datetime.datetime 对象
+        unix_timestamp = int(datetime.timestamp(datetime_obj) * MILLISECONDS_PER_SECOND)
+
+    return unix_timestamp
+
+class BCEDate:
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+
+    def __str__(self):
+        return f"{self.year}.{self.month}.{self.day}"
+
+    def to_dict(self):
+        return {"year": self.year, "month": self.month, "day": self.day}
+
+# ...
+
+
+def parse_date(date_str):
+    year, month = map(float, date_str.split('.'))
+    if year < 0:
+        return BCEDate(int(year), int(month), 1)
+    else:
+        return date(int(year), int(month), 1)
+
 
 
 app = create_app()
@@ -414,36 +459,35 @@ def index_b():
 #         events.append(event)
 #     return jsonify(events)
 
-@app.route('/vis_events',methods=["GET"])
+@app.route('/vis_events', methods=["GET"])
 def vis_events():
     events = None
     lang = request.args.get('lang')
 
     if lang == "en":
         print('kg want userid=', lang, '#'*30)
-
-                # 从 CSV 文件加载事件
         events = read_csv_data('data/i1history_en.csv')
     else:
-        # 从 CSV 文件加载事件
         events = read_csv_data('data/i1history.csv')
 
-    # 转换事件的时间格式
+    # 解析并转换事件的时间格式
     for event in events:
-        event["time"] = datetime.strptime(event["time"], '%Y.%m').date()
+        event["time"] = parse_date(event["time"])
+        event["time"] = date_to_unix_timestamp(event["time"])
 
     # 将事件转换为 Vis.js 时间轴所需的格式
     data = []
     for i, row in enumerate(events):
         event = {
             "id": i + 1,
-            "content": Markup(row["event"].replace("\n", "<br>")), # 使用 Markup 类
+            "content": Markup(row["event"].replace("\n", "<br>")),  # 使用 Markup 类
             "start": row["time"],
         }
         data.append(event)
 
     # 将事件作为 JSON 格式返回
     return jsonify(data)
+
 
 # 事件脉络
 @app.route("/sequence_vis")
