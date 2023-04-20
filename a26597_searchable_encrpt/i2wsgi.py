@@ -177,8 +177,10 @@ def home(pagenum=1):
     # print('blogs[0].extract_info=',blogs[0].extract_info)
     user = None
     if "userid" in session:
+        id = session["userid"]
         user = User.query.filter_by(id=session["userid"]).first()
-        KEY = user.key
+        if user is not None:
+            KEY = user.key
     else:
         print("userid not in session")
     print("in home", user, "blogs=", len(blogs), "*" * 20)

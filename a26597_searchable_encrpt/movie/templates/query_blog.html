@@ -110,9 +110,12 @@ div[class*="release_year"] {
 <img src="/static/images/app_data/{{blog.id % 10 }}.jpg" class="img-fluid" style="height:250px;width:500px;">
         </figure> -->
 <br/>
-    <span>file 解码下载:</span>
+ {% if session['logged_in'] %}
+      <span>file 解码下载:</span>
         <a href="{{ url_for('file_download', filename=blog.title) }}">{{blog.extract_info}}</a><br/>
     <hr/>
+
+  {% endif %}
 
      {% if session['isadmin'] %}
     <a href="#" class="btn-delete" id="{{blog.id}}">Delete</a>

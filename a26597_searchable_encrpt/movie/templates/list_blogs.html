@@ -107,7 +107,7 @@ div[class*="release_year"] {
 <hr/>
 {% if blogs %}
     {% for blog in blogs%}
-        <h4><a href="/blogs/{{blog.id}}"> &nbsp;&nbsp;&nbsp;&nbsp;{{blog.title}}</a></h4>
+        <h4><a href="/blogs/{{blog.id}}"> &nbsp;&nbsp;&nbsp;&nbsp;{{blog.extract_info}}</a></h4>
         <hr/>
     {% endfor %}
 {% else %}
