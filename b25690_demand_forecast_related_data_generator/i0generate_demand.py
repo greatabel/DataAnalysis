@@ -3,6 +3,7 @@ import random
 import math
 from datetime import datetime, timedelta
 
+
 def demand_pattern(hour):
     # 日间和夜间的需求变化
     day_demand = 0.7 * math.sin((hour - 6) * math.pi / 12) + 0.3
