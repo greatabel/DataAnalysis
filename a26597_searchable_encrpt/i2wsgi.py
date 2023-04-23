@@ -191,34 +191,20 @@ def home(pagenum=1):
         keyword = request.form["keyword"]
         print("keyword=", keyword, "-" * 10)
         if keyword is not None:
-            for blog in blogs:
-                if keyword in blog.title or keyword in blog.text:
-                    # 对blog对象进行深拷贝
-                    blog_copy = copy.deepcopy(blog)
-                    
-                    blog_copy.title = replace_html_tag(blog.title, keyword)
-                    print(blog_copy.title)
-                    blog_copy.text = replace_html_tag(blog.text, keyword)
+            if user is not None and user.allow_other_to_search == 1:
+                for blog in blogs:
+                    if keyword in blog.title or keyword in blog.text:
+                        # 对blog对象进行深拷贝
+                        blog_copy = copy.deepcopy(blog)
+                        
+                        blog_copy.title = replace_html_tag(blog.title, keyword)
+                        print(blog_copy.title)
+                        blog_copy.text = replace_html_tag(blog.text, keyword)
 
-                    search_list.append(blog_copy)
+                        search_list.append(blog_copy)
 
 
-            # if len(search_list) == 0 and keyword in ["天气", "心情"]:
-            #     es_content = es_search.mysearch(keyword)
-            #     search_list.append(es_content)
-            # for movie in notice_list:
-            #     if movie.director.director_full_name == keyword:
-            #         search_list.append(movie)
 
-            #     for actor in movie.actors:
-            #         if actor.actor_full_name == keyword:
-            #             search_list.append(movie)
-            #             break
-
-            #     for gene in movie.genres:
-            #         if gene.genre_name == keyword:
-            #             search_list.append(movie)
-            #             break
         print("search_list=", search_list, "=>" * 5)
         return rt(
             "home.html",
@@ -390,9 +376,8 @@ def update_profile(id):
         school_class = request.form["school_class"]
         school_grade = request.form["school_grade"]
         key = request.form["key"]
-        allow_other_to_search = int(request.form["allow_other_to_search"])
-
-        # 更新用户信息
+        allow_other_to_search = int(request.form.get("allow_other_to_search", 0))
+       # 更新用户信息
         user = User.query.filter_by(id=id).update(
             {
                 "password": password,
