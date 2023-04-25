@@ -28,6 +28,8 @@ import logging
 from os import listdir
 from cryptography.fernet import Fernet
 import copy
+from termcolor import cprint
+
 
 
 # import recommandation
@@ -119,19 +121,23 @@ class Blog(db.Model):
 
     # 主键ID
     id = db.Column(db.Integer, primary_key=True)
+    # user_id，关联用户
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # 添加user_id字段
     # ppt标题
     title = db.Column(db.String(100))
     extract_info = db.Column(db.String(300))
     # ppt正文
     text = db.Column(db.Text)
 
-    def __init__(self, title, text, extract_info=""):
+    def __init__(self, user_id, title, text, extract_info=""):
         """
         初始化方法
         """
+        self.user_id = user_id
         self.title = title
         self.text = text
         self.extract_info = extract_info
+
 
 
 ### -------------start of home
@@ -186,23 +192,27 @@ def home(pagenum=1):
     print("in home", user, "blogs=", len(blogs), "*" * 20)
 
     
+
     if request.method == "POST":
         search_list = []
         keyword = request.form["keyword"]
         print("keyword=", keyword, "-" * 10)
         if keyword is not None:
-            if user is not None and user.allow_other_to_search == 1:
-                for blog in blogs:
+            for blog in blogs:
+                # 获取博主
+                blog_owner = User.query.filter_by(id=blog.user_id).first()
+
+                # 如果博主允许其他人搜索（allow_other_to_search为1），则执行搜索逻辑
+                if blog_owner is not None and blog_owner.allow_other_to_search == 1:
                     if keyword in blog.title or keyword in blog.text:
                         # 对blog对象进行深拷贝
                         blog_copy = copy.deepcopy(blog)
-                        
+
                         blog_copy.title = replace_html_tag(blog.title, keyword)
-                        print(blog_copy.title)
+                        cprint('## Decrypting: ' + blog.extract_info, 'red')
                         blog_copy.text = replace_html_tag(blog.text, keyword)
 
                         search_list.append(blog_copy)
-
 
 
         print("search_list=", search_list, "=>" * 5)
@@ -230,8 +240,11 @@ def create_blog():
         title = request.form["title"]
         text = request.form["text"]
 
-        # 创建一个ppt对象
-        blog = Blog(title=title, text=text)
+        # 获取用户ID
+        user_id = session["userid"]
+
+        # 创建一个ppt对象，将user_id加入到Blog对象中
+        blog = Blog(user_id=user_id, title=title, text=text)
         db.session.add(blog)
         # 必须提交才能生效
         db.session.commit()
@@ -532,7 +545,11 @@ def upload_ppt():
         extract_info = 'upload is not success'
 
     print("####upload_ppt extract_info=", extract_info)
-    blog = Blog(title=title, text=text, extract_info=extract_info)
+    # 获取用户ID
+    user_id = session["userid"]
+
+
+    blog = Blog(user_id=user_id, title=title, text=text, extract_info=extract_info)
     db.session.add(blog)
     # 必须提交才能生效
     db.session.commit()
