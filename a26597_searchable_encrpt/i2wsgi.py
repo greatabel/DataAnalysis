@@ -207,8 +207,13 @@ def home(pagenum=1):
                     if keyword in blog.title or keyword in blog.text:
                         # 对blog对象进行深拷贝
                         blog_copy = copy.deepcopy(blog)
+                        # 使用Fernet对extra_info进行解密
+                        f = Fernet(KEY)
+                        decrypted_extract_info = f.decrypt(blog.extract_info.encode()).decode()
 
-                        blog_copy.title = replace_html_tag(blog.title, keyword)
+                        blog_copy.title = replace_html_tag(decrypted_extract_info, keyword)
+                    
+                        # blog_copy.title = replace_html_tag(blog.title, keyword)
                         cprint('## Decrypting: ' + blog.extract_info, 'red')
                         blog_copy.text = replace_html_tag(blog.text, keyword)
 
