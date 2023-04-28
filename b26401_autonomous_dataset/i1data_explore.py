@@ -204,11 +204,16 @@ plt.show()
 
 
 # 示例1: 大小分布
+
+
 print(colored("示例1:", "blue"), "实例大小分布。这个图展示了数据集中不同实例（如车辆、行人等）的尺寸（长x、宽y、高z）分布情况。")
 
 df2 = pd.DataFrame(sample_annotation_data)
 sizes = pd.DataFrame(df2["size"].tolist(), columns=["x", "y", "z"])
-plt.figure(figsize=(12, 6))
+
+sns.set_theme(style="whitegrid")  # 将背景设为白色
+
+plt.figure(figsize=(12, 6), facecolor='white')  # 添加 'facecolor' 参数并设置为 'white'
 sns.histplot(data=sizes)
 plt.title("Instance Size Distribution")
 plt.show()
@@ -221,6 +226,7 @@ sizes = pd.DataFrame(df2["size"].tolist(), columns=["x", "y", "z"])
 
 # 为每个尺寸绘制单独的直方图
 fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(18, 6))
+sns.set_theme(style="whitegrid")  # 将背景设为白色
 sns.histplot(data=sizes["x"], color="darkblue", ax=axes[0])
 axes[0].set_title("X Dimension Distribution")
 
