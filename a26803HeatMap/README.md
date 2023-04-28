@@ -1,5 +1,6 @@
 0.
-操作系统/spark/算法/准备：
+操作系统/spark/算法/准备 论文相关素材：
+
 KMeans文档介绍：https://spark.apache.org/docs/latest/ml-clustering.html#k-means
 https://blog.csdn.net/chivalrousli/article/details/72639972
 
@@ -12,6 +13,17 @@ https://spark.apache.org/docs/latest/configuration.html
 https://blog.csdn.net/weixin_42001089/article/details/82346367
 
 
+
+numpy 1.21.2 文档：https://numpy.org/doc/stable/
+
+matplotlib 3.4.3 文档：https://matplotlib.org/stable/contents.html
+
+pyspark 3.1.2 文档：https://spark.apache.org/docs/latest/api/python/index.html
+
+folium 文档：https://python-visualization.github.io/folium/
+
+
+# ---------
 
 
 1.
