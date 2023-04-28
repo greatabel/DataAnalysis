@@ -1,5 +1,16 @@
 0.
-操作系统准备：
+操作系统/spark/算法/准备：
+KMeans文档介绍：https://spark.apache.org/docs/latest/ml-clustering.html#k-means
+https://blog.csdn.net/chivalrousli/article/details/72639972
+
+Windows上WSL2部署Ubuntu 18.04：
+https://docs.microsoft.com/en-us/windows/wsl/install-win10#manual-installation-steps
+https://learn.microsoft.com/zh-cn/windows/wsl/install#manual-installation-steps
+
+Ubuntu上Spark的配置文档：
+https://spark.apache.org/docs/latest/configuration.html
+https://blog.csdn.net/weixin_42001089/article/details/82346367
+
 
 
 
