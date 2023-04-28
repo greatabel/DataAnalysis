@@ -196,6 +196,7 @@ print(
 )
 
 sns.set(style="darkgrid")
+sns.set_theme(style="white")   # 将背景设为白色
 df1 = pd.DataFrame(sample_data)
 plt.figure(figsize=(12, 6))
 sns.countplot(data=df1, x="fileformat")
@@ -211,7 +212,7 @@ print(colored("示例1:", "blue"), "实例大小分布。这个图展示了数�
 df2 = pd.DataFrame(sample_annotation_data)
 sizes = pd.DataFrame(df2["size"].tolist(), columns=["x", "y", "z"])
 
-sns.set_theme(style="whitegrid")  # 将背景设为白色
+sns.set_theme(style="white")   # 将背景设为白色
 
 plt.figure(figsize=(12, 6), facecolor='white')  # 添加 'facecolor' 参数并设置为 'white'
 sns.histplot(data=sizes)
@@ -226,7 +227,7 @@ sizes = pd.DataFrame(df2["size"].tolist(), columns=["x", "y", "z"])
 
 # 为每个尺寸绘制单独的直方图
 fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(18, 6))
-sns.set_theme(style="whitegrid")  # 将背景设为白色
+sns.set_theme(style="white")   # 将背景设为白色
 sns.histplot(data=sizes["x"], color="darkblue", ax=axes[0])
 axes[0].set_title("X Dimension Distribution")
 
@@ -246,6 +247,17 @@ sizes = pd.DataFrame(df2["size"].tolist(), columns=["x", "y", "z"])
 
 fig = plt.figure(figsize=(12, 6))
 ax = fig.add_subplot(111, projection='3d')
+
+# 设置背景颜色为白色
+ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
+ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
+ax.w_zaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
+
+# 取消网格线
+ax.grid(False)
+
+
+
 hist, xedges, yedges = np.histogram2d(sizes['x'], sizes['y'], bins=(50,50))
 xpos, ypos = np.meshgrid(xedges[:-1] + xedges[1:], yedges[:-1] + yedges[1:])
 xpos = xpos.flatten() / 2.
@@ -267,7 +279,7 @@ plt.show()
 
 # 示例2: 平移分布
 # print(colored("示例2:", "blue"), "实例平移分布。这个图展示了数据集中不同实例（如车辆、行人等）在三维空间（x、y、z轴）中的位置分布情况。")
-# sns.set_theme(style="whitegrid")
+# sns.set_theme(style="white") 
 
 # translations = pd.DataFrame(df2["translation"].tolist(), columns=["x", "y", "z"])
 # plt.figure(figsize=(12, 6))
@@ -276,7 +288,7 @@ plt.show()
 # plt.show()
 
 print(colored("示例2:", "blue"), "实例平移分布。这个图展示了数据集中不同实例（如车辆、行人等）在三维空间（x、y、z轴）中的位置分布情况。")
-sns.set_theme(style="whitegrid")
+sns.set_theme(style="white") 
 
 translations = pd.DataFrame(df2["translation"].tolist(), columns=["x", "y", "z"])
 plt.figure(figsize=(12, 6))
