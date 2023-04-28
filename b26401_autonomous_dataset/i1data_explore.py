@@ -45,6 +45,7 @@ calibrated_sensor_data = load_json(calibrated_sensor_file)
 
 
 
+
 print('-3.统计在不同距离范围内的车辆注释计数')
 
 def distance_between_points(p1, p2):
@@ -87,6 +88,12 @@ def plot_counts_by_frame(frame_counts, distance_ranges):
     ax.set_xticklabels(np.arange(1, num_frames + 1))
     plt.show()
 
+
+# start 4.28
+
+
+
+# end of 4.28
 
 
 # Assuming that the samples are sorted by frame index
@@ -206,6 +213,28 @@ sns.histplot(data=sizes)
 plt.title("Instance Size Distribution")
 plt.show()
 
+# --- 4.28
+print("4.28 示例1:", "实例大小分布。这个图展示了数据集中不同实例（如车辆、行人等）的尺寸（长x、宽y、高z）分布情况。")
+
+
+sizes = pd.DataFrame(df2["size"].tolist(), columns=["x", "y", "z"])
+
+# 为每个尺寸绘制单独的直方图
+fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(18, 6))
+sns.histplot(data=sizes["x"], color="darkblue", ax=axes[0])
+axes[0].set_title("X Dimension Distribution")
+
+sns.histplot(data=sizes["y"], color="darkblue", ax=axes[1])
+axes[1].set_title("Y Dimension Distribution")
+
+sns.histplot(data=sizes["z"], color="darkblue", ax=axes[2])
+axes[2].set_title("Z Dimension Distribution")
+
+plt.show()
+
+#---- end 4.28
+
+
 print('1-2 3d x,y z 实例大小分布')
 sizes = pd.DataFrame(df2["size"].tolist(), columns=["x", "y", "z"])
 
@@ -231,15 +260,23 @@ plt.show()
 
 
 # 示例2: 平移分布
+# print(colored("示例2:", "blue"), "实例平移分布。这个图展示了数据集中不同实例（如车辆、行人等）在三维空间（x、y、z轴）中的位置分布情况。")
+# sns.set_theme(style="whitegrid")
+
+# translations = pd.DataFrame(df2["translation"].tolist(), columns=["x", "y", "z"])
+# plt.figure(figsize=(12, 6))
+# sns.histplot(data=translations)
+# plt.title("Instance Translation Distribution")
+# plt.show()
+
 print(colored("示例2:", "blue"), "实例平移分布。这个图展示了数据集中不同实例（如车辆、行人等）在三维空间（x、y、z轴）中的位置分布情况。")
 sns.set_theme(style="whitegrid")
 
 translations = pd.DataFrame(df2["translation"].tolist(), columns=["x", "y", "z"])
 plt.figure(figsize=(12, 6))
-sns.histplot(data=translations)
+sns.histplot(data=translations, palette="RdBu")
 plt.title("Instance Translation Distribution")
 plt.show()
-
 
 # 示例3: 旋转分布
 print(
