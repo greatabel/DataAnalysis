@@ -1,0 +1,69 @@
+
+The PLY Polygon File Format
+---------------------------
+https://web.archive.org/web/20161204152348/http://www.dcs.ed.ac.uk/teaching/cs4/www/graphics/Web/ply.html
+http://paulbourke.net/dataformats/ply/
+
+
+DXF
+---------------------------
+http://paulbourke.net/dataformats/dxf/dxf10.html
+http://paulbourke.net/dataformats/dxf/min3d.html
+http://images.autodesk.com/adsk/files/autocad_2012_pdf_dxf-reference_enu.pdf
+https://www.fileformat.info/format/dxf/egff.htm
+
+MEDIT
+---------------------------
+https://hal.inria.fr/inria-00069921/document
+  7.2 szekció - mesh format
+https://people.sc.fsu.edu/~jburkardt/data/medit/medit.html
+https://github.com/ISCDtoolbox/Medit
+
+VRML 1.0
+---------------------------
+http://paulbourke.net/dataformats/vrml1/
+
+X3D
+---------------------------
+https://en.wikipedia.org/wiki/X3D
+http://x3dgraphics.com/examples/X3dForWebAuthors/index.html
+http://x3dgraphics.com/examples/X3dForWebAuthors/Chapter01TechnicalOverview/HelloTriangleIndex.html
+
+
+LSDYNA
+---------------------------
+dokumentáció ?????????????????????????
+A%20Short%20Introduction%20about%20LS%20DYNA%20and%20the%20LS%20PrePost.pdf
+
+
+VTK
+---------------------------
+UNSTRUCTURED_GRID
+
+
+povray
+---------------------------
+mesh object format:
+https://www.povray.org/documentation/view/3.7.0/67/
+
+tetgen .poly file
+---------------------------
+https://wias-berlin.de/software/tetgen/fformats.poly.html
+https://wias-berlin.de/software/tetgen/fformats.examples.html
+
+
+TIN
+---------------------------
+http://paulbourke.net/dataformats/tin/
+
+OFF
+---------------------------
+https://en.wikipedia.org/wiki/OFF_(file_format)
+http://www.geomview.org/docs/html/OFF.html
+
+GMSH
+---------------------------
+http://www.manpagez.com/info/gmsh/gmsh-2.2.6/gmsh_63.php
+
+
+
