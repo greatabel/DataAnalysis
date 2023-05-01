@@ -7,7 +7,7 @@ Flask-Login
 flask_sqlalchemy
 requests
 flask_caching
-Werkzeug==2.0.0
+Werkzeug==2.2.3
 termcolor
 setuptools_rust
 cryptography
