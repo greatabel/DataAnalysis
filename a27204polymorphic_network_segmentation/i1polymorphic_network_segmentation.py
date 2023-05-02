@@ -2,7 +2,7 @@ import numpy as np
 import networkx as nx
 import time
 
-'''
+"""
 
 1.多态网络表示： 使用 PolymorphicNetwork 类来表示多态网络。这个类接受一个邻接矩阵作为输入，然后将其转换为 NetworkX 图形。
 
@@ -19,7 +19,9 @@ Ford-Fulkerson 算法： 使用 ford_fulkerson 函数实现了该算法，该算
 测试和性能测量： 使用一个示例邻接矩阵创建了一个多态网络(我们自己生成出2个多态网络），
 并测试了可靠性计算的性能。同时记录了算法的运行时间
 
-'''
+"""
+
+
 class PolymorphicNetwork:
     def __init__(self, adjacency_matrix):
         self.adjacency_matrix = adjacency_matrix
@@ -28,7 +30,7 @@ class PolymorphicNetwork:
 
 def depth_first_search(residual_network, source, sink):
     visited = set()
-    stack = [(source, float('inf'), [])]
+    stack = [(source, float("inf"), [])]
 
     while stack:
         current_node, current_flow, current_path = stack.pop()
@@ -48,41 +50,42 @@ def depth_first_search(residual_network, source, sink):
 
 # original
 def ford_fulkerson(graph, source, sink):
-    print('#ford_fulkerson#')
+    print("#ford_fulkerson#")
     # 初始化残余网络
     residual_network = graph.copy()
-    
+
     # 初始化最大流量
     max_flow = 0
-    
+
     # 循环直到不存在可行路径
     while True:
         # 使用深度优先搜索找到一条路径
         path, flow = depth_first_search(residual_network, source, sink)
-        
+
         # 如果找不到路径，跳出循环
         if not path:
             break
-        
+
         # 更新残余网络
         for i in range(len(path) - 1):
             u, v = path[i], path[i + 1]
             residual_network[u][v] -= flow
             residual_network[v][u] += flow
-        
+
         # 更新最大流量
         max_flow += flow
-    
+
     return max_flow
+
 
 # with cache version(imporove)
 def ford_fulkerson(graph, source, sink, cache=None):
-    print('#ford_fulkerson improved with cache #')
+    print("#ford_fulkerson improved with cache #")
 
     if cache is None:
         cache = {}
 
-    graph_key = tuple(sorted(graph.edges())) # Creates an immutable key
+    graph_key = tuple(sorted(graph.edges()))  # Creates an immutable key
 
     if graph_key in cache:
         return cache[graph_key]
@@ -115,7 +118,6 @@ def ford_fulkerson(graph, source, sink, cache=None):
     return max_flow
 
 
-
 def calculate_reliability(network, source, sink):
 
     cache = {}
@@ -123,26 +125,28 @@ def calculate_reliability(network, source, sink):
     return 1 - min_cut / (min_cut + 1)
 
 
-
-
 # 创建测试数据
-adjacency_matrix_1 = np.array([
-    [0, 1, 1, 0, 0, 0],
-    [1, 0, 0, 1, 0, 0],
-    [1, 0, 0, 1, 1, 0],
-    [0, 1, 1, 0, 0, 1],
-    [0, 0, 1, 0, 0, 1],
-    [0, 0, 0, 1, 1, 0]
-])
+adjacency_matrix_1 = np.array(
+    [
+        [0, 1, 1, 0, 0, 0],
+        [1, 0, 0, 1, 0, 0],
+        [1, 0, 0, 1, 1, 0],
+        [0, 1, 1, 0, 0, 1],
+        [0, 0, 1, 0, 0, 1],
+        [0, 0, 0, 1, 1, 0],
+    ]
+)
 
-adjacency_matrix_2 = np.array([
-    [0, 1, 0, 0, 0, 1],
-    [1, 0, 1, 0, 0, 0],
-    [0, 1, 0, 1, 1, 0],
-    [0, 0, 1, 0, 1, 0],
-    [0, 0, 1, 1, 0, 1],
-    [1, 0, 0, 0, 1, 0]
-])
+adjacency_matrix_2 = np.array(
+    [
+        [0, 1, 0, 0, 0, 1],
+        [1, 0, 1, 0, 0, 0],
+        [0, 1, 0, 1, 1, 0],
+        [0, 0, 1, 0, 1, 0],
+        [0, 0, 1, 1, 0, 1],
+        [1, 0, 0, 0, 1, 0],
+    ]
+)
 
 adjacency_matrices = [adjacency_matrix_1, adjacency_matrix_2]
 
@@ -150,7 +154,7 @@ adjacency_matrices = [adjacency_matrix_1, adjacency_matrix_2]
 source, sink = 0, 5
 
 for i, adjacency_matrix in enumerate(adjacency_matrices):
-    print(f'adjacency_matrix_{i+1}', '=' * 10)
+    print(f"adjacency_matrix_{i+1}", "=" * 10)
     print(adjacency_matrix)
 
     # 初始化多态网络
