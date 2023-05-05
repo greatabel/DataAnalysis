@@ -24,30 +24,42 @@ Ford-Fulkerson 算法： 使用 ford_fulkerson 函数实现了该算法，该算
 
 """
 
-
+# q1 进行啦注释增加
 class PolymorphicNetwork:
     def __init__(self, adjacency_matrix):
+        # 初始化多态网络类，接受邻接矩阵作为输入
         self.adjacency_matrix = adjacency_matrix
+        # 使用 NetworkX 将邻接矩阵转换为 NetworkX 图形对象
         self.networkx_graph = nx.from_numpy_array(adjacency_matrix)
 
 
+# 深度优先搜索算法
 def depth_first_search(residual_network, source, sink):
+    # 创建一个集合以存储访问过的节点
     visited = set()
+    # 初始化栈，包含源节点、当前流量和当前路径
     stack = [(source, float("inf"), [])]
 
+    # 当栈不为空时继续搜索
     while stack:
+        # 弹出当前节点、当前流量和当前路径
         current_node, current_flow, current_path = stack.pop()
 
+        # 如果当前节点是汇点，返回当前路径和当前流量
         if current_node == sink:
             return current_path + [sink], current_flow
 
+        # 将当前节点添加到访问过的节点集合中
         visited.add(current_node)
 
+        # 遍历当前节点的邻居节点
         for neighbor, capacity in enumerate(residual_network[current_node]):
+            # 如果邻居节点没有被访问过且容量大于0，将其添加到栈中
             if neighbor not in visited and capacity > 0:
                 next_flow = min(current_flow, capacity)
                 stack.append((neighbor, next_flow, current_path + [current_node]))
 
+    # 如果没有找到从源到汇的路径，返回 None 和 0
     return None, 0
 
 
@@ -82,6 +94,7 @@ def ford_fulkerson(graph, source, sink):
 
 
 # with cache version(imporove)
+# 这就是改进版本 （带缓存）
 def ford_fulkerson(graph, source, sink, cache=None):
     print("#ford_fulkerson improved with cache #")
 
@@ -128,7 +141,48 @@ def calculate_reliability(network, source, sink):
     return 1 - min_cut / (min_cut + 1)
 
 
+
+
+print('''
+  1───2───4
+  │   │
+  3───┼───6
+      │
+      5
+
+
+
+  1───2───3───5
+  │       │   │
+  6───────┼───4
+          │
+          5
+    ''')
+
 # 创建测试数据
+
+'''
+
+q2: 你理解不了邻接矩阵，我给你进行啦可视化
+
+  1───2───4
+  │   │
+  3───┼───6
+      │
+      5
+
+
+  1───2───3───5
+  │       │   │
+  6───────┼───4
+          │
+          5
+对应下面的2个邻接矩阵表示：👇
+
+q3: 你自己修改的话，，可以修改下面的邻接矩阵
+
+'''
+
 adjacency_matrix_1 = np.array(
     [
         [0, 1, 1, 0, 0, 0],
