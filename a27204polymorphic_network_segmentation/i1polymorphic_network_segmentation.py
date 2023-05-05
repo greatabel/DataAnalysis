@@ -7,13 +7,16 @@ import time
 1.多态网络表示： 使用 PolymorphicNetwork 类来表示多态网络。这个类接受一个邻接矩阵作为输入，然后将其转换为 NetworkX 图形。
 
 2.
-深度优先搜索（DFS）： 实现了一个 depth_first_search 函数，该函数在给定的残余网络中找到一条从源到汇点的路径。这是求解最大流问题的关键部分。
+深度优先搜索（DFS）： 实现了一个 depth_first_search 函数，该函数在给定的残余网络中找到一条从源到汇点的路径。
+这是求解最大流问题的关键部分。
 
 3.
-Ford-Fulkerson 算法： 使用 ford_fulkerson 函数实现了该算法，该算法计算给定图形中的最大流。该函数接受一个 NetworkX 图形，源节点和汇节点作为输入，并返回最大流量值。
+Ford-Fulkerson 算法： 使用 ford_fulkerson 函数实现了该算法，该算法计算给定图形中的最大流。
+该函数接受一个 NetworkX 图形，源节点和汇节点作为输入，并返回最大流量值。
 
 4.
-计算可靠性： 实现了一个 calculate_reliability 函数，该函数计算给定多态网络的可靠性。它使用 Ford-Fulkerson 算法计算最小割，并使用该值计算可靠性。
+计算可靠性： 实现了一个 calculate_reliability 函数，该函数计算给定多态网络的可靠性。
+它使用 Ford-Fulkerson 算法计算最小割，并使用该值计算可靠性。
 
 4.
 测试和性能测量： 使用一个示例邻接矩阵创建了一个多态网络(我们自己生成出2个多态网络），
