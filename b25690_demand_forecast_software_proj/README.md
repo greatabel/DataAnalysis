@@ -23,3 +23,20 @@ python3 i2wsgi.py
 
 访问：
 http://localhost:5000/home
+
+6.
+已经注册好的管理员账号 可以直接登录：
+管理员1
+username: greatabel1@126.com
+password: abel
+
+
+你也可以自己注册和登录
+
+
+
+
+-------------------
+一般用户测试账号:(geust_test)
+username:test@126.com
+password: test
