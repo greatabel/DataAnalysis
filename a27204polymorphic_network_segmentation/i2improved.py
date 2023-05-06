@@ -128,8 +128,8 @@ def calculate_node_reliability(network, source, sink, node_failure_probabilities
 
 adjacency_matrix_1 = np.array(
     [
-        [0, 10, 15, 0, 0, 0],
-        [10, 0, 0, 12, 0, 0],
+        [0, 12, 15, 0, 0, 0],
+        [13, 0, 0, 12, 0, 0],
         [15, 0, 0, 8, 25, 0],
         [0, 12, 8, 0, 0, 20],
         [0, 0, 25, 0, 0, 5],
@@ -140,7 +140,7 @@ adjacency_matrix_1 = np.array(
 source, sink = "0", "5"
 
 node_failure_probabilities = [0.1, 0.2, 0.3, 0.1, 0.05, 0.15]
-# 创建一个新的 PolymorphicNetwork 实例，使用 adjacency_matrix_1 作为输入
+
 network_1 = PolymorphicNetwork(
     adjacency_matrix_1,
 )
@@ -149,7 +149,7 @@ network_1 = PolymorphicNetwork(
 # ---可视化---
 # 可视化多态网络
 pos = nx.spring_layout(network_1.networkx_graph)
-nx.draw_networkx_nodes(network_1.networkx_graph, pos, node_color="r")
+nx.draw_networkx_nodes(network_1.networkx_graph, pos, node_color="b")
 nx.draw_networkx_edges(network_1.networkx_graph, pos)
 nx.draw_networkx_labels(network_1.networkx_graph, pos)
 edge_labels = nx.get_edge_attributes(network_1.networkx_graph, "weight")
