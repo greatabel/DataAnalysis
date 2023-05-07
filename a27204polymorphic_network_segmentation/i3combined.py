@@ -3,24 +3,59 @@ import networkx as nx
 from random import random
 import matplotlib.pyplot as plt
 
-
 class PolymorphicNetwork:
-    def __init__(self, adjacency_matrix, node_failure_probabilities=None):
+    def __init__(
+        self,
+        adjacency_matrix,
+        node_types=[],
+        type_failure_probabilities={},
+    ):
+        print('node_types','='*20,node_types)  # debug statement
         self.adjacency_matrix = adjacency_matrix
-        self.node_failure_probabilities = (
-            node_failure_probabilities or [0.0] * adjacency_matrix.shape[0]
-        )
+        print('adjacency_matrix=',adjacency_matrix)  # debug statement
+        # Move these lines up
         self.networkx_graph = nx.from_numpy_array(
             adjacency_matrix, create_using=nx.DiGraph()
         )
+        print(self.networkx_graph.nodes(data=True))  # debug statement
+        print('1-'*10)
         self.networkx_graph = nx.relabel_nodes(
             self.networkx_graph, {i: str(i) for i in range(adjacency_matrix.shape[0])}
         )
+        # ...
+        self.node_types = node_types or [0] * adjacency_matrix.shape[0]
+        self.type_failure_probabilities = type_failure_probabilities or {}
+        
+        # Calculate node failure probabilities based on node types
+        node_failure_probabilities = {
+            str(i): self.type_failure_probabilities[node_type]
+            for i, node_type in enumerate(self.node_types)
+        }
+        print('@'*20)
+        print(self.node_types)  # debug statement
+        print('#'*10)
+        print("node_failure_probabilities==>", node_failure_probabilities)  # debug statement
+
+        # Set node attributes: node types and failure probabilities
         nx.set_node_attributes(
             self.networkx_graph,
-            dict(enumerate(self.node_failure_probabilities)),
+            dict(enumerate(self.node_types)),
+            "node_type",
+        )
+        
+        nx.set_node_attributes(
+            self.networkx_graph,
+            {str(i): node_type for i, node_type in enumerate(self.node_types)},
+            "node_type",
+        )
+
+        nx.set_node_attributes(
+            self.networkx_graph,
+            node_failure_probabilities,
             "node_failure_probability",
         )
+
+
 
 
 def calculate_edge_reliability(weight):
@@ -96,7 +131,12 @@ def ford_fulkerson(graph, source, sink, cache=None):
     return max_flow
 
 
-def monte_carlo_simulation(network, node_failure_probabilities, n_runs=1000):
+def monte_carlo_simulation(network, n_runs=1000):
+    node_failure_probabilities = nx.get_node_attributes(
+        network.networkx_graph, "node_failure_probability"
+    )
+    print('monte_carlo_simulation node_failure_probabilities==>',node_failure_probabilities)
+
     success_count = 0
     for _ in range(n_runs):
         working_network = nx.Graph()
@@ -104,8 +144,11 @@ def monte_carlo_simulation(network, node_failure_probabilities, n_runs=1000):
         working_network.add_node(str(sink))
         working_edges = []
         for u, v, data in network.networkx_graph.edges(data=True):
-            u_failure = random() > node_failure_probabilities[int(u)]
-            v_failure = random() > node_failure_probabilities[int(v)]
+            u_failure = random() > node_failure_probabilities[str(u)]
+            v_failure = random() > node_failure_probabilities[str(v)]
+
+
+
             if u_failure and v_failure:
                 working_edges.append((str(u), str(v), data))
         working_network.add_edges_from(working_edges)
@@ -114,7 +157,10 @@ def monte_carlo_simulation(network, node_failure_probabilities, n_runs=1000):
     return success_count / n_runs
 
 
-def calculate_node_reliability(network, source, sink, node_failure_probabilities):
+def calculate_node_reliability(network, source, sink):
+    node_failure_probabilities = nx.get_node_attributes(
+        network.networkx_graph, "node_failure_probability"
+    )
     min_cut = ford_fulkerson(network, source, sink)
     edge_reliabilities = {
         (u, v): calculate_edge_reliability(data["weight"])
@@ -122,7 +168,7 @@ def calculate_node_reliability(network, source, sink, node_failure_probabilities
     }
     nx.set_edge_attributes(network.networkx_graph, edge_reliabilities, "reliability")
 
-    reliability_estimate = monte_carlo_simulation(network, node_failure_probabilities)
+    reliability_estimate = monte_carlo_simulation(network)
     return reliability_estimate
 
 
@@ -140,24 +186,44 @@ adjacency_matrix_1 = np.array(
 source, sink = "0", "5"
 
 node_failure_probabilities = [0.1, 0.2, 0.3, 0.1, 0.05, 0.15]
+node_types1 = [0, 1, 0, 1, 1, 2]
+type_failure_probabilities = {0: 0.1, 1: 0.2, 2: 0.3}
 
 network_1 = PolymorphicNetwork(
     adjacency_matrix_1,
+    node_types=node_types1,
+    type_failure_probabilities=type_failure_probabilities,
 )
+
+node_colors = {0: "r", 1: "g", 2: "b", 3: "y"}  # or any other color for the new type
+
+
 
 
 # ---可视化---
 # 可视化多态网络
+
+node_types_list = []
+for _, data in network_1.networkx_graph.nodes(data=True):
+    print('#'*20)
+    print(data)  # debug statement
+    print(data.keys())  # debug statement
+    node_types_list.append(data["node_type"])
+
+# 为每个节点分配颜色
+node_color_list = [node_colors[node_type] for node_type in node_types_list]
+
+# 可视化多态网络
 pos = nx.spring_layout(network_1.networkx_graph)
-nx.draw_networkx_nodes(network_1.networkx_graph, pos, node_color="b")
+nx.draw_networkx_nodes(network_1.networkx_graph, pos, node_color=node_color_list)
 nx.draw_networkx_edges(network_1.networkx_graph, pos)
 nx.draw_networkx_labels(network_1.networkx_graph, pos)
 edge_labels = nx.get_edge_attributes(network_1.networkx_graph, "weight")
 nx.draw_networkx_edge_labels(network_1.networkx_graph, pos, edge_labels=edge_labels)
 plt.show()
-# ---end ----
+
 
 reliability_estimate = calculate_node_reliability(
-    network_1, source, sink, node_failure_probabilities
+    network_1, source, sink
 )
 print("Reliability estimate:", reliability_estimate)
