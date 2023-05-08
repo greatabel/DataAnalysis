@@ -3,6 +3,7 @@ import networkx as nx
 from random import random
 import matplotlib.pyplot as plt
 
+
 class PolymorphicNetwork:
     def __init__(
         self,
@@ -10,31 +11,33 @@ class PolymorphicNetwork:
         node_types=[],
         type_failure_probabilities={},
     ):
-        print('node_types','='*20,node_types)  # debug statement
+        print("node_types", "=" * 20, node_types)  # debug statement
         self.adjacency_matrix = adjacency_matrix
-        print('adjacency_matrix=',adjacency_matrix)  # debug statement
+        print("adjacency_matrix=", adjacency_matrix)  # debug statement
         # Move these lines up
         self.networkx_graph = nx.from_numpy_array(
             adjacency_matrix, create_using=nx.DiGraph()
         )
         print(self.networkx_graph.nodes(data=True))  # debug statement
-        print('1-'*10)
+        print("1-" * 10)
         self.networkx_graph = nx.relabel_nodes(
             self.networkx_graph, {i: str(i) for i in range(adjacency_matrix.shape[0])}
         )
-        # ...
+
         self.node_types = node_types or [0] * adjacency_matrix.shape[0]
         self.type_failure_probabilities = type_failure_probabilities or {}
-        
+
         # Calculate node failure probabilities based on node types
         node_failure_probabilities = {
             str(i): self.type_failure_probabilities[node_type]
             for i, node_type in enumerate(self.node_types)
         }
-        print('@'*20)
+        print("@" * 20)
         print(self.node_types)  # debug statement
-        print('#'*10)
-        print("node_failure_probabilities==>", node_failure_probabilities)  # debug statement
+        print("#" * 10)
+        print(
+            "node_failure_probabilities==>", node_failure_probabilities
+        )  # debug statement
 
         # Set node attributes: node types and failure probabilities
         nx.set_node_attributes(
@@ -42,7 +45,7 @@ class PolymorphicNetwork:
             dict(enumerate(self.node_types)),
             "node_type",
         )
-        
+
         nx.set_node_attributes(
             self.networkx_graph,
             {str(i): node_type for i, node_type in enumerate(self.node_types)},
@@ -54,8 +57,6 @@ class PolymorphicNetwork:
             node_failure_probabilities,
             "node_failure_probability",
         )
-
-
 
 
 def calculate_edge_reliability(weight):
@@ -135,7 +136,10 @@ def monte_carlo_simulation(network, n_runs=1000):
     node_failure_probabilities = nx.get_node_attributes(
         network.networkx_graph, "node_failure_probability"
     )
-    print('monte_carlo_simulation node_failure_probabilities==>',node_failure_probabilities)
+    print(
+        "monte_carlo_simulation node_failure_probabilities==>",
+        node_failure_probabilities,
+    )
 
     success_count = 0
     for _ in range(n_runs):
@@ -146,8 +150,6 @@ def monte_carlo_simulation(network, n_runs=1000):
         for u, v, data in network.networkx_graph.edges(data=True):
             u_failure = random() > node_failure_probabilities[str(u)]
             v_failure = random() > node_failure_probabilities[str(v)]
-
-
 
             if u_failure and v_failure:
                 working_edges.append((str(u), str(v), data))
@@ -195,9 +197,7 @@ network_1 = PolymorphicNetwork(
     type_failure_probabilities=type_failure_probabilities,
 )
 
-node_colors = {0: "r", 1: "g", 2: "b", 3: "y"}  # or any other color for the new type
-
-
+node_colors = {0: "r", 1: "g", 2: "b", 3: "y"}  
 
 
 # ---可视化---
@@ -205,7 +205,7 @@ node_colors = {0: "r", 1: "g", 2: "b", 3: "y"}  # or any other color for the new
 
 node_types_list = []
 for _, data in network_1.networkx_graph.nodes(data=True):
-    print('#'*20)
+    print("#" * 20)
     print(data)  # debug statement
     print(data.keys())  # debug statement
     node_types_list.append(data["node_type"])
@@ -223,7 +223,5 @@ nx.draw_networkx_edge_labels(network_1.networkx_graph, pos, edge_labels=edge_lab
 plt.show()
 
 
-reliability_estimate = calculate_node_reliability(
-    network_1, source, sink
-)
+reliability_estimate = calculate_node_reliability(network_1, source, sink)
 print("Reliability estimate:", reliability_estimate)

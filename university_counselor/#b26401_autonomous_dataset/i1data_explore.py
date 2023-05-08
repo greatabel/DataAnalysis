@@ -9,6 +9,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import random
 
 
+
 from i0common import *
 
 
@@ -44,6 +45,8 @@ category_data = load_json(category_file)
 calibrated_sensor_data = load_json(calibrated_sensor_file)
 
 
+common_color = "skyblue"
+
 
 
 print('-3.统计在不同距离范围内的车辆注释计数')
@@ -67,7 +70,32 @@ def count_annotations_by_distance(sample_annotations, ego_position, distance_ran
     return counts
 
 
+# def plot_counts_by_frame(frame_counts, distance_ranges):
+#     num_frames = len(frame_counts)
+#     num_ranges = len(distance_ranges)
+#     width = 0.8 / num_ranges  # Bar width
+
+#     x = np.arange(num_frames)
+
+#     fig, ax = plt.subplots(figsize=(12, 6))
+
+#     for i, distance_range in enumerate(distance_ranges):
+#         counts = [frame_count[i] for frame_count in frame_counts]
+#         ax.bar(x - 0.4 + width * (i + 0.5), counts, width, label=f"{distance_range[0]}-{distance_range[1]}m")
+
+#     plt.xlabel("Frame Index")
+#     plt.ylabel("Number of Annotations")
+#     plt.title("Counts of Annotations by Distance Ranges")
+#     plt.legend(title="Distance Ranges")
+#     ax.set_xticks(x)
+#     ax.set_xticklabels(np.arange(1, num_frames + 1))
+#     plt.show()
+
+
+
+
 def plot_counts_by_frame(frame_counts, distance_ranges):
+    global common_color
     num_frames = len(frame_counts)
     num_ranges = len(distance_ranges)
     width = 0.8 / num_ranges  # Bar width
@@ -76,9 +104,12 @@ def plot_counts_by_frame(frame_counts, distance_ranges):
 
     fig, ax = plt.subplots(figsize=(12, 6))
 
+    # Generate color variations
+    color_variations = sns.light_palette(common_color, n_colors=num_ranges + 1, reverse=True)[:num_ranges]
+
     for i, distance_range in enumerate(distance_ranges):
         counts = [frame_count[i] for frame_count in frame_counts]
-        ax.bar(x - 0.4 + width * (i + 0.5), counts, width, label=f"{distance_range[0]}-{distance_range[1]}m")
+        ax.bar(x - 0.4 + width * (i + 0.5), counts, width, label=f"{distance_range[0]}-{distance_range[1]}m", color=color_variations[i])
 
     plt.xlabel("Frame Index")
     plt.ylabel("Number of Annotations")
@@ -87,6 +118,7 @@ def plot_counts_by_frame(frame_counts, distance_ranges):
     ax.set_xticks(x)
     ax.set_xticklabels(np.arange(1, num_frames + 1))
     plt.show()
+
 
 
 # start 4.28
@@ -100,7 +132,8 @@ def plot_counts_by_frame(frame_counts, distance_ranges):
 samples = sorted(sample_annotation_data, key=lambda x: x["sample_token"])
 
 ego_position = [0, 0]  # Assuming the ego vehicle is at the origin
-distance_ranges = [(0, 30), (30, 50), (50, 70)]
+# distance_ranges = [(0, 30), (30, 50), (50, 70)]
+distance_ranges = [(30, 50), (50, 70)]
 
 frame_counts = []
 
@@ -183,12 +216,11 @@ for category in category_data:
             break
 
 # 绘制柱状图
-plt.bar(range(len(category_counts)), list(category_counts.values()), align="center")
+plt.bar(range(len(category_counts)), list(category_counts.values()), align="center", color=common_color)
 plt.xticks(range(len(category_counts)), list(category_counts.keys()), rotation=90)
 plt.ylabel("Number of Targets")
 plt.title("Target Categories")
 plt.show()
-
 
 # 示例0: 分布图
 print(
@@ -199,10 +231,9 @@ sns.set(style="darkgrid")
 sns.set_theme(style="white")   # 将背景设为白色
 df1 = pd.DataFrame(sample_data)
 plt.figure(figsize=(12, 6))
-sns.countplot(data=df1, x="fileformat")
+sns.countplot(data=df1, x="fileformat", color=common_color)
 plt.title("File Format Distribution")
 plt.show()
-
 
 # 示例1: 大小分布
 
@@ -228,13 +259,13 @@ sizes = pd.DataFrame(df2["size"].tolist(), columns=["x", "y", "z"])
 # 为每个尺寸绘制单独的直方图
 fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(18, 6))
 sns.set_theme(style="white")   # 将背景设为白色
-sns.histplot(data=sizes["x"], color="darkblue", ax=axes[0])
+sns.histplot(data=sizes["x"], color=common_color, ax=axes[0])
 axes[0].set_title("X Dimension Distribution")
 
-sns.histplot(data=sizes["y"], color="darkblue", ax=axes[1])
+sns.histplot(data=sizes["y"], color=common_color, ax=axes[1])
 axes[1].set_title("Y Dimension Distribution")
 
-sns.histplot(data=sizes["z"], color="darkblue", ax=axes[2])
+sns.histplot(data=sizes["z"], color=common_color, ax=axes[2])
 axes[2].set_title("Z Dimension Distribution")
 
 plt.show()
