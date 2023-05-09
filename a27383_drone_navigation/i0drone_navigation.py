@@ -8,10 +8,11 @@ from geopy.distance import geodesic
 # 我们将高度设为 0。这意味着我们假设无人机在一个恒定的高度上飞行
 dme_stations = np.array([
     [119.679316, 25.934989, 0],  # 福州长乐国际机场
+    [119.494418, 25.220857, 0],  # 南日岛
     [118.599816, 24.800826, 0],  # 泉州晋江国际机场
     [118.143639, 24.545038, 0],  # 厦门高崎国际机场
     [118.108445, 24.250145, 0],   # 镇海角
-     [120.0, 25.0, 0]             # 飞行区域中心
+    [117.780122, 23.918635, 0]    # 鸟嘴山
 ])
 
 
@@ -30,6 +31,7 @@ def dme_distance(pos1, pos2):
 
 
 def dme_dme_position(known_positions, distances):
+    print('dme_dme_position:',known_positions, distances)
     A = np.zeros((len(known_positions) - 1, 2))
     b = np.zeros(len(known_positions) - 1)
 
@@ -50,9 +52,9 @@ def fly_drone(waypoints, dme_stations):
     for i in range(len(waypoints) - 1):
         start = waypoints[i]
         end = waypoints[i + 1]
-        print(f"From {start} to {end}")
+        print(f"从 {start} 飞行至 {end}")
 
-        steps = 100
+        steps = 500
         for j in range(steps):
             t = j / steps
             position = (1 - t) * start + t * end
@@ -65,8 +67,9 @@ def fly_drone(waypoints, dme_stations):
     actual_positions = np.array(actual_positions)
     estimated_positions = np.array(estimated_positions)
 
-    # Calculate the mean offset between the actual and estimated positions
+    # 计算实际位置和估计位置之间的平均偏移量
     mean_offset = np.mean(actual_positions - estimated_positions, axis=0)
+    print(f"实际位置和估计位置之间的平均偏移量为: {mean_offset}")
 
     return actual_positions, estimated_positions, mean_offset
 
