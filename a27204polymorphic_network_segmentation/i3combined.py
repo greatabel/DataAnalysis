@@ -2,6 +2,7 @@ import numpy as np
 import networkx as nx
 from random import random
 import matplotlib.pyplot as plt
+import time
 
 
 class PolymorphicNetwork:
@@ -93,6 +94,62 @@ def depth_first_search(residual_network, source, sink):
     return None, 0
 
 
+def min_cut(graph, source, residual_network):
+    # 使用深度优先搜索找到所有可以从源点开始通过有正容量的边到达的节点
+    visited = set()
+    dfs(residual_network, source, visited)
+
+    # 最小割就是所有从访问过的节点指向未访问过的节点的边
+    min_cut_edges = []
+    for u in visited:
+        for v in set(graph.networkx_graph.nodes()) - visited:
+            if graph.networkx_graph.has_edge(u, v):
+                min_cut_edges.append((u, v))
+
+    return min_cut_edges
+
+
+def dfs(graph, node, visited):
+    visited.add(node)
+    for neighbor, attrs in graph[node].items():
+        if attrs["weight"] > 0 and neighbor not in visited:
+            dfs(graph, neighbor, visited)
+
+
+# original
+def original_ford_fulkerson(graph, source, sink):
+    print("#original_ford_fulkerson#")
+
+    # 使用 graph.networkx_graph.copy() 初始化残余网络
+    residual_network = graph.networkx_graph.copy()
+
+    # 初始化最大流量
+    max_flow = 0
+
+    # 循环直到不存在可行路径
+    while True:
+        # 使用深度优先搜索找到一条路径
+        path, flow = depth_first_search(residual_network, source, sink)
+
+        # 如果找不到路径，跳出循环
+        if not path:
+            break
+
+        # 更新残余网络
+        for i in range(len(path) - 1):
+            u, v = path[i], path[i + 1]
+            residual_network[u][v]["weight"] -= flow
+            residual_network[v][u]["weight"] += flow
+
+        # 更新最大流量
+        max_flow += flow
+
+    # 使用最后的残余网络找到最小割
+    min_cut_edges = min_cut(graph, source, residual_network)
+    print('\nmin_cut_edges 最小割s====>', min_cut_edges)
+    return max_flow
+
+
 def ford_fulkerson(graph, source, sink, cache=None):
     print("#ford_fulkerson improved with cache #")
 
@@ -129,7 +186,11 @@ def ford_fulkerson(graph, source, sink, cache=None):
         max_flow += flow
 
     cache[graph_key] = max_flow
+    # 使用最后的残余网络找到最小割
+    min_cut_edges = min_cut(graph, source, residual_network)
+    print('\nmin_cut_edge 最小割 s====>', min_cut_edges)
     return max_flow
+
 
 
 def monte_carlo_simulation(network, n_runs=1000):
@@ -159,11 +220,44 @@ def monte_carlo_simulation(network, n_runs=1000):
     return success_count / n_runs
 
 
+
+
+def compare_ford_fulkerson(network, source, sink):
+    # 计时并运行原始的Ford Fulkerson函数
+    start_time = time.time()
+    min_cut_original = original_ford_fulkerson(network, source, sink)
+    end_time = time.time()
+    original_time = (end_time - start_time) * 1000
+    print(f"Original Ford Fulkerson took {original_time:.2f} milliseconds.")
+
+    # 计时并运行改进的Ford Fulkerson函数
+    start_time = time.time()
+    min_cut_improved = ford_fulkerson(network, source, sink)
+    end_time = time.time()
+    improved_time = (end_time - start_time) * 1000
+    print(f"Improved Ford Fulkerson took {improved_time:.2f} milliseconds.")
+
+    # 使用matplotlib进行可视化
+    methods = ["Original", "Improved"]
+    times = [original_time, improved_time]
+    plt.bar(methods, times, color=['blue', 'green'])
+    plt.xlabel('Method')
+    plt.ylabel('Time (ms)')
+    plt.title('Comparison of Ford Fulkerson methods')
+    plt.show()
+
+
+
+
+
 def calculate_node_reliability(network, source, sink):
     node_failure_probabilities = nx.get_node_attributes(
         network.networkx_graph, "node_failure_probability"
     )
-    min_cut = ford_fulkerson(network, source, sink)
+
+    # 调用比较函数
+    compare_ford_fulkerson(network, source, sink)
+
     edge_reliabilities = {
         (u, v): calculate_edge_reliability(data["weight"])
         for u, v, data in network.networkx_graph.edges(data=True)
@@ -172,6 +266,7 @@ def calculate_node_reliability(network, source, sink):
 
     reliability_estimate = monte_carlo_simulation(network)
     return reliability_estimate
+
 
 
 adjacency_matrix_1 = np.array(
