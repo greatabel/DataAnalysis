@@ -1,0 +1,754 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: http://localhost:5000/plot_demand/Aggregate
+Subject: Demand Prediction for 2023 (Aggregate)
+Date: Tue, 18 Apr 2023 15:28:44 -0000
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--1E4XZWXZczEaaOYQ4l0paIozGEmm2lZsuPFyJ4yzQ8----"
+
+
+------MultipartBoundary--1E4XZWXZczEaaOYQ4l0paIozGEmm2lZsuPFyJ4yzQ8----
+Content-Type: text/html
+Content-ID: <frame-DD301045F9133FE38E043B90F7C729EB@mhtml.blink>
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://localhost:5000/plot_demand/Aggregate
+
+<!DOCTYPE html><html><head><meta http-equiv=3D"Content-Type" content=3D"tex=
+t/html; charset=3DUTF-8"><link rel=3D"stylesheet" type=3D"text/css" href=3D=
+"cid:css-4aee31d7-3c6d-45de-a1c6-f0c61b53bdb2@mhtml.blink" /><link rel=3D"s=
+tylesheet" type=3D"text/css" href=3D"cid:css-70359f51-3928-4a90-b493-ee6801=
+f210ef@mhtml.blink" />
+            <title>Demand Prediction for 2023 (Aggregate)</title>
+        </head>
+        <body>
+            <div>                       =20
+                        <div id=3D"cb127e33-06ba-467e-b98b-0fa0722df9c6" cl=
+ass=3D"plotly-graph-div js-plotly-plot" style=3D"height:100%; width:100%;">=
+<div class=3D"plot-container plotly"><div class=3D"user-select-none svg-con=
+tainer" style=3D"position: relative; width: 100%; height: 450px;"><svg clas=
+s=3D"main-svg" xmlns=3D"http://www.w3.org/2000/svg" xmlns:xlink=3D"http://w=
+ww.w3.org/1999/xlink" width=3D"1594" height=3D"450" style=3D"background: wh=
+ite;"><defs id=3D"defs-1f1dde"><g class=3D"clips"><clipPath id=3D"clip1f1dd=
+exyplot" class=3D"plotclip"><rect width=3D"1434" height=3D"270"></rect></cl=
+ipPath><clipPath class=3D"axesclip" id=3D"clip1f1ddex"><rect x=3D"80" y=3D"=
+0" width=3D"1434" height=3D"450"></rect></clipPath><clipPath class=3D"axesc=
+lip" id=3D"clip1f1ddey"><rect x=3D"0" y=3D"100" width=3D"1594" height=3D"27=
+0"></rect></clipPath><clipPath class=3D"axesclip" id=3D"clip1f1ddexy"><rect=
+ x=3D"80" y=3D"100" width=3D"1434" height=3D"270"></rect></clipPath></g><g =
+class=3D"gradients"></g><g class=3D"patterns"></g></defs><g class=3D"bglaye=
+r"><rect class=3D"bg" x=3D"80" y=3D"100" width=3D"1434" height=3D"270" styl=
+e=3D"fill: rgb(229, 236, 246); fill-opacity: 1; stroke-width: 0;"></rect></=
+g><g class=3D"draglayer cursor-crosshair"><g class=3D"xy"><rect class=3D"ns=
+ewdrag drag" data-subplot=3D"xy" x=3D"80" y=3D"100" width=3D"1434" height=
+=3D"270" style=3D"fill: transparent; stroke-width: 0; pointer-events: all;"=
+></rect><rect class=3D"nwdrag drag cursor-nw-resize" data-subplot=3D"xy" x=
+=3D"60" y=3D"80" width=3D"20" height=3D"20" style=3D"fill: transparent; str=
+oke-width: 0; pointer-events: all;"></rect><rect class=3D"nedrag drag curso=
+r-ne-resize" data-subplot=3D"xy" x=3D"1514" y=3D"80" width=3D"20" height=3D=
+"20" style=3D"fill: transparent; stroke-width: 0; pointer-events: all;"></r=
+ect><rect class=3D"swdrag drag cursor-sw-resize" data-subplot=3D"xy" x=3D"6=
+0" y=3D"370" width=3D"20" height=3D"20" style=3D"fill: transparent; stroke-=
+width: 0; pointer-events: all;"></rect><rect class=3D"sedrag drag cursor-se=
+-resize" data-subplot=3D"xy" x=3D"1514" y=3D"370" width=3D"20" height=3D"20=
+" style=3D"fill: transparent; stroke-width: 0; pointer-events: all;"></rect=
+><rect class=3D"ewdrag drag cursor-ew-resize" data-subplot=3D"xy" x=3D"223.=
+4" y=3D"370.5" width=3D"1147.2" height=3D"20" style=3D"fill: transparent; s=
+troke-width: 0; pointer-events: all;"></rect><rect class=3D"wdrag drag curs=
+or-w-resize" data-subplot=3D"xy" x=3D"80" y=3D"370.5" width=3D"143.4" heigh=
+t=3D"20" style=3D"fill: transparent; stroke-width: 0; pointer-events: all;"=
+></rect><rect class=3D"edrag drag cursor-e-resize" data-subplot=3D"xy" x=3D=
+"1370.6000000000001" y=3D"370.5" width=3D"143.4" height=3D"20" style=3D"fil=
+l: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class=
+=3D"nsdrag drag cursor-ns-resize" data-subplot=3D"xy" x=3D"59.5" y=3D"127" =
+width=3D"20" height=3D"216" style=3D"fill: transparent; stroke-width: 0; po=
+inter-events: all;"></rect><rect class=3D"sdrag drag cursor-s-resize" data-=
+subplot=3D"xy" x=3D"59.5" y=3D"343" width=3D"20" height=3D"27" style=3D"fil=
+l: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class=
+=3D"ndrag drag cursor-n-resize" data-subplot=3D"xy" x=3D"59.5" y=3D"100" wi=
+dth=3D"20" height=3D"27" style=3D"fill: transparent; stroke-width: 0; point=
+er-events: all;"></rect></g></g><g class=3D"layer-below"><g class=3D"imagel=
+ayer"></g><g class=3D"shapelayer"></g></g><g class=3D"cartesianlayer"><g cl=
+ass=3D"subplot xy"><g class=3D"layer-subplot"><g class=3D"shapelayer"></g><=
+g class=3D"imagelayer"></g></g><g class=3D"minor-gridlayer"><g class=3D"x">=
+</g><g class=3D"y"></g></g><g class=3D"gridlayer"><g class=3D"x"><path clas=
+s=3D"xgrid crisp" transform=3D"translate(312.43,0)" d=3D"M0,100v270" style=
+=3D"stroke: rgb(255, 255, 255); stroke-opacity: 1; stroke-width: 1px;"></pa=
+th><path class=3D"xgrid crisp" transform=3D"translate(552.75,0)" d=3D"M0,10=
+0v270" style=3D"stroke: rgb(255, 255, 255); stroke-opacity: 1; stroke-width=
+: 1px;"></path><path class=3D"xgrid crisp" transform=3D"translate(793.06,0)=
+" d=3D"M0,100v270" style=3D"stroke: rgb(255, 255, 255); stroke-opacity: 1; =
+stroke-width: 1px;"></path><path class=3D"xgrid crisp" transform=3D"transla=
+te(1037.31,0)" d=3D"M0,100v270" style=3D"stroke: rgb(255, 255, 255); stroke=
+-opacity: 1; stroke-width: 1px;"></path><path class=3D"xgrid crisp" transfo=
+rm=3D"translate(1277.63,0)" d=3D"M0,100v270" style=3D"stroke: rgb(255, 255,=
+ 255); stroke-opacity: 1; stroke-width: 1px;"></path></g><g class=3D"y"><pa=
+th class=3D"ygrid crisp" transform=3D"translate(0,360.2)" d=3D"M80,0h1434" =
+style=3D"stroke: rgb(255, 255, 255); stroke-opacity: 1; stroke-width: 1px;"=
+></path><path class=3D"ygrid crisp" transform=3D"translate(0,298.5800000000=
+0004)" d=3D"M80,0h1434" style=3D"stroke: rgb(255, 255, 255); stroke-opacity=
+: 1; stroke-width: 1px;"></path><path class=3D"ygrid crisp" transform=3D"tr=
+anslate(0,236.96)" d=3D"M80,0h1434" style=3D"stroke: rgb(255, 255, 255); st=
+roke-opacity: 1; stroke-width: 1px;"></path><path class=3D"ygrid crisp" tra=
+nsform=3D"translate(0,175.34)" d=3D"M80,0h1434" style=3D"stroke: rgb(255, 2=
+55, 255); stroke-opacity: 1; stroke-width: 1px;"></path><path class=3D"ygri=
+d crisp" transform=3D"translate(0,113.72)" d=3D"M80,0h1434" style=3D"stroke=
+: rgb(255, 255, 255); stroke-opacity: 1; stroke-width: 1px;"></path></g></g=
+><g class=3D"zerolinelayer"></g><path class=3D"xlines-below"></path><path c=
+lass=3D"ylines-below"></path><g class=3D"overlines-below"></g><g class=3D"x=
+axislayer-below"></g><g class=3D"yaxislayer-below"></g><g class=3D"overaxes=
+-below"></g><g class=3D"plot" transform=3D"translate(80,100)" clip-path=3D"=
+url(#clip1f1ddexyplot)"><g class=3D"scatterlayer mlayer"><g class=3D"trace =
+scatter trace8434e5" style=3D"stroke-miterlimit: 2; opacity: 1;"><g class=
+=3D"fills"></g><g class=3D"errorbars"></g><g class=3D"lines"><path class=3D=
+"js-line" d=3D"M0,21.78L3.94,19.17L7.88,19.17L11.82,251.59L15.76,254.44L19.=
+7,21.27L23.64,21.56L27.58,18.3L31.52,19.66L35.46,19.66L39.4,253.2L43.34,254=
+.14L47.27,18.47L51.21,22.68L55.15,21.9L59.09,19.79L63.03,19.79L66.97,252.24=
+L70.91,252.08L74.85,21.08L78.79,20.83L82.73,20.49L86.67,19.37L90.61,19.37L9=
+4.55,251.41L98.49,252.58L102.43,22.15L114.25,19.82L118.19,19.21L122.13,252.=
+98L126.07,253.29L130.01,20.49L133.95,18.82L137.88,21.73L141.82,19.88L145.76=
+,20.29L149.7,252.07L153.64,253.57L157.58,18.56L165.46,19.13L169.4,19.42L173=
+.34,19.17L177.28,252.3L181.22,252.22L185.16,20.7L200.92,19.93L204.86,252.22=
+L208.8,252.22L212.74,22.08L216.68,19.94L220.62,20.77L228.49,19.92L232.43,25=
+2.98L236.37,253.62L240.31,20.82L244.25,20.28L248.19,21.82L252.13,19.63L256.=
+07,20.04L260.01,252.07L263.95,253.57L267.89,18.56L271.83,18.56L279.71,19.42=
+L283.65,19.17L287.59,253.28L291.53,253.2L295.47,20.7L299.41,20.35L303.35,20=
+.73L307.29,19.93L311.23,19.93L315.16,253.2L319.1,253.2L323.04,22.08L326.98,=
+19.94L330.92,20.77L338.8,19.27L342.74,252.64L346.68,252.64L350.62,17.7L354.=
+56,17.75L358.5,21.71L362.44,18.44L366.38,17.89L370.32,253.52L374.26,253.19L=
+378.2,20.8L382.14,19.56L386.08,20.34L390.02,19.64L393.96,19.64L397.9,253.78=
+L401.84,253.24L405.77,24.18L413.65,24.64L417.59,19.93L421.53,19.93L425.47,2=
+53.35L429.41,253.2L433.35,20.7L449.11,19.36L453.05,253.54L456.99,253.53L460=
+.93,21.3L464.87,19.8L468.81,20.68L472.75,22.57L476.69,18.44L480.63,253.61L4=
+84.57,253.08L488.51,20.73L492.45,20.59L496.38,21.63L500.32,18.52L504.26,20.=
+01L508.2,253.18L512.14,253.2L516.08,20.1L520.02,20.31L523.96,24.16L527.9,19=
+.58L531.84,19.93L535.78,253.35L539.72,253.2L543.66,20.7L547.6,18.69L559.42,=
+19.78L563.36,253.2L567.3,252.79L571.24,22.12L575.18,18.73L579.12,19.04L586.=
+99,19.21L590.93,256.5L594.87,252.48L598.81,20.82L606.69,21.17L610.63,19.97L=
+614.57,19.63L618.51,253.59L622.45,252.08L626.39,20.63L642.15,19.42L646.09,2=
+52.98L650.03,253.13L653.97,21.15L657.91,18.69L661.85,19.07L665.79,19.93L669=
+.73,19.93L673.66,253.35L677.6,253.2L681.54,20.7L685.48,18.69L689.42,18.65L6=
+93.36,20.11L697.3,20.11L701.24,252.69L705.18,252.64L709.12,21.25L713.06,18.=
+83L717,21.84L720.94,14.21L724.88,21.54L728.82,253.65L732.76,253.32L736.7,20=
+.93L740.64,20.03L744.58,20.47L748.52,21.67L752.46,21.67L756.4,253.15L760.34=
+,253.37L764.27,21.2L776.09,21.95L780.03,20.42L783.97,253.48L787.91,253.33L7=
+91.85,20.83L795.79,18.81L803.67,20.27L807.61,19.81L811.55,253.05L815.49,253=
+.05L819.43,21.3L823.37,18.13L831.25,19.3L835.19,13.5L839.13,253.61L843.07,2=
+53.62L847.01,20.27L850.95,20.93L858.82,21.94L862.76,20.42L866.7,253.55L870.=
+64,253.2L874.58,20.26L878.52,20.1L886.4,21.06L890.34,21.48L894.28,253.35L89=
+8.22,253.2L902.16,20.7L906.1,18.68L910.04,19.06L913.98,20.29L917.92,20.14L9=
+21.86,253.2L925.8,253.31L929.74,21.73L933.68,18.84L937.62,19.22L945.49,19.8=
+1L949.43,252.87L953.37,255.91L957.31,19.56L965.19,21.41L969.13,21.66L973.07=
+,21.49L977.01,251.73L980.95,252.29L984.89,19.83L988.83,20.09L992.77,19.21L9=
+96.71,21.11L1000.65,21.22L1004.59,252.81L1008.53,253.61L1012.47,20.72L1016.=
+41,21.04L1020.35,20.11L1024.29,20.18L1028.23,20.18L1032.16,253.24L1036.1,25=
+3.09L1040.04,20.59L1043.98,19.73L1047.92,20.6L1055.8,20.51L1059.74,253.58L1=
+063.68,253.57L1067.62,22.45L1071.56,20.22L1075.5,21.85L1079.44,14.81L1083.3=
+8,14.81L1087.32,254.33L1091.26,253.64L1095.2,19.44L1099.14,19.98L1103.08,19=
+.96L1107.02,22.39L1110.96,22.14L1114.9,253.79L1118.84,253.1L1122.77,20.37L1=
+126.71,21.52L1130.65,20.69L1134.59,22.16L1138.53,22.16L1142.47,252.6L1146.4=
+1,253.16L1150.35,20.67L1154.29,19.8L1162.17,20.04L1166.11,19.91L1170.05,252=
+.97L1173.99,253.03L1177.93,21.9L1181.87,19.67L1189.75,19.91L1193.69,18.82L1=
+197.63,252.9L1201.57,253.39L1205.51,20.59L1209.45,20.59L1213.38,21.34L1217.=
+32,20.13L1221.26,20.68L1225.2,252.64L1229.14,252.62L1233.08,19.52L1240.96,1=
+9.36L1244.9,20.86L1248.84,20.35L1252.78,251.8L1256.72,252.51L1260.66,20.01L=
+1264.6,19.15L1268.54,19.39L1276.42,19.05L1280.36,252.12L1284.3,253.49L1288.=
+24,22.61L1292.18,20.37L1296.12,19.91L1303.99,20.47L1307.93,253.54L1311.87,2=
+53.34L1315.81,19.89L1327.63,21.7L1331.57,21.53L1335.51,250.94L1339.45,252.4=
+6L1343.39,19.99L1347.33,20.18L1351.27,20.08L1355.21,22.24L1359.15,22.35L136=
+3.09,254.7L1367.03,253.65L1370.97,20.73L1374.91,21.11L1378.85,20.04L1382.79=
+,19.27L1386.73,19.27L1390.66,252.34L1394.6,253.75L1398.54,15.33L1402.48,20.=
+39L1414.3,20.3L1418.24,253.37L1422.18,253.99L1426.12,22.47L1430.06,20.24L14=
+34,18.88" style=3D"vector-effect: non-scaling-stroke; fill: none; stroke: r=
+gb(99, 110, 250); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"></path=
+></g><g class=3D"points"></g><g class=3D"text"></g></g></g></g><g class=3D"=
+overplot"></g><path class=3D"xlines-above crisp" d=3D"M0,0" style=3D"fill: =
+none;"></path><path class=3D"ylines-above crisp" d=3D"M0,0" style=3D"fill: =
+none;"></path><g class=3D"overlines-above"></g><g class=3D"xaxislayer-above=
+"><g class=3D"xtick"><text text-anchor=3D"middle" x=3D"0" y=3D"383" data-un=
+formatted=3D"Jan 2023" data-math=3D"N" transform=3D"translate(80,0)" style=
+=3D"font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-si=
+ze: 12px; fill: rgb(42, 63, 95); fill-opacity: 1; white-space: pre; opacity=
+: 1;">Jan 2023</text></g><g class=3D"xtick"><text text-anchor=3D"middle" x=
+=3D"0" y=3D"383" data-unformatted=3D"Mar 2023" data-math=3D"N" style=3D"fon=
+t-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12p=
+x; fill: rgb(42, 63, 95); fill-opacity: 1; white-space: pre; opacity: 1;" t=
+ransform=3D"translate(312.43,0)">Mar 2023</text></g><g class=3D"xtick"><tex=
+t text-anchor=3D"middle" x=3D"0" y=3D"383" data-unformatted=3D"May 2023" da=
+ta-math=3D"N" style=3D"font-family: &quot;Open Sans&quot;, verdana, arial, =
+sans-serif; font-size: 12px; fill: rgb(42, 63, 95); fill-opacity: 1; white-=
+space: pre; opacity: 1;" transform=3D"translate(552.75,0)">May 2023</text><=
+/g><g class=3D"xtick"><text text-anchor=3D"middle" x=3D"0" y=3D"383" data-u=
+nformatted=3D"Jul 2023" data-math=3D"N" style=3D"font-family: &quot;Open Sa=
+ns&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(42, 63, 95=
+); fill-opacity: 1; white-space: pre; opacity: 1;" transform=3D"translate(7=
+93.06,0)">Jul 2023</text></g><g class=3D"xtick"><text text-anchor=3D"middle=
+" x=3D"0" y=3D"383" data-unformatted=3D"Sep 2023" data-math=3D"N" style=3D"=
+font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: =
+12px; fill: rgb(42, 63, 95); fill-opacity: 1; white-space: pre; opacity: 1;=
+" transform=3D"translate(1037.31,0)">Sep 2023</text></g><g class=3D"xtick">=
+<text text-anchor=3D"middle" x=3D"0" y=3D"383" data-unformatted=3D"Nov 2023=
+" data-math=3D"N" style=3D"font-family: &quot;Open Sans&quot;, verdana, ari=
+al, sans-serif; font-size: 12px; fill: rgb(42, 63, 95); fill-opacity: 1; wh=
+ite-space: pre; opacity: 1;" transform=3D"translate(1277.63,0)">Nov 2023</t=
+ext></g></g><g class=3D"yaxislayer-above"><g class=3D"ytick"><text text-anc=
+hor=3D"end" x=3D"79" y=3D"4.199999999999999" data-unformatted=3D"7500" data=
+-math=3D"N" transform=3D"translate(0,360.2)" style=3D"font-family: &quot;Op=
+en Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(42, 6=
+3, 95); fill-opacity: 1; white-space: pre; opacity: 1;">7500</text></g><g c=
+lass=3D"ytick"><text text-anchor=3D"end" x=3D"79" y=3D"4.199999999999999" d=
+ata-unformatted=3D"8000" data-math=3D"N" style=3D"font-family: &quot;Open S=
+ans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(42, 63, 9=
+5); fill-opacity: 1; white-space: pre; opacity: 1;" transform=3D"translate(=
+0,298.58000000000004)">8000</text></g><g class=3D"ytick"><text text-anchor=
+=3D"end" x=3D"79" y=3D"4.199999999999999" data-unformatted=3D"8500" data-ma=
+th=3D"N" style=3D"font-family: &quot;Open Sans&quot;, verdana, arial, sans-=
+serif; font-size: 12px; fill: rgb(42, 63, 95); fill-opacity: 1; white-space=
+: pre; opacity: 1;" transform=3D"translate(0,236.96)">8500</text></g><g cla=
+ss=3D"ytick"><text text-anchor=3D"end" x=3D"79" y=3D"4.199999999999999" dat=
+a-unformatted=3D"9000" data-math=3D"N" style=3D"font-family: &quot;Open San=
+s&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(42, 63, 95)=
+; fill-opacity: 1; white-space: pre; opacity: 1;" transform=3D"translate(0,=
+175.34)">9000</text></g><g class=3D"ytick"><text text-anchor=3D"end" x=3D"7=
+9" y=3D"4.199999999999999" data-unformatted=3D"9500" data-math=3D"N" style=
+=3D"font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-si=
+ze: 12px; fill: rgb(42, 63, 95); fill-opacity: 1; white-space: pre; opacity=
+: 1;" transform=3D"translate(0,113.72)">9500</text></g></g><g class=3D"over=
+axes-above"></g></g></g><g class=3D"polarlayer"></g><g class=3D"smithlayer"=
+></g><g class=3D"ternarylayer"></g><g class=3D"geolayer"></g><g class=3D"fu=
+nnelarealayer"></g><g class=3D"pielayer"></g><g class=3D"iciclelayer"></g><=
+g class=3D"treemaplayer"></g><g class=3D"sunburstlayer"></g><g class=3D"gli=
+mages"></g></svg><div class=3D"gl-container"></div><svg class=3D"main-svg" =
+xmlns=3D"http://www.w3.org/2000/svg" xmlns:xlink=3D"http://www.w3.org/1999/=
+xlink" width=3D"1594" height=3D"450"><defs id=3D"topdefs-1f1dde"><g class=
+=3D"clips"></g></defs><g class=3D"indicatorlayer"></g><g class=3D"layer-abo=
+ve"><g class=3D"imagelayer"></g><g class=3D"shapelayer"></g></g><g class=3D=
+"selectionlayer"></g><g class=3D"infolayer"><g class=3D"g-gtitle"><text cla=
+ss=3D"gtitle" x=3D"79.7" y=3D"50" text-anchor=3D"start" dy=3D"0em" data-unf=
+ormatted=3D"Demand Prediction for 2023 (Aggregate)" data-math=3D"N" style=
+=3D"font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-si=
+ze: 17px; fill: rgb(42, 63, 95); opacity: 1; font-weight: normal; white-spa=
+ce: pre;">Demand Prediction for 2023 (Aggregate)</text></g><g class=3D"g-xt=
+itle"><text class=3D"xtitle" x=3D"797" y=3D"409.8" text-anchor=3D"middle" d=
+ata-unformatted=3D"timestamp" data-math=3D"N" style=3D"font-family: &quot;O=
+pen Sans&quot;, verdana, arial, sans-serif; font-size: 14px; fill: rgb(42, =
+63, 95); opacity: 1; font-weight: normal; white-space: pre;">timestamp</tex=
+t></g><g class=3D"g-ytitle"><text class=3D"ytitle" transform=3D"rotate(-90,=
+24.184375000000003,235)" x=3D"24.184375000000003" y=3D"235" text-anchor=3D"=
+middle" data-unformatted=3D"prediction" data-math=3D"N" style=3D"font-famil=
+y: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 14px; fill=
+: rgb(42, 63, 95); opacity: 1; font-weight: normal; white-space: pre;">pred=
+iction</text></g></g><g class=3D"menulayer"></g><g class=3D"zoomlayer"></g>=
+</svg><div class=3D"modebar-container" style=3D"position: absolute; top: 0p=
+x; right: 0px; width: 100%;"><div id=3D"modebar-1f1dde" class=3D"modebar mo=
+debar--hover ease-bg"><div class=3D"modebar-group"><a rel=3D"tooltip" class=
+=3D"modebar-btn" data-title=3D"Download plot as a png" data-toggle=3D"false=
+" data-gravity=3D"n"><svg viewBox=3D"0 0 1000 1000" class=3D"icon" height=
+=3D"1em" width=3D"1em"><path d=3D"m500 450c-83 0-150-67-150-150 0-83 67-150=
+ 150-150 83 0 150 67 150 150 0 83-67 150-150 150z m400 150h-120c-16 0-34 13=
+-39 29l-31 93c-6 15-23 28-40 28h-340c-16 0-34-13-39-28l-31-94c-6-15-23-28-4=
+0-28h-120c-55 0-100-45-100-100v-450c0-55 45-100 100-100h800c55 0 100 45 100=
+ 100v450c0 55-45 100-100 100z m-400-550c-138 0-250 112-250 250 0 138 112 25=
+0 250 250 138 0 250-112 250-250 0-138-112-250-250-250z m365 380c-19 0-35 16=
+-35 35 0 19 16 35 35 35 19 0 35-16 35-35 0-19-16-35-35-35z" transform=3D"ma=
+trix(1 0 0 -1 0 850)"></path></svg></a></div><div class=3D"modebar-group"><=
+a rel=3D"tooltip" class=3D"modebar-btn active" data-title=3D"Zoom" data-att=
+r=3D"dragmode" data-val=3D"zoom" data-toggle=3D"false" data-gravity=3D"n"><=
+svg viewBox=3D"0 0 1000 1000" class=3D"icon" height=3D"1em" width=3D"1em"><=
+path d=3D"m1000-25l-250 251c40 63 63 138 63 218 0 224-182 406-407 406-224 0=
+-406-182-406-406s183-406 407-406c80 0 155 22 218 62l250-250 125 125z m-812 =
+250l0 438 437 0 0-438-437 0z m62 375l313 0 0-312-313 0 0 312z" transform=3D=
+"matrix(1 0 0 -1 0 850)"></path></svg></a><a rel=3D"tooltip" class=3D"modeb=
+ar-btn" data-title=3D"Pan" data-attr=3D"dragmode" data-val=3D"pan" data-tog=
+gle=3D"false" data-gravity=3D"n"><svg viewBox=3D"0 0 1000 1000" class=3D"ic=
+on" height=3D"1em" width=3D"1em"><path d=3D"m1000 350l-187 188 0-125-250 0 =
+0 250 125 0-188 187-187-187 125 0 0-250-250 0 0 125-188-188 186-187 0 125 2=
+52 0 0-250-125 0 187-188 188 188-125 0 0 250 250 0 0-126 187 188z" transfor=
+m=3D"matrix(1 0 0 -1 0 850)"></path></svg></a></div><div class=3D"modebar-g=
+roup"><a rel=3D"tooltip" class=3D"modebar-btn" data-title=3D"Zoom in" data-=
+attr=3D"zoom" data-val=3D"in" data-toggle=3D"false" data-gravity=3D"n"><svg=
+ viewBox=3D"0 0 875 1000" class=3D"icon" height=3D"1em" width=3D"1em"><path=
+ d=3D"m1 787l0-875 875 0 0 875-875 0z m687-500l-187 0 0-187-125 0 0 187-188=
+ 0 0 125 188 0 0 187 125 0 0-187 187 0 0-125z" transform=3D"matrix(1 0 0 -1=
+ 0 850)"></path></svg></a><a rel=3D"tooltip" class=3D"modebar-btn" data-tit=
+le=3D"Zoom out" data-attr=3D"zoom" data-val=3D"out" data-toggle=3D"false" d=
+ata-gravity=3D"n"><svg viewBox=3D"0 0 875 1000" class=3D"icon" height=3D"1e=
+m" width=3D"1em"><path d=3D"m0 788l0-876 875 0 0 876-875 0z m688-500l-500 0=
+ 0 125 500 0 0-125z" transform=3D"matrix(1 0 0 -1 0 850)"></path></svg></a>=
+<a rel=3D"tooltip" class=3D"modebar-btn" data-title=3D"Autoscale" data-attr=
+=3D"zoom" data-val=3D"auto" data-toggle=3D"false" data-gravity=3D"n"><svg v=
+iewBox=3D"0 0 1000 1000" class=3D"icon" height=3D"1em" width=3D"1em"><path =
+d=3D"m250 850l-187 0-63 0 0-62 0-188 63 0 0 188 187 0 0 62z m688 0l-188 0 0=
+-62 188 0 0-188 62 0 0 188 0 62-62 0z m-875-938l0 188-63 0 0-188 0-62 63 0 =
+187 0 0 62-187 0z m875 188l0-188-188 0 0-62 188 0 62 0 0 62 0 188-62 0z m-1=
+25 188l-1 0-93-94-156 156 156 156 92-93 2 0 0 250-250 0 0-2 93-92-156-156-1=
+56 156 94 92 0 2-250 0 0-250 0 0 93 93 157-156-157-156-93 94 0 0 0-250 250 =
+0 0 0-94 93 156 157 156-157-93-93 0 0 250 0 0 250z" transform=3D"matrix(1 0=
+ 0 -1 0 850)"></path></svg></a><a rel=3D"tooltip" class=3D"modebar-btn" dat=
+a-title=3D"Reset axes" data-attr=3D"zoom" data-val=3D"reset" data-toggle=3D=
+"false" data-gravity=3D"n"><svg viewBox=3D"0 0 928.6 1000" class=3D"icon" h=
+eight=3D"1em" width=3D"1em"><path d=3D"m786 296v-267q0-15-11-26t-25-10h-214=
+v214h-143v-214h-214q-15 0-25 10t-11 26v267q0 1 0 2t0 2l321 264 321-264q1-1 =
+1-4z m124 39l-34-41q-5-5-12-6h-2q-7 0-12 3l-386 322-386-322q-7-4-13-4-7 2-1=
+2 7l-35 41q-4 5-3 13t6 12l401 334q18 15 42 15t43-15l136-114v109q0 8 5 13t13=
+ 5h107q8 0 13-5t5-13v-227l122-102q5-5 6-12t-4-13z" transform=3D"matrix(1 0 =
+0 -1 0 850)"></path></svg></a></div><div class=3D"modebar-group"><a href=3D=
+"https://plotly.com/" target=3D"_blank" data-title=3D"Produced with Plotly.=
+js (v2.18.2)" class=3D"modebar-btn plotlyjsicon modebar-btn--logo"><svg xml=
+ns=3D"http://www.w3.org/2000/svg" viewBox=3D"0 0 132 132" height=3D"1em" wi=
+dth=3D"1em"><defs> <style>  .cls-0{fill:#000;}  .cls-1{fill:#FFF;}  .cls-2{=
+fill:#F26;}  .cls-3{fill:#D69;}  .cls-4{fill:#BAC;}  .cls-5{fill:#9EF;} </s=
+tyle></defs> <title>plotly-logomark</title> <g id=3D"symbol">  <rect class=
+=3D"cls-0" x=3D"0" y=3D"0" width=3D"132" height=3D"132" rx=3D"18" ry=3D"18"=
+></rect>  <circle class=3D"cls-5" cx=3D"102" cy=3D"30" r=3D"6"></circle>  <=
+circle class=3D"cls-4" cx=3D"78" cy=3D"30" r=3D"6"></circle>  <circle class=
+=3D"cls-4" cx=3D"78" cy=3D"54" r=3D"6"></circle>  <circle class=3D"cls-3" c=
+x=3D"54" cy=3D"30" r=3D"6"></circle>  <circle class=3D"cls-2" cx=3D"30" cy=
+=3D"30" r=3D"6"></circle>  <circle class=3D"cls-2" cx=3D"30" cy=3D"54" r=3D=
+"6"></circle>  <path class=3D"cls-1" d=3D"M30,72a6,6,0,0,0-6,6v24a6,6,0,0,0=
+,12,0V78A6,6,0,0,0,30,72Z"></path>  <path class=3D"cls-1" d=3D"M78,72a6,6,0=
+,0,0-6,6v24a6,6,0,0,0,12,0V78A6,6,0,0,0,78,72Z"></path>  <path class=3D"cls=
+-1" d=3D"M54,48a6,6,0,0,0-6,6v48a6,6,0,0,0,12,0V54A6,6,0,0,0,54,48Z"></path=
+>  <path class=3D"cls-1" d=3D"M102,48a6,6,0,0,0-6,6v48a6,6,0,0,0,12,0V54A6,=
+6,0,0,0,102,48Z"></path> </g></svg></a></div></div></div><svg class=3D"main=
+-svg" xmlns=3D"http://www.w3.org/2000/svg" xmlns:xlink=3D"http://www.w3.org=
+/1999/xlink" width=3D"1594" height=3D"450"><g class=3D"hoverlayer"></g></sv=
+g></div></div></div>                    </div><svg id=3D"js-plotly-tester" =
+xmlns=3D"http://www.w3.org/2000/svg" xmlns:xlink=3D"http://www.w3.org/1999/=
+xlink" style=3D"position: absolute; left: -10000px; top: -10000px; width: 9=
+000px; height: 9000px; z-index: 1;"><path class=3D"js-reference-point" d=3D=
+"M0,0H1V1H0Z" style=3D"stroke-width: 0; fill: black;"></path></svg>
+       =20
+   =20
+    </body></html>
+------MultipartBoundary--1E4XZWXZczEaaOYQ4l0paIozGEmm2lZsuPFyJ4yzQ8----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-4aee31d7-3c6d-45de-a1c6-f0c61b53bdb2@mhtml.blink
+
+@charset "utf-8";
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-logo { display: block; width: 21px; =
+height: 21px; background-image: url("data:image/svg+xml;charset=3Dutf-8,%3C=
+?xml version=3D\"1.0\" encoding=3D\"utf-8\"?%3E %3Csvg version=3D\"1.1\" id=
+=3D\"Layer_1\" xmlns=3D\"http://www.w3.org/2000/svg\" xmlns:xlink=3D\"http:=
+//www.w3.org/1999/xlink\" x=3D\"0px\" y=3D\"0px\" viewBox=3D\"0 0 21 21\" s=
+tyle=3D\"enable-background:new 0 0 21 21;\" xml:space=3D\"preserve\"%3E%3Cg=
+ transform=3D\"translate(0,0.01)\"%3E%3Cpath d=3D\"m 10.5,1.24 c -5.11,0 -9=
+.25,4.15 -9.25,9.25 0,5.1 4.15,9.25 9.25,9.25 5.1,0 9.25,-4.15 9.25,-9.25 0=
+,-5.11 -4.14,-9.25 -9.25,-9.25 z m 4.39,11.53 c -1.93,1.93 -4.78,2.31 -6.7,=
+2.31 -0.7,0 -1.41,-0.05 -2.1,-0.16 0,0 -1.02,-5.64 2.14,-8.81 0.83,-0.83 1.=
+95,-1.28 3.13,-1.28 1.27,0 2.49,0.51 3.39,1.42 1.84,1.84 1.89,4.75 0.14,6.5=
+2 z\" style=3D\"opacity:0.9;fill:%23ffffff;enable-background:new\" class=3D=
+\"st0\"/%3E%3Cpath d=3D\"M 10.5,-0.01 C 4.7,-0.01 0,4.7 0,10.49 c 0,5.79 4.=
+7,10.5 10.5,10.5 5.8,0 10.5,-4.7 10.5,-10.5 C 20.99,4.7 16.3,-0.01 10.5,-0.=
+01 Z m 0,19.75 c -5.11,0 -9.25,-4.15 -9.25,-9.25 0,-5.1 4.14,-9.26 9.25,-9.=
+26 5.11,0 9.25,4.15 9.25,9.25 0,5.13 -4.14,9.26 -9.25,9.26 z\" style=3D\"op=
+acity:0.35;enable-background:new\" class=3D\"st1\"/%3E%3Cpath d=3D\"M 14.74=
+,6.25 C 12.9,4.41 9.98,4.35 8.23,6.1 5.07,9.27 6.09,14.91 6.09,14.91 c 0,0 =
+5.64,1.02 8.81,-2.14 C 16.64,11 16.59,8.09 14.74,6.25 Z m -2.27,4.09 -0.91,=
+1.87 -0.9,-1.87 -1.86,-0.91 1.86,-0.9 0.9,-1.87 0.91,1.87 1.86,0.9 z\" styl=
+e=3D\"opacity:0.35;enable-background:new\" class=3D\"st1\"/%3E%3Cpolygon po=
+ints=3D\"11.56,12.21 10.66,10.34 8.8,9.43 10.66,8.53 11.56,6.66 12.47,8.53 =
+14.33,9.43 12.47,10.34 \" style=3D\"opacity:0.9;fill:%23ffffff;enable-backg=
+round:new\" class=3D\"st0\"/%3E%3C/g%3E%3C/svg%3E"); }
+
+.js-plotly-plot .plotly .mapboxgl-attrib-empty { display: none; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib .mapbox-improve-map { font-we=
+ight: bold; margin-left: 2px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib a:hover { color: inherit; tex=
+t-decoration: underline; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib a { color: rgba(0, 0, 0, 0.75=
+); text-decoration: none; font-size: 12px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib { color: rgba(0, 0, 0, 0.75);=
+ text-decoration: none; font-size: 12px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl { margin=
+: 0px 10px 10px 0px; float: right; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-left .mapboxgl-ctrl { margin:=
+ 0px 0px 10px 10px; float: left; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-left > .mapboxgl-ctrl-attrib.=
+mapboxgl-compact::after { bottom: 0px; left: 0px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-right > .mapboxgl-ctrl-attrib=
+.mapboxgl-compact::after { bottom: 0px; right: 0px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact { min-height=
+: 20px; padding: 0px; margin: 10px; position: relative; background-color: r=
+gb(255, 255, 255); border-radius: 3px 12px 12px 3px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact::after { con=
+tent: ""; cursor: pointer; position: absolute; background-image: url("data:=
+image/svg+xml;charset=3Dutf-8,%3Csvg viewBox=3D\"0 0 20 20\" xmlns=3D\"http=
+://www.w3.org/2000/svg\"%3E %3Cpath fill=3D\"%23333333\" fill-rule=3D\"even=
+odd\" d=3D\"M4,10a6,6 0 1,0 12,0a6,6 0 1,0 -12,0 M9,7a1,1 0 1,0 2,0a1,1 0 1=
+,0 -2,0 M9,10a1,1 0 1,1 2,0l0,3a1,1 0 1,1 -2,0\"/%3E %3C/svg%3E"); backgrou=
+nd-color: rgba(255, 255, 255, 0.5); width: 24px; height: 24px; box-sizing: =
+border-box; border-radius: 12px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact:hover { padd=
+ing: 2px 24px 2px 4px; visibility: visible; margin-top: 6px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact:hover .mapbo=
+xgl-ctrl-attrib-inner { display: block; margin-top: 2px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact .mapboxgl-ct=
+rl-attrib-inner { display: none; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl { clear: both; pointer-events: auto;=
+ transform: translate(0px, 0px); }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-right { position: absolute; p=
+ointer-events: none; z-index: 2; right: 0px; bottom: 0px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-left { position: absolute; po=
+inter-events: none; z-index: 2; bottom: 0px; left: 0px; }
+
+.js-plotly-plot .plotly .mapboxgl-canary { background-color: salmon; }
+
+.js-plotly-plot .plotly .mapboxgl-missing-css { display: none; }
+
+.js-plotly-plot .plotly .mapboxgl-map { overflow: hidden; position: relativ=
+e; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-logo { display: block; width: 21px; =
+height: 21px; background-image: url("data:image/svg+xml;charset=3Dutf-8,%3C=
+?xml version=3D\"1.0\" encoding=3D\"utf-8\"?%3E %3Csvg version=3D\"1.1\" id=
+=3D\"Layer_1\" xmlns=3D\"http://www.w3.org/2000/svg\" xmlns:xlink=3D\"http:=
+//www.w3.org/1999/xlink\" x=3D\"0px\" y=3D\"0px\" viewBox=3D\"0 0 21 21\" s=
+tyle=3D\"enable-background:new 0 0 21 21;\" xml:space=3D\"preserve\"%3E%3Cg=
+ transform=3D\"translate(0,0.01)\"%3E%3Cpath d=3D\"m 10.5,1.24 c -5.11,0 -9=
+.25,4.15 -9.25,9.25 0,5.1 4.15,9.25 9.25,9.25 5.1,0 9.25,-4.15 9.25,-9.25 0=
+,-5.11 -4.14,-9.25 -9.25,-9.25 z m 4.39,11.53 c -1.93,1.93 -4.78,2.31 -6.7,=
+2.31 -0.7,0 -1.41,-0.05 -2.1,-0.16 0,0 -1.02,-5.64 2.14,-8.81 0.83,-0.83 1.=
+95,-1.28 3.13,-1.28 1.27,0 2.49,0.51 3.39,1.42 1.84,1.84 1.89,4.75 0.14,6.5=
+2 z\" style=3D\"opacity:0.9;fill:%23ffffff;enable-background:new\" class=3D=
+\"st0\"/%3E%3Cpath d=3D\"M 10.5,-0.01 C 4.7,-0.01 0,4.7 0,10.49 c 0,5.79 4.=
+7,10.5 10.5,10.5 5.8,0 10.5,-4.7 10.5,-10.5 C 20.99,4.7 16.3,-0.01 10.5,-0.=
+01 Z m 0,19.75 c -5.11,0 -9.25,-4.15 -9.25,-9.25 0,-5.1 4.14,-9.26 9.25,-9.=
+26 5.11,0 9.25,4.15 9.25,9.25 0,5.13 -4.14,9.26 -9.25,9.26 z\" style=3D\"op=
+acity:0.35;enable-background:new\" class=3D\"st1\"/%3E%3Cpath d=3D\"M 14.74=
+,6.25 C 12.9,4.41 9.98,4.35 8.23,6.1 5.07,9.27 6.09,14.91 6.09,14.91 c 0,0 =
+5.64,1.02 8.81,-2.14 C 16.64,11 16.59,8.09 14.74,6.25 Z m -2.27,4.09 -0.91,=
+1.87 -0.9,-1.87 -1.86,-0.91 1.86,-0.9 0.9,-1.87 0.91,1.87 1.86,0.9 z\" styl=
+e=3D\"opacity:0.35;enable-background:new\" class=3D\"st1\"/%3E%3Cpolygon po=
+ints=3D\"11.56,12.21 10.66,10.34 8.8,9.43 10.66,8.53 11.56,6.66 12.47,8.53 =
+14.33,9.43 12.47,10.34 \" style=3D\"opacity:0.9;fill:%23ffffff;enable-backg=
+round:new\" class=3D\"st0\"/%3E%3C/g%3E%3C/svg%3E"); }
+
+.js-plotly-plot .plotly .mapboxgl-attrib-empty { display: none; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib .mapbox-improve-map { font-we=
+ight: bold; margin-left: 2px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib a:hover { color: inherit; tex=
+t-decoration: underline; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib a { color: rgba(0, 0, 0, 0.75=
+); text-decoration: none; font-size: 12px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib { color: rgba(0, 0, 0, 0.75);=
+ text-decoration: none; font-size: 12px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl { margin=
+: 0px 10px 10px 0px; float: right; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-left .mapboxgl-ctrl { margin:=
+ 0px 0px 10px 10px; float: left; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-left > .mapboxgl-ctrl-attrib.=
+mapboxgl-compact::after { bottom: 0px; left: 0px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-right > .mapboxgl-ctrl-attrib=
+.mapboxgl-compact::after { bottom: 0px; right: 0px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact { min-height=
+: 20px; padding: 0px; margin: 10px; position: relative; background-color: r=
+gb(255, 255, 255); border-radius: 3px 12px 12px 3px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact::after { con=
+tent: ""; cursor: pointer; position: absolute; background-image: url("data:=
+image/svg+xml;charset=3Dutf-8,%3Csvg viewBox=3D\"0 0 20 20\" xmlns=3D\"http=
+://www.w3.org/2000/svg\"%3E %3Cpath fill=3D\"%23333333\" fill-rule=3D\"even=
+odd\" d=3D\"M4,10a6,6 0 1,0 12,0a6,6 0 1,0 -12,0 M9,7a1,1 0 1,0 2,0a1,1 0 1=
+,0 -2,0 M9,10a1,1 0 1,1 2,0l0,3a1,1 0 1,1 -2,0\"/%3E %3C/svg%3E"); backgrou=
+nd-color: rgba(255, 255, 255, 0.5); width: 24px; height: 24px; box-sizing: =
+border-box; border-radius: 12px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact:hover { padd=
+ing: 2px 24px 2px 4px; visibility: visible; margin-top: 6px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact:hover .mapbo=
+xgl-ctrl-attrib-inner { display: block; margin-top: 2px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact .mapboxgl-ct=
+rl-attrib-inner { display: none; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl { clear: both; pointer-events: auto;=
+ transform: translate(0px, 0px); }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-right { position: absolute; p=
+ointer-events: none; z-index: 2; right: 0px; bottom: 0px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-left { position: absolute; po=
+inter-events: none; z-index: 2; bottom: 0px; left: 0px; }
+
+.js-plotly-plot .plotly .mapboxgl-canary { background-color: salmon; }
+
+.js-plotly-plot .plotly .mapboxgl-missing-css { display: none; }
+
+.js-plotly-plot .plotly .mapboxgl-map { overflow: hidden; position: relativ=
+e; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-logo { display: block; width: 21px; =
+height: 21px; background-image: url("data:image/svg+xml;charset=3Dutf-8,%3C=
+?xml version=3D\"1.0\" encoding=3D\"utf-8\"?%3E %3Csvg version=3D\"1.1\" id=
+=3D\"Layer_1\" xmlns=3D\"http://www.w3.org/2000/svg\" xmlns:xlink=3D\"http:=
+//www.w3.org/1999/xlink\" x=3D\"0px\" y=3D\"0px\" viewBox=3D\"0 0 21 21\" s=
+tyle=3D\"enable-background:new 0 0 21 21;\" xml:space=3D\"preserve\"%3E%3Cg=
+ transform=3D\"translate(0,0.01)\"%3E%3Cpath d=3D\"m 10.5,1.24 c -5.11,0 -9=
+.25,4.15 -9.25,9.25 0,5.1 4.15,9.25 9.25,9.25 5.1,0 9.25,-4.15 9.25,-9.25 0=
+,-5.11 -4.14,-9.25 -9.25,-9.25 z m 4.39,11.53 c -1.93,1.93 -4.78,2.31 -6.7,=
+2.31 -0.7,0 -1.41,-0.05 -2.1,-0.16 0,0 -1.02,-5.64 2.14,-8.81 0.83,-0.83 1.=
+95,-1.28 3.13,-1.28 1.27,0 2.49,0.51 3.39,1.42 1.84,1.84 1.89,4.75 0.14,6.5=
+2 z\" style=3D\"opacity:0.9;fill:%23ffffff;enable-background:new\" class=3D=
+\"st0\"/%3E%3Cpath d=3D\"M 10.5,-0.01 C 4.7,-0.01 0,4.7 0,10.49 c 0,5.79 4.=
+7,10.5 10.5,10.5 5.8,0 10.5,-4.7 10.5,-10.5 C 20.99,4.7 16.3,-0.01 10.5,-0.=
+01 Z m 0,19.75 c -5.11,0 -9.25,-4.15 -9.25,-9.25 0,-5.1 4.14,-9.26 9.25,-9.=
+26 5.11,0 9.25,4.15 9.25,9.25 0,5.13 -4.14,9.26 -9.25,9.26 z\" style=3D\"op=
+acity:0.35;enable-background:new\" class=3D\"st1\"/%3E%3Cpath d=3D\"M 14.74=
+,6.25 C 12.9,4.41 9.98,4.35 8.23,6.1 5.07,9.27 6.09,14.91 6.09,14.91 c 0,0 =
+5.64,1.02 8.81,-2.14 C 16.64,11 16.59,8.09 14.74,6.25 Z m -2.27,4.09 -0.91,=
+1.87 -0.9,-1.87 -1.86,-0.91 1.86,-0.9 0.9,-1.87 0.91,1.87 1.86,0.9 z\" styl=
+e=3D\"opacity:0.35;enable-background:new\" class=3D\"st1\"/%3E%3Cpolygon po=
+ints=3D\"11.56,12.21 10.66,10.34 8.8,9.43 10.66,8.53 11.56,6.66 12.47,8.53 =
+14.33,9.43 12.47,10.34 \" style=3D\"opacity:0.9;fill:%23ffffff;enable-backg=
+round:new\" class=3D\"st0\"/%3E%3C/g%3E%3C/svg%3E"); }
+
+.js-plotly-plot .plotly .mapboxgl-attrib-empty { display: none; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib .mapbox-improve-map { font-we=
+ight: bold; margin-left: 2px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib a:hover { color: inherit; tex=
+t-decoration: underline; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib a { color: rgba(0, 0, 0, 0.75=
+); text-decoration: none; font-size: 12px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib { color: rgba(0, 0, 0, 0.75);=
+ text-decoration: none; font-size: 12px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl { margin=
+: 0px 10px 10px 0px; float: right; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-left .mapboxgl-ctrl { margin:=
+ 0px 0px 10px 10px; float: left; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-left > .mapboxgl-ctrl-attrib.=
+mapboxgl-compact::after { bottom: 0px; left: 0px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-right > .mapboxgl-ctrl-attrib=
+.mapboxgl-compact::after { bottom: 0px; right: 0px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact { min-height=
+: 20px; padding: 0px; margin: 10px; position: relative; background-color: r=
+gb(255, 255, 255); border-radius: 3px 12px 12px 3px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact::after { con=
+tent: ""; cursor: pointer; position: absolute; background-image: url("data:=
+image/svg+xml;charset=3Dutf-8,%3Csvg viewBox=3D\"0 0 20 20\" xmlns=3D\"http=
+://www.w3.org/2000/svg\"%3E %3Cpath fill=3D\"%23333333\" fill-rule=3D\"even=
+odd\" d=3D\"M4,10a6,6 0 1,0 12,0a6,6 0 1,0 -12,0 M9,7a1,1 0 1,0 2,0a1,1 0 1=
+,0 -2,0 M9,10a1,1 0 1,1 2,0l0,3a1,1 0 1,1 -2,0\"/%3E %3C/svg%3E"); backgrou=
+nd-color: rgba(255, 255, 255, 0.5); width: 24px; height: 24px; box-sizing: =
+border-box; border-radius: 12px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact:hover { padd=
+ing: 2px 24px 2px 4px; visibility: visible; margin-top: 6px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact:hover .mapbo=
+xgl-ctrl-attrib-inner { display: block; margin-top: 2px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact .mapboxgl-ct=
+rl-attrib-inner { display: none; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl { clear: both; pointer-events: auto;=
+ transform: translate(0px, 0px); }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-right { position: absolute; p=
+ointer-events: none; z-index: 2; right: 0px; bottom: 0px; }
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-left { position: absolute; po=
+inter-events: none; z-index: 2; bottom: 0px; left: 0px; }
+
+.js-plotly-plot .plotly .mapboxgl-canary { background-color: salmon; }
+
+.js-plotly-plot .plotly .mapboxgl-missing-css { display: none; }
+
+.js-plotly-plot .plotly .mapboxgl-map { overflow: hidden; position: relativ=
+e; }
+
+.plotly-notifier .notifier-close:hover { color: rgb(68, 68, 68); text-decor=
+ation: none; cursor: pointer; }
+
+.plotly-notifier .notifier-close { color: rgb(255, 255, 255); opacity: 0.8;=
+ float: right; padding: 0px 5px; background: none; border: none; font-size:=
+ 20px; font-weight: bold; line-height: 20px; }
+
+.plotly-notifier .notifier-note { min-width: 180px; max-width: 250px; borde=
+r: 1px solid rgb(255, 255, 255); z-index: 3000; margin: 0px; background-col=
+or: rgba(140, 151, 175, 0.9); color: rgb(255, 255, 255); padding: 10px; ove=
+rflow-wrap: break-word; hyphens: auto; }
+
+.plotly-notifier p { margin: 0px; }
+
+.plotly-notifier { font-family: "Open Sans", verdana, arial, sans-serif; po=
+sition: fixed; top: 50px; right: 20px; z-index: 10000; font-size: 10pt; max=
+-width: 180px; }
+
+.js-plotly-plot .plotly .vertical [data-title]::before { border-width: 6px;=
+ border-style: solid; border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(=
+0, 0, 0, 0) rgb(105, 115, 138); border-image: initial; margin-top: 8px; mar=
+gin-right: -30px; }
+
+.js-plotly-plot .plotly .vertical [data-title]::before, .js-plotly-plot .pl=
+otly .vertical [data-title]::after { top: 0%; right: 200%; }
+
+.js-plotly-plot .plotly [data-title]::after { content: attr(data-title); ba=
+ckground: rgb(105, 115, 138); color: rgb(255, 255, 255); padding: 8px 10px;=
+ font-size: 12px; line-height: 12px; white-space: nowrap; margin-right: -18=
+px; border-radius: 2px; }
+
+.js-plotly-plot .plotly [data-title]::before { content: ""; position: absol=
+ute; background: rgba(0, 0, 0, 0); border-width: 6px; border-style: solid; =
+border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgb(105, 115, 138); border-=
+image: initial; z-index: 1002; margin-top: -12px; margin-right: -6px; }
+
+.js-plotly-plot .plotly [data-title]:hover::before, .js-plotly-plot .plotly=
+ [data-title]:hover::after { display: block; opacity: 1; }
+
+.js-plotly-plot .plotly [data-title]::before, .js-plotly-plot .plotly [data=
+-title]::after { position: absolute; transform: translate3d(0px, 0px, 0px);=
+ display: none; opacity: 0; z-index: 1001; pointer-events: none; top: 110%;=
+ right: 50%; }
+
+.js-plotly-plot .plotly .modebar.vertical .modebar-group .modebar-btn { dis=
+play: block; text-align: center; }
+
+.js-plotly-plot .plotly .modebar.vertical .modebar-group { display: block; =
+float: none; padding-left: 0px; padding-bottom: 8px; }
+
+.js-plotly-plot .plotly .modebar.vertical svg { top: -1px; }
+
+.js-plotly-plot .plotly .modebar.vertical { display: flex; flex-flow: colum=
+n wrap; align-content: flex-end; max-height: 100%; }
+
+.js-plotly-plot .plotly .modebar-btn svg { position: relative; top: 2px; }
+
+.js-plotly-plot .plotly .modebar-btn { position: relative; font-size: 16px;=
+ padding: 3px 4px; height: 22px; cursor: pointer; line-height: normal; box-=
+sizing: border-box; }
+
+.js-plotly-plot .plotly .modebar-group { float: left; display: inline-block=
+; box-sizing: border-box; padding-left: 8px; position: relative; vertical-a=
+lign: middle; white-space: nowrap; }
+
+.js-plotly-plot .plotly:hover .modebar--hover .modebar-group { opacity: 1; =
+}
+
+.js-plotly-plot .plotly .modebar--hover > :not(.watermark) { opacity: 0; tr=
+ansition: opacity 0.3s ease 0s; }
+
+.js-plotly-plot .plotly .ease-bg { transition: background-color 0.3s ease 0=
+s; }
+
+.js-plotly-plot .plotly .modebar { position: absolute; top: 2px; right: 2px=
+; }
+
+.js-plotly-plot .plotly .cursor-grab { cursor: grab; }
+
+.js-plotly-plot .plotly .cursor-ne-resize { cursor: ne-resize; }
+
+.js-plotly-plot .plotly .cursor-n-resize { cursor: n-resize; }
+
+.js-plotly-plot .plotly .cursor-nw-resize { cursor: nw-resize; }
+
+.js-plotly-plot .plotly .cursor-e-resize { cursor: e-resize; }
+
+.js-plotly-plot .plotly .cursor-w-resize { cursor: w-resize; }
+
+.js-plotly-plot .plotly .cursor-se-resize { cursor: se-resize; }
+
+.js-plotly-plot .plotly .cursor-s-resize { cursor: s-resize; }
+
+.js-plotly-plot .plotly .cursor-sw-resize { cursor: sw-resize; }
+
+.js-plotly-plot .plotly .cursor-ew-resize { cursor: ew-resize; }
+
+.js-plotly-plot .plotly .cursor-ns-resize { cursor: ns-resize; }
+
+.js-plotly-plot .plotly .cursor-row-resize { cursor: row-resize; }
+
+.js-plotly-plot .plotly .cursor-col-resize { cursor: col-resize; }
+
+.js-plotly-plot .plotly .cursor-move { cursor: move; }
+
+.js-plotly-plot .plotly .cursor-crosshair { cursor: crosshair; }
+
+.js-plotly-plot .plotly .cursor-pointer { cursor: pointer; }
+
+.js-plotly-plot .plotly .cursor-default { cursor: default; }
+
+.js-plotly-plot .plotly .main-svg .draglayer { pointer-events: all; }
+
+.js-plotly-plot .plotly .main-svg { position: absolute; top: 0px; left: 0px=
+; pointer-events: none; }
+
+.js-plotly-plot .plotly svg a:hover { fill: rgb(60, 109, 197); }
+
+.js-plotly-plot .plotly svg a { fill: rgb(68, 122, 219); }
+
+.js-plotly-plot .plotly svg { overflow: hidden; }
+
+.js-plotly-plot .plotly .user-select-none { user-select: none; }
+
+.js-plotly-plot .plotly .crisp { shape-rendering: crispedges; }
+
+.js-plotly-plot .plotly a:hover { text-decoration: none; }
+
+.js-plotly-plot .plotly a { text-decoration: none; }
+
+.js-plotly-plot .plotly input:focus, .js-plotly-plot .plotly button:focus {=
+ outline: none; }
+
+.js-plotly-plot .plotly input, .js-plotly-plot .plotly button { font-family=
+: "Open Sans", verdana, arial, sans-serif; }
+
+.js-plotly-plot .plotly, .js-plotly-plot .plotly div { direction: ltr; font=
+-family: "Open Sans", verdana, arial, sans-serif; margin: 0px; padding: 0px=
+; }
+------MultipartBoundary--1E4XZWXZczEaaOYQ4l0paIozGEmm2lZsuPFyJ4yzQ8----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-70359f51-3928-4a90-b493-ee6801f210ef@mhtml.blink
+
+@charset "utf-8";
+
+#modebar-1f1dde .modebar-btn.active .icon path { fill: rgba(68, 68, 68, 0.7=
+); }
+
+#modebar-1f1dde .modebar-btn:hover .icon path { fill: rgba(68, 68, 68, 0.7)=
+; }
+
+#modebar-1f1dde .modebar-btn .icon path { fill: rgba(68, 68, 68, 0.3); }
+
+.js-plotly-plot .plotly:hover #modebar-1f1dde .modebar-group { background-c=
+olor: rgba(255, 255, 255, 0.5); }
+------MultipartBoundary--1E4XZWXZczEaaOYQ4l0paIozGEmm2lZsuPFyJ4yzQ8------
