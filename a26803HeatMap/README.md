@@ -46,7 +46,8 @@ pip install --upgrade -r requirements.txt
 terminal底执行；
 jupyter notebook i0heatmap.ipynb
 
-
+新开一个terminal执行：
+python3 i2wsgi.py
 
 
 

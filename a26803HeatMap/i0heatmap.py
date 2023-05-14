@@ -52,9 +52,53 @@ predictions = model.transform(data_with_features)
 pdf = predictions.select("longitude", "latitude", "prediction").toPandas()
 
 
+# #  part0 数据探索
+# 
+
+# In[26]:
+
+
+# 计算并绘制每个小时的平均"speed"
+
+# 将数据读入pandas DataFrame
+data = pd.read_csv('data/sample.csv')
+
+# 将"Date"字段转换为DateTime对象
+data['Date'] = pd.to_datetime(data['Date'])
+
+# 设置"Date"字段为索引
+data.set_index('Date', inplace=True)
+
+# 计算每个小时的平均"speed"
+hourly_speed = data['speed'].resample('H').mean()
+
+# 绘制结果
+plt.figure(figsize=(10,8))
+plt.plot(hourly_speed)
+plt.xlabel('Time')
+plt.ylabel('Average Speed')
+plt.title('Average Speed by Hour')
+plt.show()
+
+
+# In[25]:
+
+
+# 计算每个小时的平均"load"
+hourly_load = data['load'].resample('H').mean()
+
+# 绘制结果
+plt.figure(figsize=(10,6))
+plt.plot(hourly_load)
+plt.xlabel('Time')
+plt.ylabel('Average Load')
+plt.title('Average Load by Hour')
+plt.show()
+
+
 # #  part1 简单可视化分类
 
-# In[35]:
+# In[7]:
 
 
 plt.scatter(pdf["longitude"], pdf["latitude"], c=pdf["prediction"], cmap="viridis")
@@ -66,7 +110,7 @@ plt.show()
 
 # #  part 2 地图可视化分类
 
-# In[36]:
+# In[8]:
 
 
 # 创建一个初始地图，以数据集中的第一个点为中心
@@ -75,7 +119,7 @@ map = folium.Map(location=initial_location, zoom_start=11)
 
 
 
-# In[32]:
+# In[9]:
 
 
 colors = ["red", "blue", "green"]  # 您可以根据需要添加更多颜色
@@ -89,8 +133,11 @@ for index, row in pdf.iterrows():
         fill_opacity=0.7
     ).add_to(map)
 
+# 保存地图为HTML文件
+map.save('i0map.html')
 
-# In[33]:
+
+# In[10]:
 
 
 map
@@ -108,7 +155,7 @@ map
 # 
 # 
 
-# In[58]:
+# In[11]:
 
 
 from pyspark.ml.feature import VectorAssembler, StandardScaler
@@ -134,7 +181,7 @@ pdf = predictions.select("longitude", "latitude", "prediction", "load").toPandas
 # 其余的代码（创建地图并显示）与前面的示例相同
 
 
-# In[59]:
+# In[12]:
 
 
 plt.scatter(pdf["longitude"], pdf["latitude"], c=pdf["prediction"], cmap="viridis")
@@ -144,7 +191,7 @@ plt.title("Hotspot Analysis")
 plt.show()
 
 
-# In[60]:
+# In[13]:
 
 
 initial_location = [pdf["latitude"].iloc[0], pdf["longitude"].iloc[0]]
@@ -162,7 +209,7 @@ for index, row in pdf.iterrows():
     ).add_to(map)
 
 
-# In[61]:
+# In[14]:
 
 
 map
@@ -183,7 +230,7 @@ map
 # #  part 4 考虑更多载客与否判断因素的地图可视化热力图
 # 
 
-# In[65]:
+# In[15]:
 
 
 colors = ["red", "blue", "green", "pink", "gray"]  # 您可以根据需要添加更多颜色
@@ -199,7 +246,7 @@ for index, row in pdf.iterrows():
     ).add_to(map)
 
 
-# In[66]:
+# In[16]:
 
 
 map
@@ -211,7 +258,7 @@ map
 # # 现在，在地图上，您可以看到聚类结果中load值的区别，同时仍然可以通过颜色的基本色调来识别每个簇。
 # # 这样，您可以更好地分析每个簇中出租车载客状态的分布情况
 
-# In[67]:
+# In[17]:
 
 
 from folium.plugins import HeatMap
@@ -224,6 +271,9 @@ map = folium.Map(location=[pdf["latitude"].mean(), pdf["longitude"].mean()], zoo
 
 # 添加热力图
 HeatMap(heat_data).add_to(map)
+
+# 保存地图为HTML文件
+map.save('i2map.html')
 
 # 显示地图
 map
