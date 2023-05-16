@@ -374,20 +374,6 @@ def update_profile(id):
 ### -------------end of profile
 
 
-@app.route("/course/<id>", methods=["GET"])
-def course_home(id):
-    """
-    查询ppt详情、删除ppt
-    """
-    if request.method == "GET":
-        # 到数据库查询ppt详情
-        blog = Blog.query.filter_by(id=id).first_or_404()
-        teacherWork = TeacherWork.query.filter_by(course_id=id).first()
-        print(id, blog, "in query_blog", "@" * 20)
-        # 渲染ppt详情页面
-        return rt("course.html", blog=blog, teacherWork=teacherWork)
-    else:
-        return "", 204
 
 
 login_manager = flask_login.LoginManager(app)
@@ -424,14 +410,7 @@ def relationship():
     return jsonify(d)
 
 
-@app.route("/index_a/")
-def index():
-    return rt("index-A.html")
 
-
-@app.route("/index_b/")
-def index_b():
-    return rt("index-B.html")
 
 
 @login_manager.user_loader
@@ -512,114 +491,9 @@ def unauthorized_handler():
     return "Unauthorized"
 
 
-# --------------------------
-@app.route("/add_ppt", methods=["GET"])
-def add_ppt():
-    return rt("index.html")
 
 
-@app.route("/upload_ppt", methods=["POST"])
-def upload_ppt():
 
-    # detail = request.form.get("detail")
-    # 从表单请求体中获取请求数据
-
-    title = request.form.get("title")
-    text = request.form.get("detail")
-
-    # 创建一个ppt对象
-    blog = Blog(title=title, text=text)
-    db.session.add(blog)
-    # 必须提交才能生效
-    db.session.commit()
-    # 创建完成之后重定向到ppt列表页面
-    # return redirect("/blogs")
-
-    return redirect(url_for("add_ppt"))
-
-
-@app.route("/student_work", methods=["POST"])
-def student_work():
-    return redirect(url_for("student_index"))
-
-
-@app.route("/student_index", methods=["GET"])
-def student_index():
-    return rt("student_index.html")
-
-
-# @app.route("/", methods=["GET"])
-# def index():
-#     return rt("index.html")
-
-
-@app.route("/file/upload", methods=["POST"])
-def upload_part():  # 接收前端上传的一个分片
-    task = request.form.get("task_id")  # 获取文件的唯一标识符
-    chunk = request.form.get("chunk", 0)  # 获取该分片在所有分片中的序号
-    filename = "%s%s" % (task, chunk)  # 构造该分片的唯一标识符
-    print("filename=", filename)
-    upload_file = request.files["file"]
-    upload_file.save("./upload/%s" % filename)  # 保存分片到本地
-    return rt("index.html")
-
-
-@app.route("/file/merge", methods=["GET"])
-def upload_success():  # 按序读出分片内容，并写入新文件
-    global last_upload_filename
-    target_filename = request.args.get("filename")  # 获取上传文件的文件名
-    last_upload_filename = target_filename
-    print("last_upload_filename=", last_upload_filename)
-    task = request.args.get("task_id")  # 获取文件的唯一标识符
-    chunk = 0  # 分片序号
-    with open("./upload/%s" % target_filename, "wb") as target_file:  # 创建新文件
-        while True:
-            try:
-                filename = "./upload/%s%d" % (task, chunk)
-                source_file = open(filename, "rb")  # 按序打开每个分片
-                target_file.write(source_file.read())  # 读取分片内容写入新文件
-                source_file.close()
-            except IOError as msg:
-                break
-
-            chunk += 1
-            os.remove(filename)  # 删除该分片，节约空间
-
-    return rt("index.html")
-
-
-@app.route("/file/list", methods=["GET"])
-def file_list():
-    files = os.listdir("./upload/")  # 获取文件目录
-    # print(type(files))
-    files.remove(".DS_Store")
-    # files = map(lambda x: x if isinstance(x, unicode) else x.decode('utf-8'), files)  # 注意编码
-    return rt("list.html", files=files)
-
-
-@app.route("/file/download/<filename>", methods=["GET"])
-def file_download(filename):
-    def send_chunk():  # 流式读取
-        store_path = "./upload/%s" % filename
-        print("store_path=", store_path)
-        with open(store_path, "rb") as target_file:
-            while True:
-                chunk = target_file.read(20 * 1024 * 1024)
-                if not chunk:
-                    break
-                yield chunk
-
-    return Response(send_chunk(), content_type="application/octet-stream")
-
-
-# Custom static data
-@app.route("/cdn/<path:filename>")
-def custom_static(filename):
-    print("#" * 20, filename, " in custom_static", app.root_path)
-    return send_from_directory(
-        "/Users/abel/Downloads/AbelProject/FlaskRepository/ppt_platform/upload/",
-        filename,
-    )
 
 
 # --------------------------
