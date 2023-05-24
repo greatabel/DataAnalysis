@@ -66,7 +66,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.abspath(
 db = SQLAlchemy(app)
 
 last_upload_filename = None
-# --- end   数据库 ---
+# --- end   database  ---
 admin_list = ["admin@126.com", "greatabel1@126.com"]
 
 
@@ -87,14 +87,14 @@ class User(db.Model):
 
 class Blog(db.Model):
     """
-    ppt数据模型
+    ppt entity
     """
 
-    # 主键ID
+
     id = db.Column(db.Integer, primary_key=True)
-    # ppt标题
+
     title = db.Column(db.String(100))
-    # ppt正文
+
     text = db.Column(db.Text)
 
     def __init__(self, title, text):
