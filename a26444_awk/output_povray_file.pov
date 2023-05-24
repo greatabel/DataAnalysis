@@ -1,5 +1,3 @@
-// Mesh description in POV-Ray format
-
 mesh2 {
   vertex_vectors {
     5
