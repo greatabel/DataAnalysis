@@ -538,7 +538,9 @@ def upload_ppt():
     return redirect(url_for("add_ppt"))
 
 
-
+@app.route("/visual", methods=["GET"])
+def visual():
+    return rt("visual.html")
 
 
 @app.route("/i0map", methods=["GET"])

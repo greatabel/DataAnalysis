@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[18]:
+# In[12]:
 
 
 from pyspark.sql import SparkSession
@@ -13,7 +13,7 @@ from pyspark.ml.clustering import KMeans
 import folium
 
 
-# In[19]:
+# In[13]:
 
 
 # 创建一个SparkSession
@@ -23,7 +23,7 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 
-# In[20]:
+# In[14]:
 
 
 data = spark.read.csv("data/sample.csv", header=True, inferSchema=True)
@@ -31,14 +31,14 @@ data = spark.read.csv("data/sample.csv", header=True, inferSchema=True)
 data.show()
 
 
-# In[21]:
+# In[15]:
 
 
 vec_assembler = VectorAssembler(inputCols=["longitude", "latitude"], outputCol="features")
 data_with_features = vec_assembler.transform(data)
 
 
-# In[22]:
+# In[16]:
 
 
 kmeans = KMeans(k=3, seed=1, featuresCol="features")  # 可以更改k值来改变聚类数量
@@ -46,16 +46,57 @@ model = kmeans.fit(data_with_features)
 predictions = model.transform(data_with_features)
 
 
-# In[23]:
+# In[17]:
 
 
 pdf = predictions.select("longitude", "latitude", "prediction").toPandas()
 
 
+# In[ ]:
+
+
+
+
+
 # #  part0 数据探索
 # 
 
-# In[26]:
+# In[19]:
+
+
+print(data.columns)
+from pyspark.sql.functions import dayofweek, to_date
+
+# Convert to Date type
+data = data.withColumn('Date', to_date(data['Date'], 'yyyy-MM-dd HH:mm:ss'))
+
+# Add a new column 'weekday'
+data = data.withColumn('weekday', dayofweek(data['Date']))
+
+# Check the DataFrame
+data.show()
+
+
+
+# In[24]:
+
+
+from pyspark.sql import functions as F
+
+# Calculate sum of load for each weekday
+load_counts = data.groupBy('weekday').agg(F.sum('load').alias('total_load'))
+
+# Convert to pandas DataFrame
+load_counts_pd = load_counts.toPandas()
+
+# Plot
+plt.pie(load_counts_pd['total_load'], labels=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], 
+        autopct='%1.1f%%', startangle=90, colors=['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'])
+plt.title('Load Counts by Day of Week')
+plt.show()
+
+
+# In[7]:
 
 
 # 计算并绘制每个小时的平均"speed"
@@ -81,7 +122,7 @@ plt.title('Average Speed by Hour')
 plt.show()
 
 
-# In[25]:
+# In[8]:
 
 
 # 计算每个小时的平均"load"
@@ -94,6 +135,12 @@ plt.xlabel('Time')
 plt.ylabel('Average Load')
 plt.title('Average Load by Hour')
 plt.show()
+
+
+# In[ ]:
+
+
+
 
 
 # #  part1 简单可视化分类
