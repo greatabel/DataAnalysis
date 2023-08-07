@@ -1,9 +1,0 @@
-default default default
-default
-default
-default default
-
-purchase_a_sword
-purchase_a_sword
-purchase_a_sword purchase_a_sword
-purchase_a_sword
